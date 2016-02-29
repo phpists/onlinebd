@@ -127,7 +127,7 @@ class Ajax extends CI_Controller {
 	}
 
 
-	function create_zayavka_prihod() {
+/*	function create_zayavka_prihod() {
 		$product=$this->input->post('nazva');
 		// існуючий проект
 		if($this->input->post('radios') == 1) {
@@ -179,7 +179,71 @@ class Ajax extends CI_Controller {
 		// товар zayavki_products
 			$this->db->insert('zayavki_products', array('zayavka_id'=>$return_z_id, 'product_id'=>$return_p_id, 'cnt'=>$kilk[$k]));
 		}
+	}*/
+
+
+
+	function create_zayavka_prihod() {
+		$product=$this->input->post('nazva');
+		// існуючий проект
+		if($this->input->post('radios') == 1) {
+			$progect_id = $this->input->post('progect_id');
+			$nazva_progect = $this->db->get_where('progects', array('id' => $progect_id))->row('nazva');
+		}
+		// новий проект
+		if($this->input->post('radios') == 2) {
+			$nazva_progect = $this->input->post('nazva_progect');
+			$this->db->insert('progects', array(
+				'user_id'=>$this->session->userdata('user_id'),
+				'company_id'=>$this->session->userdata('user_company_id'),
+				'nazva'=>$nazva_progect,
+				'date_create'=>date("Y-m-d")));
+			$progect_id = $this->db->insert_id();
+		}
+
+		$data = array(
+			'user_id' => $this->session->userdata('user_id'),
+			'progect_id' => $progect_id,
+			'nazva_progect' => $nazva_progect,
+			'date_otgruzki' => $this->input->post('date_otgruzki'),
+			'fio' => $this->input->post('fio'),
+			'tel' => $this->input->post('tel'),
+			'nom_avto' => $this->input->post('nom_avto'),
+			'comment' => $this->input->post('comment'),
+			'date_create' => date("Y-m-d"),
+			'status' => 1,
+			'type' => 1
+		);
+		$this->db->insert('zayavki', $data);
+		$return_z_id = $this->db->insert_id();
+
+		// товар (zayavki_prihod)
+		$artikl=$this->input->post('artikl');
+		$edinica_izm=$this->input->post('edinica_izm');
+		$kilk=$this->input->post('kilk');
+		foreach ($product as $k=>$value) {
+			$data = array(
+				'zayavka_id' => $return_z_id,
+				'nazva' => $value,
+				'kilk' => $kilk[$k],
+				'edinica_izm' => $edinica_izm[$k],
+				'opus' => 'нет',
+				'artikl' => $artikl[$k]
+			);
+			$this->db->insert('zayavki_prihod', $data);
+			//$return_p_id = $this->db->insert_id();
+		// товар zayavki_products
+			//$this->db->insert('zayavki_products', array('zayavka_id'=>$return_z_id, 'product_id'=>$return_p_id, 'cnt'=>$kilk[$k]));
+		}
 	}
+
+
+
+
+
+
+
+
 
 
 

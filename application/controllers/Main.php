@@ -249,11 +249,19 @@ class Main extends CI_Controller {
 		
 	public function zayavka($id) {
 		$data['title'] = "Изменить заявку №".$id;
-		$data['main'] = $this->db->get_where('zayavki', array('id' => $id))->row();
-		$this->db->select('zayavki_products.id, zayavki_products.product_id, zayavki_products.cnt, products.nazva, products.artikl, products.edinica_izm, products.kilk');		
-		$this->db->join('products', 'zayavki_products.product_id = products.id', 'left');
-		$this->db->where('zayavki_products.zayavka_id', $id);
-		$data['products'] = $this->db->get('zayavki_products');
+		$data['main'] = $zayavka = $this->db->get_where('zayavki', array('id' => $id))->row();
+		if($zayavka->type == 0) {
+			$this->db->select('zayavki_products.id, zayavki_products.product_id, zayavki_products.cnt, products.nazva, products.artikl, products.edinica_izm, products.kilk');		
+			$this->db->join('products', 'zayavki_products.product_id = products.id', 'left');
+			$this->db->where('zayavki_products.zayavka_id', $id);
+			$data['products'] = $this->db->get('zayavki_products');
+		}
+		if($zayavka->type == 1) {	// приход	
+			$this->db->select('zayavki_prihod.id, zayavki_prihod.nazva, zayavki_prihod.kilk, zayavki_prihod.edinica_izm, zayavki_prihod.artikl');		
+			//$this->db->join('products', 'zayavki_products.product_id = products.id', 'left');
+			$this->db->where('zayavki_prihod.zayavka_id', $id);		
+			$data['products'] = $this->db->get('zayavki_prihod');
+		}
 		$this->load->view('edit_zayavka', $data);
 		//$this->output->enable_profiler(TRUE);	// профайлер
 	}

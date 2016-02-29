@@ -21,7 +21,7 @@ $(document).ready(function(){
 		<div class="col-md-12 col-sm-12">
 
 			<div class="panel panel-default">
-				<div class="panel-heading">Заявки на отгрузку /приход</div>
+				<div class="panel-heading">Заявки на отгрузку / приход</div>
 				<div class="panel-body">
 	
 						<ul class="nav nav-tabs">
