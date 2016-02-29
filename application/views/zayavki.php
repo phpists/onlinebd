@@ -1,6 +1,19 @@
 <?php $this->load->view('header'); ?>
 
 
+<script type="text/javascript">
+$(document).ready(function(){
+// зміна статусу вакансія-кандидат
+	$(document).on('click', '.change_status_prihod', function(event){
+		data_id = $(event.target).data("id"); 
+		data_title = $(event.target).data("title"); 
+		$(this).parent().parent().prev().text(data_title);
+		//$.post("/ajax/ajax_change_status_v_to_c", { 'id':data_id, 'status':data_title } );
+		//return false;
+	});
+</script>
+
+
 <div class="container-fluid my_container">
 	<div class="row">
 		<div class="col-md-12 col-sm-12">
@@ -88,7 +101,10 @@
 									<tbody>
 							<?php 
 							$a=1;
-							foreach ($prihod->result() as $row) { 
+							foreach ($prihod->result() as $row) {
+								if($row->status==1) $status = "В обработке";
+								if($row->status==2) $status = "В ожидании";
+								if($row->status==0) $status = "Отгружено";
 								echo '
 										<tr>
 											<td><center>'.$a++.'</center></td>
@@ -96,30 +112,15 @@
 											<td><center>'.$row->date_otgruzki.'</center></td>
 											<td><center>'.$row->fio.'</center></td>
 											<td><center>'.$row->tel.'</center></td>
-											<td><center>';
-											if($row->status==1) echo "В обработке";
-											if($row->status==2) echo "В ожидании";
-											if($row->status==0) echo "Отгружено";
-										echo '
-
-
-<div class="btn-group responsible_vacancy open">
-<button class="btn btn-link dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="true">Review</button>
-<ul class="dropdown-menu">
-<li>
-<a class="change_status_v_to_c" data-title="Review" data-id="116" href="#">Review</a>
-</li>
-<li>
-<li>
-<li>
-<li>
-<li>
-<li>
-</ul>
-</div>
-
-
-										</center></td>
+											<td><center>
+												<div class="btn-group responsible_vacancy open">
+													<button class="btn btn-link dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="true">'.$status.'</button>
+													<ul class="dropdown-menu">
+														<li><a class="change_status_prihod" data-title="Review" data-id="'.$row->id.'" href="#">В обработке</a></li>
+														<li><a class="change_status_prihod" data-title="Review" data-id="'.$row->id.'" href="#">Принято</a></li>
+													</ul>
+												</div>
+											</center></td>
 											<td><center>
 												<a href="/main/zayavka/'.$row->id.'" class="btn btn-warning btn-sm" title="Изменить"><span class="glyphicon glyphicon-pencil"></span></a>
 												<a href="/php_excel/export.php?id='.$row->id.'&type=1" class="btn btn-primary btn-sm" title="Печать"><span class="glyphicon glyphicon-print"></span></a>

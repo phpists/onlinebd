@@ -224,6 +224,20 @@ class Main extends CI_Controller {
 			$this->db->delete('users', array('id' => $id));
 		}
 		redirect(site_url("main/users"));
+	}	
+
+	public function deactevate_user($id) {
+		if($id != 1) {
+			$active = $this->db->get_where('users', array('id' => $id))->row("active");
+			if($active == 1) {
+				$data = array('active' => 0);
+			} else {
+				$data = array('active' => 1);
+			}
+			$this->db->where('id', $id);
+			$this->db->update('users', $data); 
+		}
+		redirect(site_url("main/users"));
 	}
 
 // заявки (type=0-расход  type=1-приход)
