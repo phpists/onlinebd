@@ -237,20 +237,15 @@ class Ajax extends CI_Controller {
 		}
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-	public function otgruzit() {
+	public function do_prihod() {
 		echo "ghfhfh";
 	}	
+
+
+
+
+
+
 
 
 	public function del_tmc($id) {
