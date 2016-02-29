@@ -100,7 +100,26 @@
 											if($row->status==1) echo "В обработке";
 											if($row->status==2) echo "В ожидании";
 											if($row->status==0) echo "Отгружено";
-										echo '</center></td>
+										echo '
+
+
+<div class="btn-group responsible_vacancy open">
+<button class="btn btn-link dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="true">Review</button>
+<ul class="dropdown-menu">
+<li>
+<a class="change_status_v_to_c" data-title="Review" data-id="116" href="#">Review</a>
+</li>
+<li>
+<li>
+<li>
+<li>
+<li>
+<li>
+</ul>
+</div>
+
+
+										</center></td>
 											<td><center>
 												<a href="/main/zayavka/'.$row->id.'" class="btn btn-warning btn-sm" title="Изменить"><span class="glyphicon glyphicon-pencil"></span></a>
 												<a href="/php_excel/export.php?id='.$row->id.'&type=1" class="btn btn-primary btn-sm" title="Печать"><span class="glyphicon glyphicon-print"></span></a>
