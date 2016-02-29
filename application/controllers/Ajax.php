@@ -191,6 +191,11 @@ class Ajax extends CI_Controller {
 
 	public function del_tmc($id) {
 		$this->db->delete('zayavki_products', array('id' => $id));
+	}	
+
+	public function change_status_prihod() {
+		$this->db->where('id', $this->input->post('id'));
+		$this->db->update('zayavki', array('status' => $this->input->post('status')));
 	}
 
 

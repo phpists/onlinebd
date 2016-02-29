@@ -3,14 +3,16 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-// зміна статусу вакансія-кандидат
+// зміна статусу
 	$(document).on('click', '.change_status_prihod', function(event){
 		data_id = $(event.target).data("id"); 
 		data_title = $(event.target).data("title"); 
+		data_status = $(event.target).data("status"); 
 		$(this).parent().parent().prev().text(data_title);
-		//$.post("/ajax/ajax_change_status_v_to_c", { 'id':data_id, 'status':data_title } );
+		$.post("/ajax/change_status_prihod", { 'id':data_id, 'status':data_status } );
 		//return false;
 	});
+});
 </script>
 
 
@@ -103,8 +105,8 @@ $(document).ready(function(){
 							$a=1;
 							foreach ($prihod->result() as $row) {
 								if($row->status==1) $status = "В обработке";
-								if($row->status==2) $status = "В ожидании";
-								if($row->status==0) $status = "Отгружено";
+								//if($row->status==2) $status = "В ожидании";
+								if($row->status==0) $status = "Принято"; //"Отгружено";
 								echo '
 										<tr>
 											<td><center>'.$a++.'</center></td>
@@ -116,8 +118,8 @@ $(document).ready(function(){
 												<div class="btn-group responsible_vacancy open">
 													<button class="btn btn-link dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="true">'.$status.'</button>
 													<ul class="dropdown-menu">
-														<li><a class="change_status_prihod" data-title="Review" data-id="'.$row->id.'" href="#">В обработке</a></li>
-														<li><a class="change_status_prihod" data-title="Review" data-id="'.$row->id.'" href="#">Принято</a></li>
+														<li><a class="change_status_prihod" data-status="1" data-title="В обработке" data-id="'.$row->id.'" href="#">В обработке</a></li>
+														<li><a class="change_status_prihod" data-status="0" data-title="Принято" data-id="'.$row->id.'" href="#">Принято</a></li>
 													</ul>
 												</div>
 											</center></td>
