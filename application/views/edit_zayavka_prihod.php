@@ -45,17 +45,23 @@ $(document).ready(function(){
 		return false;
 	});
 
+	var dis = 0;
 	$('#otgruzit').click(function() {
-		$('.progress .progress-bar').progressbar({display_text: 'fill'});
-		$('#mess_error').delay(1000).show("slow");
-		$("[name=status]").val('0');
-
-		/*setTimeout (function(){
-			$.post("/ajax/do_prihod", $("#srch").serialize()).done(function(data) {
-				$("#example > tbody").html(data);
+		if(dis==0) {
+			$(this).attr('disabled', 'disabled');
+			dis = 1;
+			$('.progress .progress-bar').progressbar({display_text: 'fill'});
+			$("[name=status]").val('0');
+			$.ajax({
+				type: "POST",
+				url: "/ajax/do_prihod",
+				data: { "id": "<? echo $main->id ?>", "progect_id": "<? echo $main->progect_id ?>" },
+				dataType: "html",
+				success: function(msg){
+					$('#mess_error').delay(1000).show("slow");
+				}
 			});
-		}, 1000);*/
-
+		}
 		return false;
 	});
 
@@ -79,7 +85,7 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">Дата отгрузки / время отгрузки:</label>  
 	  <div class="col-md-4">
-	  <input name="date_otgruzki" class="form-control input-md datepicker" type="text" value="<? echo @$main->nazva ?>">
+	  <input name="date_otgruzki" class="form-control input-md datepicker" type="text" value="<? echo $main->date_otgruzki ?>">
 	  </div>
 	</div>	
 
@@ -87,7 +93,7 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">ФИО кто забирает:</label>  
 	  <div class="col-md-4">
-	  <input name="fio" class="form-control input-md" type="text" value="<? echo @$main->fio ?>">
+	  <input name="fio" class="form-control input-md" type="text" value="<? echo $main->fio ?>">
 	  </div>
 	</div>	
 
@@ -95,7 +101,7 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">Номер телефона:</label>  
 	  <div class="col-md-4">
-	  <input name="tel" class="form-control input-md" type="text" value="<? echo @$main->tel ?>">
+	  <input name="tel" class="form-control input-md" type="text" value="<? echo $main->tel ?>">
 	  </div>
 	</div>	
 
@@ -119,7 +125,7 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">Комментарий:</label>
 	  <div class="col-md-4">
-		<textarea rows="3" class="form-control" name="comment"><? echo @$main->comment ?></textarea>
+		<textarea rows="3" class="form-control" name="comment"><? echo $main->comment ?></textarea>
 	  </div>
 	</div>
 
@@ -127,11 +133,11 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">Проект:</label>  
 	  <div class="col-md-4">
-		 <input class="form-control input-md" type="text" value="<? echo @$main->nazva_progect ?>" readonly>
+		 <input class="form-control input-md" type="text" value="<? echo $main->nazva_progect ?>" readonly>
 	  </div>
 	</div>
 
-<!-- Text input-->
+	<!-- Text input-->
 	<div class="form-group">
 	  <label class="col-md-4 control-label">Статус:</label>  
 	  <div class="col-md-4">

@@ -238,7 +238,23 @@ class Ajax extends CI_Controller {
 	}
 
 	public function do_prihod() {
-		echo "ghfhfh";
+		$zayavka_id = $this->input->post('id');
+		$progect_id = $this->input->post('progect_id');
+		$products = $this->db->get_where('zayavki_prihod', array('zayavka_id' => $zayavka_id));
+		foreach ($products->result() as $row) {
+			//echo $row->nazva;
+			$this->db->insert('products', 
+				array(
+					//'zayavka_id'=>$return_z_id, 
+					//'progect_id'=>$progect_id, 
+					'nazva'=>$row->nazva, 
+					'kilk'=>$row->kilk, 
+					'edinica_izm'=>$row->edinica_izm, 
+					'opus'=>$row->opus, 
+					'artikl'=>$row->artikl
+				)
+			);
+		}
 	}	
 
 
