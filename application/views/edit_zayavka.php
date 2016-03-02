@@ -34,17 +34,23 @@ $(document).ready(function(){
 			alert("Сохранено");
 			window.location = "/main/zayavki";
 		});
-
 	});
 
-$('.del_tmc').click(function() {
-	if(confirm('Удалить этот ТМЦ?')) {
-		id = $(this).data('id');
-		//$.get("/ajax/del_tmc/"+id);
-		$(this).parent().parent().parent().fadeOut('slow');
-	}
-	return false;
-});
+	$('.del_tmc').click(function() {
+		if(confirm('Удалить этот ТМЦ?')) {
+			id = $(this).data('id');
+			//$.get("/ajax/del_tmc/"+id);
+			$(this).parent().parent().parent().fadeOut('slow');
+		}
+		return false;
+	});
+
+	$('[name=count_product]').click(function(){
+			alert("Сохранено");		
+
+	});
+	
+
 
 	var i = 0;
 	$('#otgruzit').click(function() {
@@ -208,7 +214,7 @@ $('.del_tmc').click(function() {
 				<td><center>'.$row->edinica_izm.'</center></td>
 				<td><center>'.$row->kilk.'</center></td>
 				<td><center>
-					<div class="input-group col-md-4"><input type="number" name="count_platform" class="form-control" min="1" max="'.$row->kilk.'" value="'.$row->cnt.'">
+					<div class="input-group col-md-4"><input type="number" name="count_product" class="form-control" min="1" max="'.$row->kilk.'" value="'.$row->cnt.'">
 					<span class="input-group-btn">
 						<a class="btn btn-default"><span class="glyphicon glyphicon-floppy-saved"></span></a>
 					</span></div>

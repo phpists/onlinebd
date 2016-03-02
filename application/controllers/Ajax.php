@@ -74,7 +74,7 @@ class Ajax extends CI_Controller {
 		$this->db->insert('zayavki', $data);
 		$return_id = $this->db->insert_id();
 
-		$sql = "INSERT INTO zayavki_products (zayavka_id, product_id, cnt) VALUES ";
+		$sql = "INSERT INTO zayavki_rashod (zayavka_id, product_id, cnt) VALUES ";
 		$insertArray = array();
 		foreach ($product as $value) {
 			array_push($insertArray, "(".$return_id.", ".$value.", ".$count[$value].")");
@@ -105,14 +105,14 @@ class Ajax extends CI_Controller {
 			'nom_avto' => $this->input->post('nom_avto'),
 			'comment' => $this->input->post('comment'),
 			//'date_create' => date("Y-m-d"),
-			'status' => $this->input->post('status'),
+			//'status' => $this->input->post('status'),
 		);
 		$this->db->where('id', $id);
 		$this->db->update('zayavki', $data); 
 
 		$return_id = $id;
 
-		/*$sql = "INSERT INTO zayavki_products (zayavka_id, product_id, cnt) VALUES ";
+		/*$sql = "INSERT INTO zayavki_rashod (zayavka_id, product_id, cnt) VALUES ";
 		$insertArray = array();
 		foreach ($product as $value) {
 			array_push($insertArray, "(".$return_id.", ".$value.", ".$count[$value].")");
@@ -176,8 +176,8 @@ class Ajax extends CI_Controller {
 			);
 			$this->db->insert('products', $data);
 			$return_p_id = $this->db->insert_id();
-		// товар zayavki_products
-			$this->db->insert('zayavki_products', array('zayavka_id'=>$return_z_id, 'product_id'=>$return_p_id, 'cnt'=>$kilk[$k]));
+		// товар zayavki_rashod
+			$this->db->insert('zayavki_rashod', array('zayavka_id'=>$return_z_id, 'product_id'=>$return_p_id, 'cnt'=>$kilk[$k]));
 		}
 	}*/
 
@@ -232,8 +232,8 @@ class Ajax extends CI_Controller {
 			);
 			$this->db->insert('zayavki_prihod', $data);
 			//$return_p_id = $this->db->insert_id();
-		// товар zayavki_products
-			//$this->db->insert('zayavki_products', array('zayavka_id'=>$return_z_id, 'product_id'=>$return_p_id, 'cnt'=>$kilk[$k]));
+		// товар zayavki_rashod
+			//$this->db->insert('zayavki_rashod', array('zayavka_id'=>$return_z_id, 'product_id'=>$return_p_id, 'cnt'=>$kilk[$k]));
 		}
 	}
 
@@ -246,7 +246,7 @@ class Ajax extends CI_Controller {
 			$this->db->insert('products', 
 				array(
 					//'zayavka_id'=>$return_z_id, 
-					//'progect_id'=>$progect_id, 
+					'progect_id'=>$progect_id, 
 					'nazva'=>$row->nazva, 
 					'kilk'=>$row->kilk, 
 					'edinica_izm'=>$row->edinica_izm, 
@@ -255,6 +255,7 @@ class Ajax extends CI_Controller {
 				)
 			);
 		}
+		$this->db->where('id', $zayavka_id)->update('zayavki', array('status' => 0)); 
 	}	
 
 
@@ -265,7 +266,7 @@ class Ajax extends CI_Controller {
 
 
 	public function del_tmc($id) {
-		$this->db->delete('zayavki_products', array('id' => $id));
+		$this->db->delete('zayavki_rashod', array('id' => $id));
 	}	
 
 	public function change_status_prihod() {

@@ -141,7 +141,7 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">Статус:</label>  
 	  <div class="col-md-4">
-		<select name="status" class="form-control">
+		<select name="status" class="form-control" readonly>
 			<option value="1" <? if($main->status==1) echo "selected" ?>>В обработке</option>
 			<option value="0" <? if($main->status==0) echo "selected" ?>>Прийнято</option>
 		</select>
@@ -171,7 +171,7 @@ $(document).ready(function(){
 				<td><center>'.$row->artikl.'</center></td>
 				<td><center>'.$row->edinica_izm.'</center></td>
 				<td><center>'.$row->kilk.'</center></td>
-				<td><center><a href="#" title="Удалить" class="del_tmc" data-id="'.$row->id.'"><img src="'.base_url().'application/views/img/validno.png"></a></center></td>
+				<td><center>'.(($main->status==1)?'<a href="#" title="Удалить" class="del_tmc" data-id="'.$row->id.'"><img src="'.base_url().'application/views/img/validno.png"></a>':'').'</center></td>
 			</tr>';
 		}
 	?>
@@ -195,7 +195,9 @@ $(document).ready(function(){
 				<a href="#" class="btn btn-success" id="create"><i class="glyphicon glyphicon-ok"></i> Сохранить</a>
 				<a href="/main/zayavki" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Отмена</a>		
 				<a href="/php_excel/export.php?id=<? echo $main->id ?>&type=1" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a>
+				<? if($main->status==1) { ?>
 				<a href="#" class="btn btn-warning" id="otgruzit"><i class="glyphicon glyphicon-refresh"></i> Прийнять</a>	
+				<? } ?>
 			  </div>
 			</div>	
 		</div>
