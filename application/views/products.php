@@ -98,6 +98,7 @@ $(document).ready(function(){
 						</table>
 
 						<button class="btn btn-success" type="button" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i> Добавить товар</button>
+						<a href="" class="btn btn-danger"><i class="glyphicon glyphicon-plus"></i> Добавить товар</a>
 
 
 

@@ -39,13 +39,22 @@ $(document).ready(function(){
 	$('.del_tmc').click(function() {
 		if(confirm('Удалить этот ТМЦ?')) {
 			id = $(this).data('id');
-			//$.get("/ajax/del_tmc/"+id);
+			$.get("/ajax/del_tmc/"+id);
 			$(this).parent().parent().parent().fadeOut('slow');
 		}
 		return false;
 	});
 
-	//$('[name=count_product]').click(function(){
+	$('.upd_cnt').click(function() {
+		//$(this).parent().parent().parent().parent().prev().children().css('background-color', '#d9534f');
+		//alert($(this).parent().parent().parent().parent().prev().children().text());
+		id = $(this).data('id');
+		new_cnt = $(this).parent().parent().children().val();
+		$.post( "/ajax/upd_cnt_rashod/", { 'id': id, 'cnt': new_cnt } );
+		$(this).css('background-color', '#5cb85c');
+	});
+
+
 	$('[name=count_product]').bind('change click keyup', function(){
 		//$(this).parent().parent().parent().prev().css('background-color', '#d9534f');
 		var oststok = parseInt($(this).parent().parent().parent().prev().text());
@@ -55,51 +64,24 @@ $(document).ready(function(){
 	});
 	
 
-
-	var i = 0;
+	var dis = 0;
 	$('#otgruzit').click(function() {
-    $('.progress .progress-bar').progressbar({display_text: 'fill'});
-
-
-
-
-
-
-
-		/*var progress = setInterval(function () {
-		var $bar = $('.progress-bar');
-
-		    if ($bar.width() >= 400) {
-		        clearInterval(progress);
-		        $('.progress').removeClass('active');
-		    } else {
-		        $bar.width($bar.width() + 40);
-		    }
-		    $bar.text($bar.width() / 4 + "%");
-		}, 800);*/
-
-
-
-		/*i++;
-		if(i == 1) {
-			$(".progress-bar").css("width", "100%").text("100%");
-			$(".progress-bar").css("transition", " width .6s ease");
-			//$(".progress-bar").css("animation", "progress-bar-stripes 2s linear infinite");
-		} else {
-			$(".progress-bar").css("transition", "none");
-			$(".progress-bar").css("animation", "none");
-			$(".progress-bar").css("width", "0%").text("0%");	
-			setTimeout (function(){
-				$(".progress-bar").css("width", "100%").text("100%");
-				$(".progress-bar").css("transition", " width .6s ease");
-				//$(".progress-bar").css("animation", "progress-bar-stripes 2s linear infinite");
-			}, 500);
-		}*/
-		/*setTimeout (function(){
-			$.post("/ajax/ajax_search_master", $("#srch").serialize()).done(function(data) {
-				$("#example > tbody").html(data);
+		if(dis==0) {
+			$(this).attr('disabled', 'disabled');
+			dis = 1;
+			$('.progress .progress-bar').progressbar({display_text: 'fill'});
+			$("[name=status]").val('0');
+			$.ajax({
+				type: "POST",
+				url: "/ajax/do_rashod",
+				data: { "id": "<? echo $main->id ?>", "progect_id": "<? echo $main->progect_id ?>" },
+				dataType: "html",
+				success: function(msg){
+					alert(msg);
+					$('#mess_error').delay(1000).show("slow");
+				}
 			});
-		}, 1000);*/
+		}
 		return false;
 	});
 
@@ -180,14 +162,9 @@ $(document).ready(function(){
 	  <label class="col-md-4 control-label">Статус:</label>  
 	  <div class="col-md-4">
 		<select name="status" class="form-control">
-<? if($main->type == 0) { ?>
 			<option value="1" <? if($main->status==1) echo "selected" ?>>В обработке</option>
 			<option value="2" <? if($main->status==2) echo "selected" ?>>В ожидании</option>
 			<option value="0" <? if($main->status==0) echo "selected" ?>>Отгружено</option>
-<? } if($main->type == 1) { ?>
-			<option value="1" <? if($main->status==1) echo "selected" ?>>В обработке</option>
-			<option value="0" <? if($main->status==0) echo "selected" ?>>Прийнято</option>
-<? } ?>
 		</select>
 	  </div>
 	</div>
@@ -220,7 +197,7 @@ $(document).ready(function(){
 				<td><center>
 					<div class="input-group col-md-4"><input type="number" name="count_product" class="form-control" min="1" max="'.$row->kilk.'" value="'.$row->cnt.'">
 					<span class="input-group-btn">
-						<a class="btn btn-default"><span class="glyphicon glyphicon-floppy-saved"></span></a>
+						<a class="btn btn-default upd_cnt" data-id="'.$row->id.'"><span class="glyphicon glyphicon-floppy-saved"></span></a>
 					</span></div>
 				</center></td>
 				<td><center><a href="#" title="Удалить" class="del_tmc" data-id="'.$row->id.'"><img src="'.base_url().'application/views/img/validno.png"></a></center></td>
@@ -275,50 +252,34 @@ $(document).ready(function(){
 		<div class="col-md-12">
 			<!-- Button (Double) -->
 			<div class="form-group">
-			  <label class="col-md-3 control-label" for="button1id"> </label>
+			  <label class="col-md-4 control-label" for="button1id"> </label>
 			  <div class="col-md-5">
 				<a href="#" class="btn btn-success" id="create"><i class="glyphicon glyphicon-ok"></i> Сохранить</a>
 				<a href="/main/zayavki" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Отмена</a>		
-				<a href="/php_excel/export.php?id=<? echo $main->id ?>&type=<? echo $main->type ?>" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a>
+				<a href="/php_excel/export.php?id=<? echo $main->id ?>&type=0" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a>
 				<a href="#" class="btn btn-warning" id="otgruzit"><i class="glyphicon glyphicon-refresh"></i> Отгрузить</a>	
 			  </div>
 			</div>	
 		</div>
 	</div>
 
-	<div class="col-md-12">
-		<div class="row" style="padding-top:10px; display:none;" id="mess_error">
-			<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Выберете хотя б один товар!</div>
-		</div>
-	</div>
+
 
 	<div class="col-md-12">
 		<div class="row" style="padding-top:10px;">
-			<!-- <div class="my_progress">
-					<div class="progress progress-striped active">
-					  <div class="progress-bar"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="myBar">
-					    <span class="sr-only">0% Complete</span>
-					  </div>
-					</div>
-				</div> -->	
-
-
-
-    <!-- <div class="progress progress-striped active">
-        <div class="progress-bar" style="width: 0%;"></div>
-    </div> -->
-
-
-
-	<div class="progress">
-	    <div class="progress-bar progress-bar-danger six-sec-ease-in-out" role="progressbar" data-transitiongoal="100"></div>
-	</div>
-
-
-
-
+			<div class="progress progress-striped">
+				<div class="progress-bar progress-bar-success six-sec-ease-in-out" role="progressbar" data-transitiongoal="100"></div>
+			</div>
 		</div>
 	</div>
+
+	<div class="col-md-12">
+		<div class="row" style="padding-top:10px; display:none;" id="mess_error">
+			<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>ТМЦ отгружен, заявка принята!</div>
+		</div>
+	</div>
+
+
 
 							
 

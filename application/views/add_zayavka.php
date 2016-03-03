@@ -41,6 +41,16 @@ $(document).ready(function(){
 		}	
 	});
 
+	// $(document).on('click', '[type="number"]', function(event){
+	// //$('[name=count]').bind('change click keyup', function(){
+	// 	$(this).parent().parent().prev().css('background-color', '#d9534f');
+	// 	var oststok = parseInt($(this).parent().parent().prev().children().text());
+	// 	//alert(oststok);
+	// 	if($(this).val() > oststok)	{
+	// 		$(this).val(oststok);
+	// 	}
+	// });
+
 	$('.check-all').click(function(){
 		if($(this).is(':checked')) {
 			$(".sel_ch").prop('checked', true);

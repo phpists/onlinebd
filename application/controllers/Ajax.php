@@ -92,8 +92,12 @@ class Ajax extends CI_Controller {
 		$zayavka_id = 2;
 		$zayavki_rashod = $this->db->get_where('zayavki_rashod', array('zayavka_id' => $zayavka_id));
 		foreach ($zayavki_rashod->result() as $row) {
-			echo $row->cnt;
-		}		
+			//echo $row->cnt;
+			$this->db->query("UPDATE products SET kilk=kilk-".$row->cnt." WHERE id=".$row->product_id);
+		}
+
+		$this->db->where('id', $zayavka_id);
+		$this->db->update('zayavki', array('status' => 0));
 
 	}
 
@@ -209,6 +213,11 @@ class Ajax extends CI_Controller {
 
 	public function del_tmc($id) {
 		$this->db->delete('zayavki_rashod', array('id' => $id));
+	}	
+
+	public function upd_cnt_rashod() {
+		$this->db->where('id', $this->input->post('id'));
+		$this->db->update('zayavki_rashod', array('cnt' => $this->input->post('cnt')));
 	}	
 
 	public function change_status_prihod() {

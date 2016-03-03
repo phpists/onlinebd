@@ -4,12 +4,21 @@
 <script type="text/javascript">
 $(document).ready(function(){
 // зміна статусу
+	$(document).on('click', '.change_status_rashod', function(event){
+		data_id = $(event.target).data("id"); 
+		data_title = $(event.target).data("title"); 
+		data_status = $(event.target).data("status"); 
+		$(this).parent().parent().prev().text(data_title);
+		//$.post("/ajax/change_status_rashod", { 'id':data_id, 'status':data_status } );
+		//return false;
+	});
+
 	$(document).on('click', '.change_status_prihod', function(event){
 		data_id = $(event.target).data("id"); 
 		data_title = $(event.target).data("title"); 
 		data_status = $(event.target).data("status"); 
 		$(this).parent().parent().prev().text(data_title);
-		$.post("/ajax/change_status_prihod", { 'id':data_id, 'status':data_status } );
+		//$.post("/ajax/change_status_prihod", { 'id':data_id, 'status':data_status } );
 		//return false;
 	});
 });
@@ -53,7 +62,10 @@ $(document).ready(function(){
 									<tbody>
 							<?php 
 							$a=1;
-							foreach ($rashod->result() as $row) { 
+							foreach ($rashod->result() as $row) {
+								if($row->status==1) $status = "В обработке";
+								if($row->status==2) $status = "В ожидании";
+								if($row->status==0) $status = "Отгружено";
 								echo '
 										<tr>
 											<td><center>'.$a++.'</center></td>
@@ -61,11 +73,16 @@ $(document).ready(function(){
 											<td><center>'.$row->date_otgruzki.'</center></td>
 											<td><center>'.$row->fio.'</center></td>
 											<td><center>'.$row->tel.'</center></td>
-											<td><center>';
-											if($row->status==1) echo "В обработке";
-											if($row->status==2) echo "В ожидании";
-											if($row->status==0) echo "Отгружено";
-										echo '</center></td>
+											<td><center>
+												<div class="btn-group responsible_vacancy">
+													<button class="btn btn-link dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="true">'.$status.'</button>
+													<ul class="dropdown-menu">
+														<li><a class="change_status_rashod" data-status="1" data-title="В обработке" data-id="'.$row->id.'" href="#">В обработке</a></li>
+														<li><a class="change_status_rashod" data-status="2" data-title="В ожидании" data-id="'.$row->id.'" href="#">В ожидании</a></li>
+														<li><a class="change_status_rashod" data-status="0" data-title="Отгружено" data-id="'.$row->id.'" href="#">Отгружено</a></li>
+													</ul>
+												</div>
+											</center></td>
 											<td><center>
 												<a href="/main/zayavka/'.$row->id.'" class="btn btn-warning btn-sm" title="Изменить"><span class="glyphicon glyphicon-pencil"></span></a>
 												<a href="/php_excel/export.php?id='.$row->id.'&type=0" class="btn btn-primary btn-sm" title="Печать"><span class="glyphicon glyphicon-print"></span></a>
@@ -115,7 +132,7 @@ $(document).ready(function(){
 											<td><center>'.$row->fio.'</center></td>
 											<td><center>'.$row->tel.'</center></td>
 											<td><center>
-												<div class="btn-group responsible_vacancy open">
+												<div class="btn-group responsible_vacancy">
 													<button class="btn btn-link dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="true">'.$status.'</button>
 													<ul class="dropdown-menu">
 														<li><a class="change_status_prihod" data-status="1" data-title="В обработке" data-id="'.$row->id.'" href="#">В обработке</a></li>
