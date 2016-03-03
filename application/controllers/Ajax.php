@@ -48,7 +48,7 @@ class Ajax extends CI_Controller {
 	}
 
 // заявки (type=0-расход  type=1-приход)
-	function create_zayavka() {
+	function create_zayavka_rashod() {
 		$product=$this->input->post('product');
 		$count=$this->input->post('count');
 
@@ -83,9 +83,18 @@ class Ajax extends CI_Controller {
 		$this->db->query($sql);
 
 		// віднімаємо остаток з products
-		foreach ($product as $value) {
-		 	$this->db->query("UPDATE products SET `kilk`=kilk-".$count[$value]." WHERE `id`=".$value);
-		}
+		// foreach ($product as $value) {
+		//  	$this->db->query("UPDATE products SET `kilk`=kilk-".$count[$value]." WHERE `id`=".$value);
+		// }
+	}
+
+	public function do_rashod() {
+		$zayavka_id = 2;
+		$zayavki_rashod = $this->db->get_where('zayavki_rashod', array('zayavka_id' => $zayavka_id));
+		foreach ($zayavki_rashod->result() as $row) {
+			echo $row->cnt;
+		}		
+
 	}
 
 
@@ -109,77 +118,10 @@ class Ajax extends CI_Controller {
 		);
 		$this->db->where('id', $id);
 		$this->db->update('zayavki', $data); 
-
-		$return_id = $id;
-
-		/*$sql = "INSERT INTO zayavki_rashod (zayavka_id, product_id, cnt) VALUES ";
-		$insertArray = array();
-		foreach ($product as $value) {
-			array_push($insertArray, "(".$return_id.", ".$value.", ".$count[$value].")");
-		}
-		$sql .= implode(", ", $insertArray);
-		$this->db->query($sql);
-
-		// остаток
-		foreach ($product as $value) {
-		 	$this->db->query("UPDATE products SET `kilk`=kilk-".$count[$value]." WHERE `id`=".$value);
-		}*/
 	}
 
 
-/*	function create_zayavka_prihod() {
-		$product=$this->input->post('nazva');
-		// існуючий проект
-		if($this->input->post('radios') == 1) {
-			$progect_id = $this->input->post('progect_id');
-			$nazva_progect = $this->db->get_where('progects', array('id' => $progect_id))->row('nazva');
-		}
-		// новий проект
-		if($this->input->post('radios') == 2) {
-			$nazva_progect = $this->input->post('nazva_progect');
-			$this->db->insert('progects', array(
-				'user_id'=>$this->session->userdata('user_id'),
-				'company_id'=>$this->session->userdata('user_company_id'),
-				'nazva'=>$nazva_progect,
-				'date_create'=>date("Y-m-d")));
-			$progect_id = $this->db->insert_id();
-		}
 
-		$data = array(
-			'user_id' => $this->session->userdata('user_id'),
-			'progect_id' => $progect_id,
-			'nazva_progect' => $nazva_progect,
-			'date_otgruzki' => $this->input->post('date_otgruzki'),
-			'fio' => $this->input->post('fio'),
-			'tel' => $this->input->post('tel'),
-			'nom_avto' => $this->input->post('nom_avto'),
-			'comment' => $this->input->post('comment'),
-			'date_create' => date("Y-m-d"),
-			'status' => 1,
-			'type' => 1
-		);
-		$this->db->insert('zayavki', $data);
-		$return_z_id = $this->db->insert_id();
-
-		// товар (загальна таблиця)
-		$artikl=$this->input->post('artikl');
-		$edinica_izm=$this->input->post('edinica_izm');
-		$kilk=$this->input->post('kilk');
-		foreach ($product as $k=>$value) {
-			$data = array(
-				'progect_id' => $progect_id,
-				'nazva' => $value,
-				'kilk' => $kilk[$k],
-				'edinica_izm' => $edinica_izm[$k],
-				'opus' => 'нет',
-				'artikl' => $artikl[$k]
-			);
-			$this->db->insert('products', $data);
-			$return_p_id = $this->db->insert_id();
-		// товар zayavki_rashod
-			$this->db->insert('zayavki_rashod', array('zayavka_id'=>$return_z_id, 'product_id'=>$return_p_id, 'cnt'=>$kilk[$k]));
-		}
-	}*/
 
 
 

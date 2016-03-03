@@ -255,7 +255,7 @@ class Main extends CI_Controller {
 			$this->db->join('products', 'zayavki_rashod.product_id = products.id', 'left');
 			$this->db->where('zayavki_rashod.zayavka_id', $id);
 			$data['products'] = $this->db->get('zayavki_rashod');
-			$this->load->view('edit_zayavka', $data);
+			$this->load->view('edit_zayavka_rashod', $data);
 		}
 		if($zayavka->type == 1) {	// приход
 			$data['title'] = "Изменить заявку на приход №".$id;

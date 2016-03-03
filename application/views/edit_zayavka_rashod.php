@@ -45,9 +45,13 @@ $(document).ready(function(){
 		return false;
 	});
 
-	$('[name=count_product]').click(function(){
-			alert("Сохранено");		
-
+	//$('[name=count_product]').click(function(){
+	$('[name=count_product]').bind('change click keyup', function(){
+		//$(this).parent().parent().parent().prev().css('background-color', '#d9534f');
+		var oststok = parseInt($(this).parent().parent().parent().prev().text());
+		if($(this).val() > oststok)	{
+			$(this).val(oststok);
+		}
 	});
 	
 

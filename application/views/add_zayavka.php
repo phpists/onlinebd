@@ -61,7 +61,7 @@ $(document).ready(function(){
 				}
 			});
 			if(selected.length > 0) {
-				$.post("/ajax/create_zayavka", $("#form_add_zayavka").serialize()).done(function(data) {
+				$.post("/ajax/create_zayavka_rashod", $("#form_add_zayavka").serialize()).done(function(data) {
 					alert("Заявка добавлена!");
 					window.location = "/main/zayavki";
 				});
