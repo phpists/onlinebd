@@ -9,7 +9,7 @@ $(document).ready(function(){
 		data_title = $(event.target).data("title"); 
 		data_status = $(event.target).data("status"); 
 		$(this).parent().parent().prev().text(data_title);
-		//$.post("/ajax/change_status_rashod", { 'id':data_id, 'status':data_status } );
+		$.post("/ajax/change_status_rashod", { 'id':data_id, 'status':data_status } );
 		//return false;
 	});
 
@@ -79,7 +79,7 @@ $(document).ready(function(){
 													<ul class="dropdown-menu">
 														<li><a class="change_status_rashod" data-status="1" data-title="В обработке" data-id="'.$row->id.'" href="#">В обработке</a></li>
 														<li><a class="change_status_rashod" data-status="2" data-title="В ожидании" data-id="'.$row->id.'" href="#">В ожидании</a></li>
-														<li><a class="change_status_rashod" data-status="0" data-title="Отгружено" data-id="'.$row->id.'" href="#">Отгружено</a></li>
+														<li><a class="change_status_rashod1" data-status="0" data-title="Отгружено" data-id="'.$row->id.'" href="#">Отгружено</a></li>
 													</ul>
 												</div>
 											</center></td>

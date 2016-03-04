@@ -149,6 +149,7 @@ class Main extends CI_Controller {
 		$data['progects'] = $this->db->get_where('progects', array('id' => $progects_id))->row();		
 		$data['main'] = $this->db->get_where('products', array('progect_id' => $progects_id));
 		$data['progects_id'] = $progects_id;
+		$data['zayavok'] = $this->db->get_where('zayavki', array('progect_id' => $progects_id));
 		$this->load->view('products', $data);
 	}
 
@@ -187,6 +188,14 @@ class Main extends CI_Controller {
 		redirect(site_url("main/products/".$progect_id));
 	}
 
+	public function progect_zayavki($progects_id) {
+		//$data['progects'] = $this->db->get_where('products');	
+		$data['progects'] = $this->db->get_where('progects', array('id' => $progects_id))->row();		
+		$data['main'] = $this->db->get_where('products', array('progect_id' => $progects_id));
+		$data['progects_id'] = $progects_id;
+		$data['zayavok'] = $this->db->get_where('zayavki', array('progect_id' => $progects_id));
+		$this->load->view('progect_zayavki', $data);
+	}
 
 // пользователи
 	public function users() {

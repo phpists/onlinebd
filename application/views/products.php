@@ -98,7 +98,7 @@ $(document).ready(function(){
 						</table>
 
 						<button class="btn btn-success" type="button" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i> Добавить товар</button>
-						<a href="" class="btn btn-danger"><i class="glyphicon glyphicon-plus"></i> Добавить товар</a>
+						<a href="<? echo site_url("main/progect_zayavki/".$progects_id) ?>" class="btn btn-danger"><span class="badge"><? echo count($zayavok->result()) ?></span> Заявок</a>
 
 
 

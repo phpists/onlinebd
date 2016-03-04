@@ -220,11 +220,15 @@ class Ajax extends CI_Controller {
 		$this->db->update('zayavki_rashod', array('cnt' => $this->input->post('cnt')));
 	}	
 
+	public function change_status_rashod() {
+		$this->db->where('id', $this->input->post('id'));
+		$this->db->update('zayavki', array('status' => $this->input->post('status')));
+	}
+	
 	public function change_status_prihod() {
 		$this->db->where('id', $this->input->post('id'));
 		$this->db->update('zayavki', array('status' => $this->input->post('status')));
 	}
-
 
 
 
