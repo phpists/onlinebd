@@ -188,12 +188,12 @@ class Main extends CI_Controller {
 		redirect(site_url("main/products/".$progect_id));
 	}
 
+// заявки проекта
 	public function progect_zayavki($progects_id) {
-		//$data['progects'] = $this->db->get_where('products');	
 		$data['progects'] = $this->db->get_where('progects', array('id' => $progects_id))->row();		
-		$data['main'] = $this->db->get_where('products', array('progect_id' => $progects_id));
-		$data['progects_id'] = $progects_id;
-		$data['zayavok'] = $this->db->get_where('zayavki', array('progect_id' => $progects_id));
+		$data['zayavki'] = $this->db->get_where('zayavki', array('progect_id' => $progects_id));
+		$this->load->model('Main_model');
+		// $this->Main_model->zayavki_prihod(1);
 		$this->load->view('progect_zayavki', $data);
 	}
 
@@ -269,7 +269,7 @@ class Main extends CI_Controller {
 		if($zayavka->type == 1) {	// приход
 			$data['title'] = "Изменить заявку на приход №".$id;
 			$this->db->select('zayavki_prihod.id, zayavki_prihod.nazva, zayavki_prihod.kilk, zayavki_prihod.edinica_izm, zayavki_prihod.artikl');		
-			$this->db->where('zayavki_prihod.zayavka_id', $id);		
+			$this->db->where('zayavki_prihod.zayavka_id', $id);
 			$data['products'] = $this->db->get('zayavki_prihod');
 			$this->load->view('edit_zayavka_prihod', $data);
 		}

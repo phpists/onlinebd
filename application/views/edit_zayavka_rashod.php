@@ -39,7 +39,7 @@ $(document).ready(function(){
 	$('.del_tmc').click(function() {
 		if(confirm('Удалить этот ТМЦ?')) {
 			id = $(this).data('id');
-			$.get("/ajax/del_tmc/"+id);
+			$.get("/ajax/del_tmc_rashod/"+id);
 			$(this).parent().parent().parent().fadeOut('slow');
 		}
 		return false;
@@ -69,16 +69,18 @@ $(document).ready(function(){
 		if(dis==0) {
 			$(this).attr('disabled', 'disabled');
 			dis = 1;
+			//$('[name=status]').html('<option value="0" disabled>Отгружено</option>');
 			$('.progress .progress-bar').progressbar({display_text: 'fill'});
 			$("[name=status]").val('0');
 			$.ajax({
 				type: "POST",
 				url: "/ajax/do_rashod",
-				data: { "id": "<? echo $main->id ?>", "progect_id": "<? echo $main->progect_id ?>" },
+				data: { "id": "<? echo $main->id ?>" },
 				dataType: "html",
 				success: function(msg){
-					alert(msg);
+					//alert(msg);
 					$('#mess_error').delay(1000).show("slow");
+					setTimeout(function () { location.reload(); }, 3000);
 				}
 			});
 		}
@@ -105,7 +107,7 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">Дата отгрузки / время отгрузки:</label>  
 	  <div class="col-md-4">
-	  <input name="date_otgruzki" class="form-control input-md datepicker" type="text" value="<? echo @$main->nazva ?>">
+	  <input name="date_otgruzki" class="form-control input-md datepicker" type="text" value="<? echo @$main->date_otgruzki ?>">
 	  </div>
 	</div>	
 
@@ -162,15 +164,18 @@ $(document).ready(function(){
 	  <label class="col-md-4 control-label">Статус:</label>  
 	  <div class="col-md-4">
 		<select name="status" class="form-control">
+		<? if($main->status==0) { ?>
+			<option value="0" <? if($main->status==0) echo "selected" ?> disabled>Отгружено</option>
+		<? } else { ?>
 			<option value="1" <? if($main->status==1) echo "selected" ?>>В обработке</option>
 			<option value="2" <? if($main->status==2) echo "selected" ?>>В ожидании</option>
-			<option value="0" <? if($main->status==0) echo "selected" ?>>Отгружено</option>
+			<option value="0" disabled>Отгружено</option>
+		<? } ?>
 		</select>
 	  </div>
 	</div>
 
 
-<? if($main->type == 0) { ?>
 		<table class="table table-bordered" id="example1">
 			<thead>
 				<tr>
@@ -184,8 +189,9 @@ $(document).ready(function(){
 				</tr>
 			</thead>
 			<tbody>
-	<?php 
-	$a=1;
+<?php 
+$a=1;
+if($main->status != 0) { 	
 		foreach ($products->result() as $row) { 
 			echo '
 			<tr>
@@ -203,27 +209,8 @@ $(document).ready(function(){
 				<td><center><a href="#" title="Удалить" class="del_tmc" data-id="'.$row->id.'"><img src="'.base_url().'application/views/img/validno.png"></a></center></td>
 			</tr>';
 		}
-	?>
-
-			</tbody>
-		</table>
-
-
-<? } if($main->type == 1) { ?>
-		<table class="table table-bordered" id="example1">
-			<thead>
-				<tr>
-					<th><center>#</center></th>
-					<th><center>Название</center></th>
-					<th><center>Артикул</center></th>
-					<th><center>Един. измер.</center></th>
-					<th><center>Количество</center></th>
-					<th><center>#</center></th>
-				</tr>
-			</thead>
-			<tbody>
-	<?php 
-	$a=1;
+}
+if($main->status == 0) { 
 		foreach ($products->result() as $row) { 
 			echo '
 			<tr>
@@ -232,14 +219,15 @@ $(document).ready(function(){
 				<td><center>'.$row->artikl.'</center></td>
 				<td><center>'.$row->edinica_izm.'</center></td>
 				<td><center>'.$row->kilk.'</center></td>
-				<td><center><a href="#" title="Удалить" class="del_tmc" data-id="'.$row->id.'"><img src="'.base_url().'application/views/img/validno.png"></a></center></td>
+				<td><center>'.$row->cnt.'</center></td>
+				<td><center><img src="'.base_url().'application/views/img/validyes.png"></center></td>
 			</tr>';
 		}
-	?>
+}
+?>
 
 			</tbody>
 		</table>
-<? } ?>
 
 
 <input type="hidden" name="id" value="<? echo $main->id ?>">
@@ -254,10 +242,15 @@ $(document).ready(function(){
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="button1id"> </label>
 			  <div class="col-md-5">
+			<? if($main->status==0) { ?>
+				<a href="/main/zayavki" class="btn btn-danger">Вернутся к списку заявок</a>
+				<a href="/php_excel/export.php?id=<? echo $main->id ?>&type=0" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a>
+			<? } else { ?>
 				<a href="#" class="btn btn-success" id="create"><i class="glyphicon glyphicon-ok"></i> Сохранить</a>
 				<a href="/main/zayavki" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Отмена</a>		
 				<a href="/php_excel/export.php?id=<? echo $main->id ?>&type=0" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a>
 				<a href="#" class="btn btn-warning" id="otgruzit"><i class="glyphicon glyphicon-refresh"></i> Отгрузить</a>	
+			<? } ?>
 			  </div>
 			</div>	
 		</div>
@@ -266,18 +259,30 @@ $(document).ready(function(){
 
 
 	<div class="col-md-12">
+<? if($main->status!=0) { ?>
 		<div class="row" style="padding-top:10px;">
 			<div class="progress progress-striped">
 				<div class="progress-bar progress-bar-success six-sec-ease-in-out" role="progressbar" data-transitiongoal="100"></div>
 			</div>
 		</div>
-	</div>
 
-	<div class="col-md-12">
-		<div class="row" style="padding-top:10px; display:none;" id="mess_error">
+		<div class="row" style="display:none;" id="mess_error">
 			<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>ТМЦ отгружен, заявка принята!</div>
 		</div>
+<? } if($main->status==0) { ?>
+		<div class="row" style="padding-top:10px;">
+			<div class="progress progress-striped">
+				<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" style="width: 100%;">100%</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>ТМЦ отгружен, заявка принята!</div>
+		</div>
+<? } ?>
 	</div>
+
+
 
 
 

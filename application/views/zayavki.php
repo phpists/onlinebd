@@ -68,7 +68,7 @@ $(document).ready(function(){
 								if($row->status==0) $status = "Отгружено";
 								echo '
 										<tr>
-											<td><center>'.$a++.'</center></td>
+											<td><center>'.anchor("main/zayavka/".$row->id, 'Заявка №'.$row->id).'</center></td>
 											<td>'.anchor("main/zayavka/".$row->id, $row->nazva_progect).'</td>
 											<td><center>'.$row->date_otgruzki.'</center></td>
 											<td><center>'.$row->fio.'</center></td>
@@ -126,7 +126,7 @@ $(document).ready(function(){
 								if($row->status==0) $status = "Принято"; //"Отгружено";
 								echo '
 										<tr>
-											<td><center>'.$a++.'</center></td>
+											<td><center>'.anchor("main/zayavka/".$row->id, 'Заявка №'.$row->id).'</center></td>
 											<td>'.anchor("main/zayavka/".$row->id, $row->nazva_progect).'</td>
 											<td><center>'.$row->date_otgruzki.'</center></td>
 											<td><center>'.$row->fio.'</center></td>

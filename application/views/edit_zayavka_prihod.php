@@ -39,7 +39,7 @@ $(document).ready(function(){
 	$('.del_tmc').click(function() {
 		if(confirm('Удалить этот ТМЦ?')) {
 			id = $(this).data('id');
-			$.get("/ajax/del_tmc/"+id);
+			$.get("/ajax/del_tmc_prihod/"+id);
 			$(this).parent().parent().parent().fadeOut('slow');
 		}
 		return false;
@@ -59,6 +59,7 @@ $(document).ready(function(){
 				dataType: "html",
 				success: function(msg){
 					$('#mess_error').delay(1000).show("slow");
+					setTimeout(function () { location.reload(); }, 3000);
 				}
 			});
 		}
@@ -141,9 +142,9 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">Статус:</label>  
 	  <div class="col-md-4">
-		<select name="status" class="form-control" readonly>
-			<option value="1" <? if($main->status==1) echo "selected" ?>>В обработке</option>
-			<option value="0" <? if($main->status==0) echo "selected" ?>>Прийнято</option>
+		<select name="status" class="form-control">
+			<option value="1" <? if($main->status==1) echo "selected" ?> disabled>В обработке</option>
+			<option value="0" <? if($main->status==0) echo "selected" ?> disabled>Прийнято</option>
 		</select>
 	  </div>
 	</div>
@@ -192,10 +193,13 @@ $(document).ready(function(){
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="button1id"> </label>
 			  <div class="col-md-5">
+			<? if($main->status==0) { ?>	
+				<a href="/main/zayavki" class="btn btn-danger">Вернутся к списку заявок</a>
+				<a href="/php_excel/export.php?id=<? echo $main->id ?>&type=1" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a>
+			<? } else { ?>
 				<a href="#" class="btn btn-success" id="create"><i class="glyphicon glyphicon-ok"></i> Сохранить</a>
 				<a href="/main/zayavki" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Отмена</a>		
 				<a href="/php_excel/export.php?id=<? echo $main->id ?>&type=1" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a>
-				<? if($main->status==1) { ?>
 				<a href="#" class="btn btn-warning" id="otgruzit"><i class="glyphicon glyphicon-refresh"></i> Прийнять</a>	
 				<? } ?>
 			  </div>
@@ -203,19 +207,32 @@ $(document).ready(function(){
 		</div>
 	</div>
 
+
+
 	<div class="col-md-12">
+<? if($main->status!=0) { ?>
 		<div class="row" style="padding-top:10px;">
 			<div class="progress progress-striped">
 				<div class="progress-bar progress-bar-success six-sec-ease-in-out" role="progressbar" data-transitiongoal="100"></div>
 			</div>
 		</div>
+
+		<div class="row" style="display:none;" id="mess_error">
+			<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>ТМЦ отгружен, заявка принята!</div>
+		</div>
+<? } if($main->status==0) { ?>
+		<div class="row" style="padding-top:10px;">
+			<div class="progress progress-striped">
+				<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" style="width: 100%;">100%</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>ТМЦ отгружен, заявка принята!</div>
+		</div>
+<? } ?>
 	</div>
 
-	<div class="col-md-12">
-		<div class="row" style="padding-top:10px; display:none;" id="mess_error">
-			<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>ТМЦ загружен, заявка принята!</div>
-		</div>
-	</div>
 							
 
 				</div>

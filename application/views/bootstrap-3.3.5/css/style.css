@@ -1,3 +1,17 @@
 .container-fluid.my_container{
 	margin-top: 55px;
 }
+.panel-heading.posRel.history_panel{
+border: 1px solid #ccc;
+background-color: #f5f5f5;
+margin-bottom: 3px;
+
+}
+.history_candidate.comentators_block{
+	    border: 1px solid #ccc;
+	    border-top: none;
+	    padding: 10px;
+}
+.filterGroupTitle.collapsed{
+	color: #5e5e5e;
+}

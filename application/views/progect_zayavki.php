@@ -65,117 +65,31 @@ $(document).ready(function(){
 	
 	
 
-
+<?php 
+$a=1;
+foreach ($zayavki->result() as $row) { ?>
 							<br>
-							<a class="filterGroupTitle collapsed" data-toggle="collapse" data-parent="#filters" href="#description" aria-expanded="false">
+							<a class="filterGroupTitle collapsed" data-toggle="collapse" data-parent="#filters" href="#description<? echo $row->id ?>" aria-expanded="false">
 								<div class="panel-heading posRel history_panel">
 									<h3 class="panel-title"><span class="glyphicon glyphicon-chevron-down downAccordion"></span>
-										История <span class="badge"> 15</span>
-									</h3>                             
-								</div>
-							</a>							
-							<a class="filterGroupTitle collapsed" data-toggle="collapse" data-parent="#filters" href="#description" aria-expanded="false">
-								<div class="panel-heading posRel history_panel">
-									<h3 class="panel-title"><span class="glyphicon glyphicon-chevron-down downAccordion"></span>
-										История <span class="badge"> 15</span>
-									</h3>                             
+										Заявка № <? echo $row->id; echo ' - '.(($row->type==1)?'Приход':'Расход').' ('.date_convert($row->date_create).')'; ?> 
+									</h3>                         
 								</div>
 							</a>
-							<div id="description" class="panel-collapse collapse" aria-expanded="true">
+							<div id="description<? echo $row->id ?>" class="panel-collapse collapse" aria-expanded="true">
 								<div class="history_candidate comentators_block">
-									<table class="table">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>Действие</th>
-												<th>Время</th>
-											</tr>
-										</thead>
-										<tbody>
-										
-											<tr>
-												<td>1</td>
-												<td>Пользователь Ярослав отредактировал кандидата Ivan Chernov</td>
-												<td>2016-02-18 16:53:15</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Кандидат определен на вакансию - Mid to Sr.</td>
-												<td>2016-02-18 21:23:15</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Кандидат определен на вакансию - Sr.</td>
-												<td>2016-02-18 21:23:15</td>
-											</tr>
-											<tr>
-												<td>4</td>
-												<td>Кандидат определен на вакансию - Mid to Sr.</td>
-												<td>2016-02-18 21:23:24</td>
-											</tr>
-											<tr>
-												<td>5</td>
-												<td>Кандидат определен на вакансию - Sr.</td>
-												<td>2016-02-18 21:23:24</td>
-											</tr>
-											<tr>
-												<td>6</td>
-												<td>Кандидат определен на вакансию - Mid to Sr.</td>
-												<td>2016-02-18 21:23:24</td>
-											</tr>
-											<tr>
-												<td>7</td>
-												<td>Кандидат определен на вакансию - Sr.</td>
-												<td>2016-02-18 21:23:24</td>
-											</tr>
-											<tr>
-												<td>8</td>
-												<td>Кандидат определен на вакансию - Mid to Sr.</td>
-												<td>2016-02-18 21:23:24</td>
-											</tr>
-											<tr>
-												<td>9</td>
-												<td>Кандидат определен на вакансию - Sr.</td>
-												<td>2016-02-18 21:23:24</td>
-											</tr>
-											<tr>
-												<td>10</td>
-												<td>Кандидат определен на вакансию - Mid to Sr.</td>
-												<td>2016-02-18 21:23:24</td>
-											</tr>
-											<tr>
-												<td>11</td>
-												<td>Кандидат определен на вакансию - Sr.</td>
-												<td>2016-02-18 21:23:24</td>
-											</tr>
-											<tr>
-												<td>12</td>
-												<td>Пользователь Ярослав отредактировал кандидата Ivan Chernov</td>
-												<td>2016-02-19 13:28:26</td>
-											</tr>
-											<tr>
-												<td>13</td>
-												<td>Пользователь Ярослав отредактировал кандидата Ivan Chernov</td>
-												<td>2016-02-19 13:28:45</td>
-											</tr>
-											<tr>
-												<td>14</td>
-												<td>Кандидат определен на вакансию - Sr.</td>
-												<td>2016-02-19 13:43:16</td>
-											</tr>
-											<tr>
-												<td>15</td>
-												<td>Кандидат определен на вакансию - Mid to Sr.</td>
-												<td>2016-02-25 13:53:47</td>
-											</tr>										</tbody>
-									</table>
+									<a href="/main/zayavka/<? echo $row->id ?>" class="btn btn-danger">Перейти</a>
+<? 
+if($row->type==1) {
+	$this->Main_model->zayavki_prihod($row->id);
+}
+if($row->type==0) {
+	$this->Main_model->zayavki_rashod($row->id);
+}
+?>
 								</div>
 							</div>
-						</div>
-					</div>
-
-
-
+<? } ?>							
 
 
 

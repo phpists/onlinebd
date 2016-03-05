@@ -5,6 +5,7 @@ $(document).ready(function(){
 	$('.detail').click(function(){
 		$('#edit_progect').attr('href', '/main/edit_progect/'+$(this).attr("progect_id"));
 		$('#products').attr('href', '/main/products/'+$(this).attr("progect_id"));
+		$('#zayavki').attr('href', '/main/progect_zayavki/'+$(this).attr("progect_id"));
 		$.ajax({
 			type: "POST",
 			url: "/ajax/ajax_get_progect_detail",
@@ -101,6 +102,7 @@ $(document).ready(function(){
 			<div class="modal-footer">
 				<a href="#" class="btn btn-warning" id="edit_progect"><i class="glyphicon glyphicon-pencil"></i> Изменить</a>
 				<a href="#" class="btn btn-primary" id="products"><i class="glyphicon glyphicon-file"></i> Товар</a>
+				<a href="#" class="btn btn-danger" id="zayavki">Заявки</a>
 				<a href="#" class="btn btn-default" data-dismiss="modal">Закрыть</a>
 			</div>
 		</div>

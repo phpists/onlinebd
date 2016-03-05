@@ -5,11 +5,6 @@ $DB = new DB_CLASS();
 include_once 'Classes/PHPExcel/IOFactory.php';
 
 $id = $_GET['id'];
-$products = $DB->getRows('SELECT `zayavki_products`.`id`, `zayavki_products`.`product_id`, `zayavki_products`.`cnt`, `products`.`nazva`, `products`.`artikl`, `products`.`edinica_izm`, `products`.`kilk`
-FROM `zayavki_products`
-LEFT JOIN `products` ON `zayavki_products`.`product_id` = `products`.`id`
-WHERE `zayavki_products`.`zayavka_id` = '.$id);
-
 
 $zayavka_res = $DB->getRows('SELECT CONCAT(companies.contragent, " ",companies.nazva) AS nazva, companies.nomer_dogovora, companies.date_c, zayavki.fio, zayavki.date_otgruzki, zayavki.comment, CONCAT(companies.id, "-",progects.id, "-", zayavki.id) AS nomer
 FROM zayavki LEFT JOIN progects ON zayavki.progect_id = progects.id LEFT JOIN companies ON progects.company_id = companies.id WHERE zayavki.id = '.$id);
@@ -19,6 +14,11 @@ $zayavka = $zayavka_res[0];
 
 
 if($_GET['type']==0) {
+	$products = $DB->getRows('SELECT `zayavki_rashod`.`id`, `zayavki_rashod`.`product_id`, `zayavki_rashod`.`cnt`, `products`.`nazva`, `products`.`artikl`, `products`.`edinica_izm`, `products`.`kilk`
+	FROM `zayavki_rashod`
+	LEFT JOIN `products` ON `zayavki_rashod`.`product_id` = `products`.`id`
+	WHERE `zayavki_rashod`.`zayavka_id` = '.$id);
+
 	$objPHPExcel = PHPExcel_IOFactory::load("otgruzka.xls");
 	$objPHPExcel->setActiveSheetIndex(0);
 	$aSheet = $objPHPExcel->getActiveSheet();
@@ -44,6 +44,10 @@ if($_GET['type']==0) {
 }
 
 if($_GET['type']==1) {
+	$products = $DB->getRows('SELECT zayavki_prihod.id, zayavki_prihod.nazva, zayavki_prihod.kilk, zayavki_prihod.edinica_izm, zayavki_prihod.artikl
+	FROM `zayavki_prihod`
+	WHERE `zayavki_prihod`.`zayavka_id` = '.$id);
+
 	$objPHPExcel = PHPExcel_IOFactory::load("priem.xls");
 	$objPHPExcel->setActiveSheetIndex(0);
 	$aSheet = $objPHPExcel->getActiveSheet();

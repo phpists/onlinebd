@@ -89,24 +89,19 @@ class Ajax extends CI_Controller {
 	}
 
 	public function do_rashod() {
-		$zayavka_id = 2;
+		$zayavka_id = $this->input->post('id');
 		$zayavki_rashod = $this->db->get_where('zayavki_rashod', array('zayavka_id' => $zayavka_id));
 		foreach ($zayavki_rashod->result() as $row) {
 			//echo $row->cnt;
 			$this->db->query("UPDATE products SET kilk=kilk-".$row->cnt." WHERE id=".$row->product_id);
 		}
-
-		$this->db->where('id', $zayavka_id);
-		$this->db->update('zayavki', array('status' => 0));
-
+		// апдейт статуса заявки
+		$this->db->where('id', $zayavka_id)->update('zayavki', array('status' => 0)); 
 	}
 
 
 	function update_zayavka() {
 		$id=$this->input->post('id');
-		$product=$this->input->post('product');
-		$count=$this->input->post('count');
-
 		//$nazva_progect = $this->db->get_where('progects', array('id' => $this->input->post('progect_id')))->row('nazva');
 		$data = array(
 			'user_id' => $this->session->userdata('user_id'),
@@ -120,6 +115,9 @@ class Ajax extends CI_Controller {
 			//'date_create' => date("Y-m-d"),
 			//'status' => $this->input->post('status'),
 		);
+		if($this->input->post('status') == 1) $data['status'] = 1;
+		if($this->input->post('status') == 2) $data['status'] = 2;
+
 		$this->db->where('id', $id);
 		$this->db->update('zayavki', $data); 
 	}
@@ -201,18 +199,19 @@ class Ajax extends CI_Controller {
 				)
 			);
 		}
+		// апдейт статуса заявки
 		$this->db->where('id', $zayavka_id)->update('zayavki', array('status' => 0)); 
 	}	
 
 
 
 
-
-
-
-
-	public function del_tmc($id) {
+	public function del_tmc_rashod($id) {
 		$this->db->delete('zayavki_rashod', array('id' => $id));
+	}	
+
+	public function del_tmc_prihod($id) {
+		$this->db->delete('zayavki_prihod', array('id' => $id));
 	}	
 
 	public function upd_cnt_rashod() {
