@@ -299,6 +299,30 @@ class Main extends CI_Controller {
 	}
 
 
+
+	public function generate_nomer() {
+		$tpl = "00/000/000"; // № клиента/№ проекта/№ ТМЦ
+
+		$id_user = 4;
+		$id_progect = 7;
+		$id_products = 13456344967;
+
+		if(strlen($id_user) == 1) $id_user = '0'.$id_user;
+		if(strlen($id_progect) == 1) $id_progect = '00'.$id_progect;
+		if(strlen($id_progect) == 2) $id_progect = '0'.$id_progect;
+		if(strlen($id_products) == 1) $id_products = '00'.$id_products;
+		if(strlen($id_products) == 2) $id_products = '0'.$id_products;
+		if(strlen($id_products) >= 4) $id_products = substr($id_products, -4);
+
+		$tpl = $id_user.'-'.$id_progect.'-'.$id_products;
+
+		echo $tpl;
+	}
+
+
+
+
+
 /*	public function test() {
 		if($this->input->post('nazva')) {
 			$nazva=$this->input->post('nazva');

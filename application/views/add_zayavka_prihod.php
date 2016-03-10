@@ -87,7 +87,7 @@ $(document).ready(function(){
 
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 control-label">ФИО кто забирает:</label>  
+	  <label class="col-md-4 control-label">ФИО кто привезет:</label>  
 	  <div class="col-md-4">
 	  <input name="fio" class="form-control input-md" type="text">
 	  </div>
