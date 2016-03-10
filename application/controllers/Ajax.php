@@ -161,24 +161,28 @@ class Ajax extends CI_Controller {
 		$this->db->insert('zayavki', $data);
 		$return_z_id = $this->db->insert_id();
 
+		$max_id = $this->db->select_max("id")->get("zayavki_prihod")->row("id");
+		if(!$max_id) { $max_id=1; } else { $max_id++; }
+		$artikl = $this->generate_nomer($progect_id, $max_id);
+
 		// товар (zayavki_prihod)
-		$artikl=$this->input->post('artikl');
+		//$artikl=$this->input->post('artikl');
 		$edinica_izm=$this->input->post('edinica_izm');
 		$kilk=$this->input->post('kilk');
+		$opus=$this->input->post('opus');
 		foreach ($product as $k=>$value) {
-			$data = array(
+			$data_p = array(
 				'zayavka_id' => $return_z_id,
 				'nazva' => $value,
 				'kilk' => $kilk[$k],
 				'edinica_izm' => $edinica_izm[$k],
-				'opus' => 'нет',
-				'artikl' => $artikl[$k]
+				'opus' => $opus[$k],
+				'artikl' => $this->generate_nomer($progect_id, $max_id)
 			);
-			$this->db->insert('zayavki_prihod', $data);
-			//$return_p_id = $this->db->insert_id();
-		// товар zayavki_rashod
-			//$this->db->insert('zayavki_rashod', array('zayavka_id'=>$return_z_id, 'product_id'=>$return_p_id, 'cnt'=>$kilk[$k]));
+			$this->db->insert('zayavki_prihod', $data_p);
+			$max_id = $this->db->insert_id()+1;
 		}
+		//print_r($data_p);
 	}
 
 	public function do_prihod() {
@@ -232,7 +236,26 @@ class Ajax extends CI_Controller {
 
 
 
+	public function generate_nomer($id_progect, $id_products) {
+		//$tpl = "00-000-000"; // № клиента-№ проекта-№ ТМЦ
+		// $id_user = 4;
+		// $id_progect = 7;
+		// $id_products = 1345;
+		$id_user = $this->session->userdata('user_id');
+		//$id_progect = 7;
+		//$id_products = 13456344967;
 
+		if(strlen($id_user) == 1) $id_user = '0'.$id_user;
+		if(strlen($id_progect) == 1) $id_progect = '00'.$id_progect;
+		if(strlen($id_progect) == 2) $id_progect = '0'.$id_progect;
+		if(strlen($id_products) == 1) $id_products = '00'.$id_products;
+		if(strlen($id_products) == 2) $id_products = '0'.$id_products;
+		if(strlen($id_products) >= 4) $id_products = substr($id_products, -4);
+
+		$tpl = $id_user.'-'.$id_progect.'-'.$id_products;
+
+		return $tpl;
+	}
 
 
 

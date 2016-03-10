@@ -26,7 +26,8 @@ $(document).ready(function(){
 			last_row.css('border-color', '#d9534f');
 		} else {
 			i++;
-			$("#example1 > tbody").append('<tr><td><center>'+i+'</center></td><td><input class="form-control" type="text" name="nazva[]"></td><td><input class="form-control" type="text" name="artikl[]"></td><td><select name="edinica_izm[]" class="form-control"><option value="упаковка">упаковка</option><option value="шт">шт</option><option value="ед">ед.</option><option value="коробка">коробка</option><option value="паллет">паллет</option></select></td><td><input class="form-control" type="number" min="1" value="1" name="kilk[]"></td><td><center><a href="#" class="del_item"><img src="<? echo base_url() ?>application/views/img/validno.png"></a></center></td></tr>');
+			//$("#example1 > tbody").append('<tr><td><center>'+i+'</center></td><td><input class="form-control" type="text" name="nazva[]"></td><td><input class="form-control" type="text" name="artikl[]"></td><td><select name="edinica_izm[]" class="form-control"><option value="упаковка">упаковка</option><option value="шт">шт</option><option value="ед">ед.</option><option value="коробка">коробка</option><option value="паллет">паллет</option></select></td><td><input class="form-control" type="number" min="1" value="1" name="kilk[]"></td><td><center><a href="#" class="del_item"><img src="<? echo base_url() ?>application/views/img/validno.png"></a></center></td></tr>');
+			$("#example1 > tbody").append('<tr><td><center>'+i+'</center></td><td><input class="form-control" type="text" name="nazva[]"></td><td><input class="form-control" type="text" name="opus[]"></td><td><select name="edinica_izm[]" class="form-control"><option value="упаковка">упаковка</option><option value="шт">шт</option><option value="ед">ед.</option><option value="коробка">коробка</option><option value="паллет">паллет</option></select></td><td><input class="form-control" type="number" min="1" value="1" name="kilk[]"></td><td><center><a href="#" class="del_item"><img src="<? echo base_url() ?>application/views/img/validno.png"></a></center></td></tr>');
 		}
 		return false;
 	});
@@ -51,8 +52,9 @@ $(document).ready(function(){
 		if($("[name=progect_id]").val()!='' || $("[name=nazva_progect]").val()!='') {
 			if($("[name=fio]").val()!='') {
 				$.post("/ajax/create_zayavka_prihod", $("#form_add_zayavka").serialize()).done(function(data) {
+					//alert(data);
 					alert("Заявка добавлена!");
-					window.location = "/main/zayavki";
+					//window.location = "/main/zayavki";
 				});
 			} else {
 				$("[name=fio]").css('border-color', '#d9534f');
@@ -148,7 +150,7 @@ $(document).ready(function(){
 			<tr>
 				<th><center>#</center></th>
 				<th><center>Название</center></th>
-				<th><center>Артикул</center></th>
+				<th><center>Описание</center></th>
 				<th><center>Един. измер</center></th>
 				<th><center>Количество</center></th>
 				<th><center>#</center></th>
@@ -158,7 +160,7 @@ $(document).ready(function(){
 			<tr>
 				<td><center>1</center></td>
 				<td><input class="form-control" type="text" name="nazva[]"></td>
-				<td><input class="form-control" type="text" name="artikl[]"></td>
+				<td><input class="form-control" type="text" name="opus[]"></td>
 				<td>
 					<select name="edinica_izm[]" class="form-control">
 						<option value="упаковка">упаковка</option>
