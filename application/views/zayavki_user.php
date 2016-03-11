@@ -1,30 +1,6 @@
 <?php $this->load->view('header'); ?>
 
 
-<script type="text/javascript">
-$(document).ready(function(){
-// зміна статусу
-	$(document).on('click', '.change_status_rashod', function(event){
-		data_id = $(event.target).data("id"); 
-		data_title = $(event.target).data("title"); 
-		data_status = $(event.target).data("status"); 
-		$(this).parent().parent().prev().text(data_title);
-		$.post("/ajax/change_status_rashod", { 'id':data_id, 'status':data_status } );
-		//return false;
-	});
-
-	$(document).on('click', '.change_status_prihod', function(event){
-		data_id = $(event.target).data("id"); 
-		data_title = $(event.target).data("title"); 
-		data_status = $(event.target).data("status"); 
-		$(this).parent().parent().prev().text(data_title);
-		//$.post("/ajax/change_status_prihod", { 'id':data_id, 'status':data_status } );
-		//return false;
-	});
-});
-</script>
-
-
 <div class="container-fluid my_container">
 	<div class="row">
 		<div class="col-md-12 col-sm-12">
@@ -73,27 +49,10 @@ $(document).ready(function(){
 											<td><center>'.$row->date_otgruzki.'</center></td>
 											<td><center>'.$row->fio.'</center></td>
 											<td><center>'.$row->tel.'</center></td>
-											<td><center>
-												<div class="btn-group responsible_vacancy">
-													<button class="btn btn-link dropdown-toggle" data-toggle="dropdown" type="button">'.$status.'</button>
-													<ul class="dropdown-menu">
-														<li><a class="change_status_rashod" data-status="1" data-title="В обработке" data-id="'.$row->id.'" href="#">В обработке</a></li>
-														<li><a class="change_status_rashod" data-status="2" data-title="В ожидании" data-id="'.$row->id.'" href="#">В ожидании</a></li>
-														<li><a class="change_status_rashod1" data-status="0" data-title="Отгружено" data-id="'.$row->id.'" href="#">Отгружено</a></li>
-													</ul>
-												</div>
-											</center></td>
+											<td><center>'.$status.'</center></td>
 											<td><center>
 												<a href="/main/zayavka/'.$row->id.'" class="btn btn-warning btn-sm" title="Изменить"><span class="glyphicon glyphicon-pencil"></span></a>
-												
-												<div class="btn-group responsible_vacancy">
-													<button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" type="button"><span class="glyphicon glyphicon-print"></span></button>
-													<ul class="dropdown-menu">
-														<li><a href="/php_excel/export.php?id='.$row->id.'&type=0">Печать в файл</a></li>
-														<li><a href="#">Печать в браузере</a></li>
-													</ul>
-												</div>
-
+												<a href="/php_excel/export.php?id='.$row->id.'&type=0" class="btn btn-primary btn-sm" title="Печать"><span class="glyphicon glyphicon-print"></span></a>
 												<a href="#" class="btn btn-danger btn-sm" title="Удалить"><span class="glyphicon glyphicon-remove"></span></a>
 											</center></td>
 										</tr>';
@@ -139,26 +98,10 @@ $(document).ready(function(){
 											<td><center>'.$row->date_otgruzki.'</center></td>
 											<td><center>'.$row->fio.'</center></td>
 											<td><center>'.$row->tel.'</center></td>
-											<td><center>
-												<div class="btn-group responsible_vacancy">
-													<button class="btn btn-link dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="true">'.$status.'</button>
-													<ul class="dropdown-menu">
-														<li><a class="change_status_prihod" data-status="1" data-title="В обработке" data-id="'.$row->id.'" href="#">В обработке</a></li>
-														<li><a class="change_status_prihod" data-status="0" data-title="Принято" data-id="'.$row->id.'" href="#">Принято</a></li>
-													</ul>
-												</div>
-											</center></td>
+											<td><center>'.$status.'</center></td>
 											<td><center>
 												<a href="/main/zayavka/'.$row->id.'" class="btn btn-warning btn-sm" title="Изменить"><span class="glyphicon glyphicon-pencil"></span></a>
-												
-												<div class="btn-group responsible_vacancy">
-													<button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" type="button"><span class="glyphicon glyphicon-print"></span></button>
-													<ul class="dropdown-menu">
-														<li><a href="/php_excel/export.php?id='.$row->id.'&type=0">Печать в файл</a></li>
-														<li><a href="#">Печать в браузере</a></li>
-													</ul>
-												</div>
-
+												<a href="/php_excel/export.php?id='.$row->id.'&type=1" class="btn btn-primary btn-sm" title="Печать"><span class="glyphicon glyphicon-print"></span></a>
 												<a href="#" class="btn btn-danger btn-sm" title="Удалить"><span class="glyphicon glyphicon-remove"></span></a>
 											</center></td>
 										</tr>';
