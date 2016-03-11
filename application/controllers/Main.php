@@ -251,9 +251,31 @@ class Main extends CI_Controller {
 
 // заявки (type=0-расход  type=1-приход)
 	public function zayavki() {
-		$data['rashod'] = $this->db->get_where('zayavki', array('type' => 0));	
-		$data['prihod'] = $this->db->get_where('zayavki', array('type' => 1));	
-		$this->load->view('zayavki', $data);
+		if($this->session->userdata('user_role')==1) {
+			$data['rashod'] = $this->db->get_where('zayavki', array('type' => 0));	
+			$data['prihod'] = $this->db->get_where('zayavki', array('type' => 1));	
+			$this->load->view('zayavki', $data);
+		} else {
+			$arr = array();
+			$progects = $this->db->get_where('progects', array('company_id' => $this->session->userdata('user_company_id')));
+			foreach ($progects->result() as $row) {
+				$arr[] = $row->id;
+			}
+
+			if($arr) {
+				$this->db->select('*')->where_in('progect_id', $arr)->where('type', 0);
+			 	$data['rashod'] = $this->db->order_by('id', 'ASC')->get('zayavki');				
+
+			 	$this->db->select('*')->where_in('progect_id', $arr)->where('type', 1);
+			 	$data['prihod'] = $this->db->order_by('id', 'ASC')->get('zayavki');
+
+				$this->load->view('zayavki_user', $data);
+			}
+			$this->output->enable_profiler(TRUE);	// профайлер
+			//print_r($progect_id);
+			// $data['rashod'] = $this->db->get_where('zayavki', array('type' => 0));	
+			// $data['prihod'] = $this->db->get_where('zayavki', array('type' => 1));	
+		}
 	}	
 		
 	public function zayavka($id) {
