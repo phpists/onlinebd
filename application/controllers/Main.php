@@ -46,7 +46,7 @@ class Main extends CI_Controller {
 // проекты
 	public function index() {
 		if($this->session->userdata('user_role') == "1") {
-			$this->db->select('progects.id, progects.nazva, progects.date_create, progects.sroki, (SELECT COUNT(*) FROM `products` WHERE progect_id = progects.id) AS cnt, companies.nazva AS company');		
+			$this->db->select('progects.id, progects.nazva, progects.date_create, progects.sroki, (SELECT COUNT(*) FROM `products` WHERE progect_id = progects.id) AS cnt, (SELECT COUNT(*) FROM `zayavki` WHERE progect_id = progects.id) AS zayavok, companies.nazva AS company');		
 			$this->db->join('companies', 'progects.company_id = companies.id', 'left');
 			$this->db->from('progects');
 		}
@@ -271,7 +271,7 @@ class Main extends CI_Controller {
 
 				$this->load->view('zayavki_user', $data);
 			}
-			$this->output->enable_profiler(TRUE);	// профайлер
+			//$this->output->enable_profiler(TRUE);	// профайлер
 			//print_r($progect_id);
 			// $data['rashod'] = $this->db->get_where('zayavki', array('type' => 0));	
 			// $data['prihod'] = $this->db->get_where('zayavki', array('type' => 1));	
@@ -286,14 +286,22 @@ class Main extends CI_Controller {
 			$this->db->join('products', 'zayavki_rashod.product_id = products.id', 'left');
 			$this->db->where('zayavki_rashod.zayavka_id', $id);
 			$data['products'] = $this->db->get('zayavki_rashod');
-			$this->load->view('edit_zayavka_rashod', $data);
+			if($this->session->userdata('user_role')==1) {
+				$this->load->view('edit_zayavka_rashod', $data);
+			} else {
+				$this->load->view('edit_zayavka_rashod_user', $data);
+			}
 		}
 		if($zayavka->type == 1) {	// приход
 			$data['title'] = "Изменить заявку на приход №".$id;
 			$this->db->select('zayavki_prihod.id, zayavki_prihod.nazva, zayavki_prihod.kilk, zayavki_prihod.edinica_izm, zayavki_prihod.artikl');		
 			$this->db->where('zayavki_prihod.zayavka_id', $id);
 			$data['products'] = $this->db->get('zayavki_prihod');
-			$this->load->view('edit_zayavka_prihod', $data);
+			if($this->session->userdata('user_role')==1) {
+				$this->load->view('edit_zayavka_prihod', $data);
+			} else {
+				$this->load->view('edit_zayavka_prihod_user', $data);
+			}
 		}
 		//$this->output->enable_profiler(TRUE);	// профайлер
 	}

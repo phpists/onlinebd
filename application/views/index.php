@@ -47,7 +47,7 @@ $(document).ready(function(){
 									<th><center>ТМЦ</center></th>
 									<th><center>Дата создания</center></th>
 									<th><center>Сроки</center></th>
-									<!-- <th><center>Статус</center></th> -->
+									<th><center>Заявок</center></th>
 									<th><center>#</center></th>
 								</tr>
 							</thead>
@@ -63,7 +63,7 @@ $(document).ready(function(){
 									<td><center>('.anchor("main/products/".$row->id, $row->cnt).')</center></td>
 									<td><center>'.$row->date_create.'</center></td>
 									<td><center>'.$row->sroki.'</center></td>
-									<!--<td><center></center></td>-->
+									<td><center>'.anchor("main/progect_zayavki/".$row->id, $row->zayavok).'</center></td>
 									<td><center>
 										<a href="'.site_url("main/edit_progect/".$row->id).'"><img src="'.base_url().'application/views/img/pencil.png"></a>&nbsp;&nbsp;&nbsp;
 										<a href="'.site_url("main/edit_progect/".$row->id).'"><img src="'.base_url().'application/views/img/validno.png"></a>

@@ -191,10 +191,12 @@ $(document).ready(function(){
 			<tbody>
 <?php 
 $a=1;
+$error_z = 0;
 if($main->status != 0) { 	
 		foreach ($products->result() as $row) { 
+			if($row->kilk < $row->cnt) { $color='style="background-color:#eea236"'; $error_z = 1; } else { $color='';}
 			echo '
-			<tr>
+			<tr '.$color.'>
 				<td><center>'.$a++.'</center></td>
 				<td>'.$row->nazva.'</td>
 				<td><center>'.$row->artikl.'</center></td>
@@ -224,6 +226,7 @@ if($main->status == 0) {
 			</tr>';
 		}
 }
+
 ?>
 
 			</tbody>
@@ -280,6 +283,16 @@ if($main->status == 0) {
 			<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>ТМЦ отгружен, заявка принята!</div>
 		</div>
 <? } ?>
+
+<? if($error_z == 1) { ?>
+		<div class="row" id="mess_error">
+			<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Остаток ТМЦ меньше указаного в заявке!</div>
+		</div>
+		<script type="text/javascript">
+			$('#otgruzit').hide();
+		</script>
+<? } ?>
+
 	</div>
 
 

@@ -20,14 +20,6 @@ $(document).ready(function(){
 		locale: 'ru'
 	});
 
-	// $(document).on('click', 'input[type="checkbox"]', function(event){
-	// 	if (this.checked) {
-	// 		$(this).parent().parent().parent().css('background-color', '#d9534f');
-	// 	} else {
-	// 		$(this).parent().parent().parent().css('background-color', '#fff');
-	// 	}	
-	// });
-
 	$('#create').click(function(){
 		$.post("/ajax/update_zayavka", $("#form_add_zayavka").serialize()).done(function(data) {
 			alert("Сохранено");
@@ -44,29 +36,6 @@ $(document).ready(function(){
 		}
 		return false;
 	});
-
-	var dis = 0;
-	$('#otgruzit').click(function() {
-		if(dis==0) {
-			$(this).attr('disabled', 'disabled');
-			dis = 1;
-			$('.progress .progress-bar').progressbar({display_text: 'fill'});
-			$("[name=status]").val('0');
-			$.ajax({
-				type: "POST",
-				url: "/ajax/do_prihod",
-				data: { "id": "<? echo $main->id ?>", "progect_id": "<? echo $main->progect_id ?>" },
-				dataType: "html",
-				success: function(msg){
-					$('#mess_error').delay(1000).show("slow");
-					setTimeout(function () { location.reload(); }, 3000);
-				}
-			});
-		}
-		return false;
-	});
-
-
 
 });
 </script>
@@ -140,13 +109,11 @@ $(document).ready(function(){
 
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 control-label">Статус:</label>  
-	  <div class="col-md-4">
-		<select name="status" class="form-control">
-			<option value="1" <? if($main->status==1) echo "selected" ?> disabled>В обработке</option>
-			<option value="0" <? if($main->status==0) echo "selected" ?> disabled>Прийнято</option>
-		</select>
-	  </div>
+	  <label class="col-md-4 control-label">Статус:</label>
+	  <label class="col-md-4" style="margin-top:8px">
+		<? if($main->status==1) echo "В обработке" ?>
+		<? if($main->status==0) echo "Прийнято" ?>
+	  </label>
 	</div>
 
 
@@ -200,7 +167,6 @@ $(document).ready(function(){
 				<a href="#" class="btn btn-success" id="create"><i class="glyphicon glyphicon-ok"></i> Сохранить</a>
 				<a href="/main/zayavki" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Отмена</a>		
 				<a href="/php_excel/export.php?id=<? echo $main->id ?>&type=1" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a>
-				<a href="#" class="btn btn-warning" id="otgruzit"><i class="glyphicon glyphicon-refresh"></i> Прийнять</a>	
 			<? } ?>
 			  </div>
 			</div>	

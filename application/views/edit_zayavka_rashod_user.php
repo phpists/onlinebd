@@ -7,7 +7,7 @@
 <!-- datetimepicker end -->
 <!-- jQuery Masked Input Plugin -->
 <script src="<? echo base_url() ?>application/views/js/jquery.maskedinput.js"></script>
-<!-- bootstrap-progressbar -->
+
 <script type="text/javascript" src="<? echo base_url() ?>application/views/bootstrap-3.3.5/bootstrap-progressbar.min.js"></script>
 
 <script type="text/javascript">
@@ -20,54 +20,49 @@ $(document).ready(function(){
 		locale: 'ru'
 	});
 
-	// $(document).on('click', 'input[type="checkbox"]', function(event){
-	// 	if (this.checked) {
-	// 		$(this).parent().parent().parent().css('background-color', '#d9534f');
-	// 	} else {
-	// 		$(this).parent().parent().parent().css('background-color', '#fff');
-	// 	}	
-	// });
+
+	$(document).on('click', 'input[type="checkbox"]', function(event){
+		if (this.checked) {
+			$(this).parent().parent().parent().css('background-color', '#d9534f');
+		} else {
+			$(this).parent().parent().parent().css('background-color', '#fff');
+		}	
+	});
 
 	$('#create').click(function(){
 		$.post("/ajax/update_zayavka", $("#form_add_zayavka").serialize()).done(function(data) {
 			alert("Сохранено");
 			window.location = "/main/zayavki";
 		});
-
 	});
 
 	$('.del_tmc').click(function() {
 		if(confirm('Удалить этот ТМЦ?')) {
 			id = $(this).data('id');
-			$.get("/ajax/del_tmc_prihod/"+id);
+			$.get("/ajax/del_tmc_rashod/"+id);
 			$(this).parent().parent().parent().fadeOut('slow');
 		}
 		return false;
 	});
 
-	var dis = 0;
-	$('#otgruzit').click(function() {
-		if(dis==0) {
-			$(this).attr('disabled', 'disabled');
-			dis = 1;
-			$('.progress .progress-bar').progressbar({display_text: 'fill'});
-			$("[name=status]").val('0');
-			$.ajax({
-				type: "POST",
-				url: "/ajax/do_prihod",
-				data: { "id": "<? echo $main->id ?>", "progect_id": "<? echo $main->progect_id ?>" },
-				dataType: "html",
-				success: function(msg){
-					$('#mess_error').delay(1000).show("slow");
-					setTimeout(function () { location.reload(); }, 3000);
-				}
-			});
-		}
-		return false;
+	$('.upd_cnt').click(function() {
+		//$(this).parent().parent().parent().parent().prev().children().css('background-color', '#d9534f');
+		//alert($(this).parent().parent().parent().parent().prev().children().text());
+		id = $(this).data('id');
+		new_cnt = $(this).parent().parent().children().val();
+		$.post( "/ajax/upd_cnt_rashod/", { 'id': id, 'cnt': new_cnt } );
+		$(this).css('background-color', '#5cb85c');
 	});
 
 
-
+	$('[name=count_product]').bind('change click keyup', function(){
+		//$(this).parent().parent().parent().prev().css('background-color', '#d9534f');
+		var oststok = parseInt($(this).parent().parent().parent().prev().text());
+		if($(this).val() > oststok)	{
+			$(this).val(oststok);
+		}
+	});
+	
 });
 </script>
 
@@ -86,7 +81,7 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">Дата отгрузки / время отгрузки:</label>  
 	  <div class="col-md-4">
-	  <input name="date_otgruzki" class="form-control input-md datepicker" type="text" value="<? echo $main->date_otgruzki ?>">
+	  <input name="date_otgruzki" class="form-control input-md datepicker" type="text" value="<? echo @$main->date_otgruzki ?>">
 	  </div>
 	</div>	
 
@@ -94,7 +89,7 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">ФИО кто забирает:</label>  
 	  <div class="col-md-4">
-	  <input name="fio" class="form-control input-md" type="text" value="<? echo $main->fio ?>">
+	  <input name="fio" class="form-control input-md" type="text" value="<? echo @$main->fio ?>">
 	  </div>
 	</div>	
 
@@ -102,7 +97,7 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">Номер телефона:</label>  
 	  <div class="col-md-4">
-	  <input name="tel" class="form-control input-md" type="text" value="<? echo $main->tel ?>">
+	  <input name="tel" class="form-control input-md" type="text" value="<? echo @$main->tel ?>">
 	  </div>
 	</div>	
 
@@ -126,7 +121,7 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">Комментарий:</label>
 	  <div class="col-md-4">
-		<textarea rows="3" class="form-control" name="comment"><? echo $main->comment ?></textarea>
+		<textarea rows="3" class="form-control" name="comment"><? echo @$main->comment ?></textarea>
 	  </div>
 	</div>
 
@@ -134,19 +129,18 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">Проект:</label>  
 	  <div class="col-md-4">
-		 <input class="form-control input-md" type="text" value="<? echo $main->nazva_progect ?>" readonly>
+		 <input class="form-control input-md" type="text" value="<? echo @$main->nazva_progect ?>" readonly>
 	  </div>
 	</div>
 
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 control-label">Статус:</label>  
-	  <div class="col-md-4">
-		<select name="status" class="form-control">
-			<option value="1" <? if($main->status==1) echo "selected" ?> disabled>В обработке</option>
-			<option value="0" <? if($main->status==0) echo "selected" ?> disabled>Прийнято</option>
-		</select>
-	  </div>
+	  <label class="col-md-4 control-label">Статус:</label>
+	  <label class="col-md-4" style="margin-top:8px">
+		<? if($main->status==1) echo "В обработке" ?>
+		<? if($main->status==2) echo "В ожидании" ?>
+		<? if($main->status==0) echo "Отгружено" ?>
+	  </label>
 	</div>
 
 
@@ -157,13 +151,15 @@ $(document).ready(function(){
 					<th><center>Название</center></th>
 					<th><center>Артикул</center></th>
 					<th><center>Един. измер.</center></th>
+					<th><center>Остаток</center></th>
 					<th><center>Количество</center></th>
 					<th><center>#</center></th>
 				</tr>
 			</thead>
 			<tbody>
-	<?php 
-	$a=1;
+<?php 
+$a=1;
+if($main->status != 0) { 	
 		foreach ($products->result() as $row) { 
 			echo '
 			<tr>
@@ -172,10 +168,31 @@ $(document).ready(function(){
 				<td><center>'.$row->artikl.'</center></td>
 				<td><center>'.$row->edinica_izm.'</center></td>
 				<td><center>'.$row->kilk.'</center></td>
-				<td><center>'.(($main->status==1)?'<a href="#" title="Удалить" class="del_tmc" data-id="'.$row->id.'"><img src="'.base_url().'application/views/img/validno.png"></a>':'').'</center></td>
+				<td><center>
+					<div class="input-group col-md-4"><input type="number" name="count_product" class="form-control" min="1" max="'.$row->kilk.'" value="'.$row->cnt.'">
+					<span class="input-group-btn">
+						<a class="btn btn-default upd_cnt" data-id="'.$row->id.'"><span class="glyphicon glyphicon-floppy-saved"></span></a>
+					</span></div>
+				</center></td>
+				<td><center><a href="#" title="Удалить" class="del_tmc" data-id="'.$row->id.'"><img src="'.base_url().'application/views/img/validno.png"></a></center></td>
 			</tr>';
 		}
-	?>
+}
+if($main->status == 0) { 
+		foreach ($products->result() as $row) { 
+			echo '
+			<tr>
+				<td><center>'.$a++.'</center></td>
+				<td>'.$row->nazva.'</td>
+				<td><center>'.$row->artikl.'</center></td>
+				<td><center>'.$row->edinica_izm.'</center></td>
+				<td><center>'.$row->kilk.'</center></td>
+				<td><center>'.$row->cnt.'</center></td>
+				<td><center><img src="'.base_url().'application/views/img/validyes.png"></center></td>
+			</tr>';
+		}
+}
+?>
 
 			</tbody>
 		</table>
@@ -193,14 +210,13 @@ $(document).ready(function(){
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="button1id"> </label>
 			  <div class="col-md-5">
-			<? if($main->status==0) { ?>	
+			<? if($main->status==0) { ?>
 				<a href="/main/zayavki" class="btn btn-danger">Вернутся к списку заявок</a>
-				<a href="/php_excel/export.php?id=<? echo $main->id ?>&type=1" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a>
+				<a href="/php_excel/export.php?id=<? echo $main->id ?>&type=0" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a>
 			<? } else { ?>
 				<a href="#" class="btn btn-success" id="create"><i class="glyphicon glyphicon-ok"></i> Сохранить</a>
 				<a href="/main/zayavki" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Отмена</a>		
-				<a href="/php_excel/export.php?id=<? echo $main->id ?>&type=1" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a>
-				<a href="#" class="btn btn-warning" id="otgruzit"><i class="glyphicon glyphicon-refresh"></i> Прийнять</a>	
+				<a href="/php_excel/export.php?id=<? echo $main->id ?>&type=0" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a>
 			<? } ?>
 			  </div>
 			</div>	
@@ -232,6 +248,10 @@ $(document).ready(function(){
 		</div>
 <? } ?>
 	</div>
+
+
+
+
 
 							
 

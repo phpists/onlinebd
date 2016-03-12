@@ -13,14 +13,14 @@ $(document).ready(function(){
 		//return false;
 	});
 
-	$(document).on('click', '.change_status_prihod', function(event){
+	/*$(document).on('click', '.change_status_prihod', function(event){
 		data_id = $(event.target).data("id"); 
 		data_title = $(event.target).data("title"); 
 		data_status = $(event.target).data("status"); 
 		$(this).parent().parent().prev().text(data_title);
 		//$.post("/ajax/change_status_prihod", { 'id':data_id, 'status':data_status } );
 		//return false;
-	});
+	});*/
 });
 </script>
 

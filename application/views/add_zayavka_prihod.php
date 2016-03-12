@@ -54,7 +54,7 @@ $(document).ready(function(){
 				$.post("/ajax/create_zayavka_prihod", $("#form_add_zayavka").serialize()).done(function(data) {
 					//alert(data);
 					alert("Заявка добавлена!");
-					//window.location = "/main/zayavki";
+					window.location = "/main/zayavki";
 				});
 			} else {
 				$("[name=fio]").css('border-color', '#d9534f');

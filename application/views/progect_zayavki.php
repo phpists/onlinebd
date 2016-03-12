@@ -72,7 +72,7 @@ foreach ($zayavki->result() as $row) { ?>
 							<a class="filterGroupTitle collapsed" data-toggle="collapse" data-parent="#filters" href="#description<? echo $row->id ?>" aria-expanded="false">
 								<div class="panel-heading posRel history_panel">
 									<h3 class="panel-title"><span class="glyphicon glyphicon-chevron-down downAccordion"></span>
-										Заявка № <? echo $row->id; echo ' - '.(($row->type==1)?'Приход':'Расход').' ('.date_convert($row->date_create).')'; ?> 
+										Заявка № <? echo $row->id; echo ' - '.(($row->type==1)?'Приход':'Расход').' ('.date_convert($row->date_create).') - <strong>'.(($row->status==1)?'В обработке':'Закрыта').'</strong>'; ?> 
 									</h3>                         
 								</div>
 							</a>
