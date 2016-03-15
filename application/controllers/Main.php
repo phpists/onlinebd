@@ -51,7 +51,7 @@ class Main extends CI_Controller {
 			$this->db->from('progects');
 		}
 		if($this->session->userdata('user_role') == "2") {
-			$this->db->select('progects.id, progects.nazva, progects.date_create, progects.sroki, (SELECT COUNT(*) FROM `products` WHERE progect_id = progects.id) AS cnt, companies.nazva AS company');		
+			$this->db->select('progects.id, progects.nazva, progects.date_create, progects.sroki, (SELECT COUNT(*) FROM `products` WHERE progect_id = progects.id) AS cnt, (SELECT COUNT(*) FROM `zayavki` WHERE progect_id = progects.id) AS zayavok, companies.nazva AS company');		
 			$this->db->join('companies', 'progects.company_id = companies.id', 'left');
 			$this->db->from('progects');	
 			$this->db->where('company_id', $this->session->userdata('user_company_id'));
@@ -330,23 +330,34 @@ class Main extends CI_Controller {
 
 
 
-	public function generate_nomer() {
-		$tpl = "00/000/000"; // № клиента/№ проекта/№ ТМЦ
+	public function print_prihod($id) {
+		$header = $this->db->query('SELECT CONCAT(companies.contragent, " ",companies.nazva) AS nazva, companies.nomer_dogovora, companies.date_c, zayavki.fio, zayavki.date_otgruzki, zayavki.comment, CONCAT(companies.id, "-",progects.id, "-", zayavki.id) AS nomer
+			FROM zayavki LEFT JOIN progects ON zayavki.progect_id = progects.id LEFT JOIN companies ON progects.company_id = companies.id WHERE zayavki.id = '.$id);
+		$data['header'] = $header->row();
 
-		$id_user = 4;
-		$id_progect = 7;
-		$id_products = 13456344967;
+		$query = $this->db->query('SELECT zayavki_prihod.id, zayavki_prihod.nazva, zayavki_prihod.kilk, zayavki_prihod.edinica_izm, zayavki_prihod.artikl
+			FROM zayavki_prihod WHERE zayavki_prihod.zayavka_id = '.$id);
+		$data['main'] = $query;
+		$this->load->view('print_templates/prihod', $data);
 
-		if(strlen($id_user) == 1) $id_user = '0'.$id_user;
-		if(strlen($id_progect) == 1) $id_progect = '00'.$id_progect;
-		if(strlen($id_progect) == 2) $id_progect = '0'.$id_progect;
-		if(strlen($id_products) == 1) $id_products = '00'.$id_products;
-		if(strlen($id_products) == 2) $id_products = '0'.$id_products;
-		if(strlen($id_products) >= 4) $id_products = substr($id_products, -4);
+	}
 
-		$tpl = $id_user.'-'.$id_progect.'-'.$id_products;
+	public function print_rashod($id) {
+		$header = $this->db->query('SELECT CONCAT(companies.contragent, " ",companies.nazva) AS nazva, companies.nomer_dogovora, companies.date_c, zayavki.fio, zayavki.date_otgruzki, zayavki.comment, CONCAT(companies.id, "-",progects.id, "-", zayavki.id) AS nomer
+			FROM zayavki LEFT JOIN progects ON zayavki.progect_id = progects.id LEFT JOIN companies ON progects.company_id = companies.id WHERE zayavki.id = '.$id);
+		$data['header'] = $header->row();
 
-		echo $tpl;
+		$query = $this->db->query('SELECT CONCAT(companies.contragent, " ",companies.nazva) AS nazva, companies.nomer_dogovora, companies.date_c, zayavki.fio, zayavki.date_otgruzki, zayavki.comment, CONCAT(companies.id, "-",progects.id, "-", zayavki.id) AS nomer
+								FROM zayavki LEFT JOIN progects ON zayavki.progect_id = progects.id LEFT JOIN companies ON progects.company_id = companies.id WHERE zayavki.id = '.$id);
+		$data['main'] = $query;
+		$this->load->view('print_templates/rashod', $data);
+
+/*		foreach ($query->result() as $row)
+		{
+			echo $row->nazva;
+			echo $row->fio;
+			echo $row->nomer_dogovora;
+		}*/
 	}
 
 

@@ -170,6 +170,7 @@ $(document).ready(function(){
 					<th><center>Артикул</center></th>
 					<th><center>Един. измер</center></th>
 					<th><center>Остаток</center></th>
+					<th><center>С заявок</center></th>
 					<th><center>Количество</center></th>
 					<th><center><input class="check-all" type="checkbox" /></center></th>
 				</tr>

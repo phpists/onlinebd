@@ -155,7 +155,7 @@ $(document).ready(function(){
 													<button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" type="button"><span class="glyphicon glyphicon-print"></span></button>
 													<ul class="dropdown-menu">
 														<li><a href="/php_excel/export.php?id='.$row->id.'&type=0">Печать в файл</a></li>
-														<li><a href="#">Печать в браузере</a></li>
+														<li><a href="'.site_url("main/print_prihod/".$row->id).'">Печать в браузере</a></li>
 													</ul>
 												</div>
 
