@@ -42,7 +42,7 @@ class Ajax extends CI_Controller {
 				<td><center>'.$row->edinica_izm.'</center></td>
 				<td><center>'.$row->kilk.'</center></td>
 				<td><center>'.$this->ostatok_tmc($row->id).'</center></td>
-				<td><center><input type="number" name="count['.$row->id.']" class="form-control" min="1" max="'.$row->kilk.'" value="1"></center></td>
+				<td><center><input type="number" name="count['.$row->id.']" class="form-control" min="1" max="'.(($this->ostatok_tmc($row->id)>0)?$this->ostatok_tmc($row->id):$row->kilk).'" value="1"></center></td>
 				<td><center><input type="checkbox" name="product[]" value="'.$row->id.'" class="form-control sel_ch"></center></td>
 			</tr>';
 		}
