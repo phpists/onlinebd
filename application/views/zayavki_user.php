@@ -22,7 +22,7 @@
 								<a href="/main/add_zayavka" class="btn btn-success" title="Создать заявку"><i class="glyphicon glyphicon-plus"></i> Создать заявку</a>
 							</div>
 							<br><br>
-
+	<!-- отгрузка -->
 								<table class="table table-bordered" id="example2">
 									<thead>
 										<tr>
@@ -52,7 +52,7 @@
 											<td><center>'.$status.'</center></td>
 											<td><center>
 												<a href="/main/zayavka/'.$row->id.'" class="btn btn-warning btn-sm" title="Изменить"><span class="glyphicon glyphicon-pencil"></span></a>
-												<a href="/php_excel/export.php?id='.$row->id.'&type=0" class="btn btn-primary btn-sm" title="Печать"><span class="glyphicon glyphicon-print"></span></a>
+												<a href="'.site_url("main/print_rashod/".$row->id).'" class="btn btn-primary btn-sm" title="Печать"><span class="glyphicon glyphicon-print"></span></a>
 												<a href="#" class="btn btn-danger btn-sm" title="Удалить"><span class="glyphicon glyphicon-remove"></span></a>
 											</center></td>
 										</tr>';
@@ -71,7 +71,7 @@
 								<a href="/main/add_zayavka_prihod" class="btn btn-success" title="Создать заявку"><i class="glyphicon glyphicon-plus"></i> Создать заявку</a>
 							</div>
 							<br><br>
-
+	<!-- приход -->
 								<table class="table table-bordered">
 									<thead>
 										<tr>
@@ -101,7 +101,7 @@
 											<td><center>'.$status.'</center></td>
 											<td><center>
 												<a href="/main/zayavka/'.$row->id.'" class="btn btn-warning btn-sm" title="Изменить"><span class="glyphicon glyphicon-pencil"></span></a>
-												<a href="/php_excel/export.php?id='.$row->id.'&type=1" class="btn btn-primary btn-sm" title="Печать"><span class="glyphicon glyphicon-print"></span></a>
+												<a href="'.site_url("main/print_prihod/".$row->id).'" class="btn btn-primary btn-sm" title="Печать"><span class="glyphicon glyphicon-print"></span></a>
 												<a href="#" class="btn btn-danger btn-sm" title="Удалить"><span class="glyphicon glyphicon-remove"></span></a>
 											</center></td>
 										</tr>';

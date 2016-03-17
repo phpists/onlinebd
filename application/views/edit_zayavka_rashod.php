@@ -46,8 +46,6 @@ $(document).ready(function(){
 	});
 
 	$('.upd_cnt').click(function() {
-		//$(this).parent().parent().parent().parent().prev().children().css('background-color', '#d9534f');
-		//alert($(this).parent().parent().parent().parent().prev().children().text());
 		id = $(this).data('id');
 		new_cnt = $(this).parent().parent().children().val();
 		$.post( "/ajax/upd_cnt_rashod/", { 'id': id, 'cnt': new_cnt } );
@@ -56,7 +54,6 @@ $(document).ready(function(){
 
 
 	$('[name=count_product]').bind('change click keyup', function(){
-		//$(this).parent().parent().parent().prev().css('background-color', '#d9534f');
 		var oststok = parseInt($(this).parent().parent().parent().prev().text());
 		if($(this).val() > oststok)	{
 			$(this).val(oststok);

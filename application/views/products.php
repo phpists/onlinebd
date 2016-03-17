@@ -96,8 +96,9 @@ $(document).ready(function(){
 
 							</tbody>
 						</table>
-
-						<button class="btn btn-success" type="button" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i> Добавить товар</button>
+<? if($this->session->userdata('user_role')==1) { ?>
+						<!-- <button class="btn btn-success" type="button" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i> Добавить товар</button> -->
+<? } ?>
 						<a href="<? echo site_url("main/progect_zayavki/".$progects_id) ?>" class="btn btn-danger">Заявок <span class="badge"><? echo count($zayavok->result()) ?></span></a>
 
 

@@ -46,8 +46,6 @@ $(document).ready(function(){
 	});
 
 	$('.upd_cnt').click(function() {
-		//$(this).parent().parent().parent().parent().prev().children().css('background-color', '#d9534f');
-		//alert($(this).parent().parent().parent().parent().prev().children().text());
 		id = $(this).data('id');
 		new_cnt = $(this).parent().parent().children().val();
 		$.post( "/ajax/upd_cnt_rashod/", { 'id': id, 'cnt': new_cnt } );
@@ -56,7 +54,6 @@ $(document).ready(function(){
 
 
 	$('[name=count_product]').bind('change click keyup', function(){
-		//$(this).parent().parent().parent().prev().css('background-color', '#d9534f');
 		var oststok = parseInt($(this).parent().parent().parent().prev().text());
 		if($(this).val() > oststok)	{
 			$(this).val(oststok);
@@ -65,6 +62,14 @@ $(document).ready(function(){
 	
 });
 </script>
+
+<?
+if($main->status == 0 or $main->status == 2) {
+	$status_input = 'readonly';
+} else {
+	$status_input = '';
+}
+?>
 
 <div class="container-fluid" style="margin-top: 55px;">
 	<div class="row">
@@ -81,7 +86,7 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">Дата отгрузки / время отгрузки:</label>  
 	  <div class="col-md-4">
-	  <input name="date_otgruzki" class="form-control input-md datepicker" type="text" value="<? echo @$main->date_otgruzki ?>">
+	  <input name="date_otgruzki" class="form-control input-md datepicker" type="text" value="<? echo @$main->date_otgruzki ?>" <? echo $status_input ?>>
 	  </div>
 	</div>	
 
@@ -89,7 +94,7 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">ФИО кто забирает:</label>  
 	  <div class="col-md-4">
-	  <input name="fio" class="form-control input-md" type="text" value="<? echo @$main->fio ?>">
+	  <input name="fio" class="form-control input-md" type="text" value="<? echo @$main->fio ?>" <? echo $status_input ?>>
 	  </div>
 	</div>	
 
@@ -97,7 +102,7 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">Номер телефона:</label>  
 	  <div class="col-md-4">
-	  <input name="tel" class="form-control input-md" type="text" value="<? echo @$main->tel ?>">
+	  <input name="tel" class="form-control input-md" type="text" value="<? echo @$main->tel ?>" <? echo $status_input ?>>
 	  </div>
 	</div>	
 
@@ -113,7 +118,7 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">№авто:</label>  
 	  <div class="col-md-4">
-	  <input name="nom_avto" class="form-control input-md" type="text" value="<? echo @$main->nom_avto ?>">
+	  <input name="nom_avto" class="form-control input-md" type="text" value="<? echo @$main->nom_avto ?>" <? echo $status_input ?>>
 	  </div>
 	</div>	
 
@@ -121,7 +126,7 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">Комментарий:</label>
 	  <div class="col-md-4">
-		<textarea rows="3" class="form-control" name="comment"><? echo @$main->comment ?></textarea>
+		<textarea rows="3" class="form-control" name="comment" <? echo $status_input ?>><? echo @$main->comment ?></textarea>
 	  </div>
 	</div>
 
@@ -159,7 +164,7 @@ $(document).ready(function(){
 			<tbody>
 <?php 
 $a=1;
-if($main->status != 0) { 	
+if($main->status == 1) { // 1 - В обработке 
 		foreach ($products->result() as $row) { 
 			echo '
 			<tr>
@@ -178,7 +183,7 @@ if($main->status != 0) {
 			</tr>';
 		}
 }
-if($main->status == 0) { 
+if($main->status == 0 or $main->status == 2) { // 2 - В ожидании, 0 - Отгружено
 		foreach ($products->result() as $row) { 
 			echo '
 			<tr>
@@ -210,7 +215,7 @@ if($main->status == 0) {
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="button1id"> </label>
 			  <div class="col-md-5">
-			<? if($main->status==0) { ?>
+			<? if($main->status == 0 or $main->status == 2) { ?>
 				<a href="/main/zayavki" class="btn btn-danger">Вернутся к списку заявок</a>
 				<a href="/php_excel/export.php?id=<? echo $main->id ?>&type=0" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a>
 			<? } else { ?>

@@ -345,19 +345,14 @@ class Main extends CI_Controller {
 	public function print_rashod($id) {
 		$header = $this->db->query('SELECT CONCAT(companies.contragent, " ",companies.nazva) AS nazva, companies.nomer_dogovora, companies.date_c, zayavki.fio, zayavki.date_otgruzki, zayavki.comment, CONCAT(companies.id, "-",progects.id, "-", zayavki.id) AS nomer
 			FROM zayavki LEFT JOIN progects ON zayavki.progect_id = progects.id LEFT JOIN companies ON progects.company_id = companies.id WHERE zayavki.id = '.$id);
-		$data['header'] = $header->row();
+		
+		$query = $this->db->query('SELECT zayavki_rashod.id, zayavki_rashod.product_id, zayavki_rashod.cnt, products.nazva, products.artikl, products.edinica_izm, products.kilk 
+			FROM zayavki_rashod LEFT JOIN products ON zayavki_rashod.product_id = products.id 	WHERE zayavki_rashod.zayavka_id = '.$id);
 
-		$query = $this->db->query('SELECT CONCAT(companies.contragent, " ",companies.nazva) AS nazva, companies.nomer_dogovora, companies.date_c, zayavki.fio, zayavki.date_otgruzki, zayavki.comment, CONCAT(companies.id, "-",progects.id, "-", zayavki.id) AS nomer
-								FROM zayavki LEFT JOIN progects ON zayavki.progect_id = progects.id LEFT JOIN companies ON progects.company_id = companies.id WHERE zayavki.id = '.$id);
+		//$query = $this->db->query('SELECT CONCAT(companies.contragent, " ",companies.nazva) AS nazva, companies.nomer_dogovora, companies.date_c, zayavki.fio, zayavki.date_otgruzki, zayavki.comment, CONCAT(companies.id, "-",progects.id, "-", zayavki.id) AS nomer
+		//						FROM zayavki LEFT JOIN progects ON zayavki.progect_id = progects.id LEFT JOIN companies ON progects.company_id = companies.id WHERE zayavki.id = '.$id);
 		$data['main'] = $query;
 		$this->load->view('print_templates/rashod', $data);
-
-/*		foreach ($query->result() as $row)
-		{
-			echo $row->nazva;
-			echo $row->fio;
-			echo $row->nomer_dogovora;
-		}*/
 	}
 
 

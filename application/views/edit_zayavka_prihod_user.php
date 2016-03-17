@@ -40,6 +40,14 @@ $(document).ready(function(){
 });
 </script>
 
+<?
+if($main->status == 0) {
+	$status_input = 'readonly';
+} else {
+	$status_input = '';
+}
+?>
+
 <div class="container-fluid" style="margin-top: 55px;">
 	<div class="row">
 		<div class="col-md-12 col-sm-12">
@@ -55,7 +63,7 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">Дата отгрузки / время отгрузки:</label>  
 	  <div class="col-md-4">
-	  <input name="date_otgruzki" class="form-control input-md datepicker" type="text" value="<? echo $main->date_otgruzki ?>">
+	  <input name="date_otgruzki" class="form-control input-md datepicker" type="text" value="<? echo $main->date_otgruzki ?>" <? echo $status_input ?>>
 	  </div>
 	</div>	
 
@@ -63,7 +71,7 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">ФИО кто забирает:</label>  
 	  <div class="col-md-4">
-	  <input name="fio" class="form-control input-md" type="text" value="<? echo $main->fio ?>">
+	  <input name="fio" class="form-control input-md" type="text" value="<? echo $main->fio ?>" <? echo $status_input ?>>
 	  </div>
 	</div>	
 
@@ -71,7 +79,7 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">Номер телефона:</label>  
 	  <div class="col-md-4">
-	  <input name="tel" class="form-control input-md" type="text" value="<? echo $main->tel ?>">
+	  <input name="tel" class="form-control input-md" type="text" value="<? echo $main->tel ?>" <? echo $status_input ?>>
 	  </div>
 	</div>	
 
@@ -87,7 +95,7 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">№авто:</label>  
 	  <div class="col-md-4">
-	  <input name="nom_avto" class="form-control input-md" type="text" value="<? echo @$main->nom_avto ?>">
+	  <input name="nom_avto" class="form-control input-md" type="text" value="<? echo @$main->nom_avto ?>" <? echo $status_input ?>>
 	  </div>
 	</div>	
 
@@ -95,7 +103,7 @@ $(document).ready(function(){
 	<div class="form-group">
 	  <label class="col-md-4 control-label">Комментарий:</label>
 	  <div class="col-md-4">
-		<textarea rows="3" class="form-control" name="comment"><? echo $main->comment ?></textarea>
+		<textarea rows="3" class="form-control" name="comment" <? echo $status_input ?>><? echo $main->comment ?></textarea>
 	  </div>
 	</div>
 
