@@ -41,6 +41,16 @@ $(document).ready(function(){
 		}	
 	});
 
+	//$('[name=count]').bind('change click keyup', function(){
+	$(document).on('change keyup', '[type="number"]', function(event){
+		var oststok = parseInt($(this).parent().parent().prev().text());
+		//alert(oststok);
+		if($(this).val() > oststok)	{
+		 	$(this).val(oststok);
+		}
+	});
+
+
 	// $(document).on('click', '[type="number"]', function(event){
 	// //$('[name=count]').bind('change click keyup', function(){
 	// 	$(this).parent().parent().prev().css('background-color', '#d9534f');
