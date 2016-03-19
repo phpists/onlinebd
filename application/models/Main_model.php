@@ -70,6 +70,15 @@ class Main_model extends CI_Model {
 	}
 
 
+	// ф-ція виводить остаток даного ТМЦ по всім не закритим заявкам
+	public function ostatok_tmc($product_id) {
+		$header = $this->db->query('SELECT SUM(cnt) AS ostatok FROM zayavki_rashod 
+			LEFT JOIN zayavki ON zayavki_rashod.zayavka_id = zayavki.id
+			WHERE product_id = '.$product_id.' AND (zayavki.status = 1 OR zayavki.status = 2)');
+		// $data['header'] = $header->row();
+		return $header->row('ostatok');
+	}
+
 
 }
 

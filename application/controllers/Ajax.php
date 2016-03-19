@@ -31,9 +31,11 @@ class Ajax extends CI_Controller {
 	}
 
 	public function ajax_get_progect_products() {
+		$this->load->model('Main_model');
 		$products = $this->db->get_where('products', array('progect_id' => $this->input->post('id')));
 		$a=1;
 		foreach ($products->result() as $row) { 
+			$ostatok_tmc = $this->Main_model->ostatok_tmc($row->id);
 			echo '
 			<tr>
 				<td><center>'.$a++.'</center></td>
@@ -41,28 +43,17 @@ class Ajax extends CI_Controller {
 				<td><center>'.$row->artikl.'</center></td>
 				<td><center>'.$row->edinica_izm.'</center></td>
 				<td><center>'.$row->kilk.'</center></td>
-				<td><center>'.$this->ostatok_tmc($row->id).'</center></td>
-				<td><center><input type="number" name="count['.$row->id.']" class="form-control" min="1" max="'.($row->kilk - $this->ostatok_tmc($row->id)).'" value="1"></center></td>
+				<td><center>'.$ostatok_tmc.'</center></td>
+				<td><center><input type="number" name="count['.$row->id.']" class="form-control" min="1" max="'.($row->kilk - $ostatok_tmc).'" value="1"></center></td>
 				<td><center>';
-				if($row->kilk-$this->ostatok_tmc($row->id) != 0) {
+				if($row->kilk - $ostatok_tmc != 0) {
 					echo '<input type="checkbox" name="product[]" value="'.$row->id.'" class="form-control sel_ch">';
 				}
 				echo '</center></td>
 			</tr>';
-			// 				<td><center><input type="number" name="count['.$row->id.']" class="form-control" min="1" max="'.(($this->ostatok_tmc($row->id)>0)?$this->ostatok_tmc($row->id):$row->kilk).'" value="1"></center></td>
+			//<td><center><input type="number" name="count['.$row->id.']" class="form-control" min="1" max="'.(($this->ostatok_tmc($row->id)>0)?$this->ostatok_tmc($row->id):$row->kilk).'" value="1"></center></td>
 		}
 	}
-
-	// ф-ція виводить остаток даного ТМЦ по всім не закритим заявкам
-	private function ostatok_tmc($product_id) {
-		$header = $this->db->query('SELECT SUM(cnt) AS ostatok FROM zayavki_rashod 
-			LEFT JOIN zayavki ON zayavki_rashod.zayavka_id = zayavki.id
-			WHERE product_id = '.$product_id.' AND (zayavki.status = 1 OR zayavki.status = 2)');
-		// $data['header'] = $header->row();
-		return $header->row('ostatok');
-
-	}
-
 
 
 // заявки (type=0-расход  type=1-приход)

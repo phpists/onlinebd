@@ -41,7 +41,6 @@ $(document).ready(function(){
 		}	
 	});
 
-	//$('[name=count]').bind('change click keyup', function(){
 	$(document).on('change keyup', '[type="number"]', function(event){
 		var oststok = parseInt($(this).parent().parent().prev().text());
 		//alert(oststok);
@@ -49,17 +48,6 @@ $(document).ready(function(){
 		 	$(this).val(oststok);
 		}
 	});
-
-
-	// $(document).on('click', '[type="number"]', function(event){
-	// //$('[name=count]').bind('change click keyup', function(){
-	// 	$(this).parent().parent().prev().css('background-color', '#d9534f');
-	// 	var oststok = parseInt($(this).parent().parent().prev().children().text());
-	// 	//alert(oststok);
-	// 	if($(this).val() > oststok)	{
-	// 		$(this).val(oststok);
-	// 	}
-	// });
 
 	$('.check-all').click(function(){
 		if($(this).is(':checked')) {
@@ -70,7 +58,6 @@ $(document).ready(function(){
 			$("#example1 > tbody").css('background-color', '#fff');
 		}
 	});
-
 
 	$('#create').click(function(){
 		if($("[name=progect_id]").val()!='') {

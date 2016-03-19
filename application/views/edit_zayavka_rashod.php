@@ -181,6 +181,7 @@ $(document).ready(function(){
 					<th><center>Артикул</center></th>
 					<th><center>Един. измер.</center></th>
 					<th><center>Остаток</center></th>
+					<th><center>С заявок</center></th>
 					<th><center>Количество</center></th>
 					<th><center>#</center></th>
 				</tr>
@@ -191,7 +192,9 @@ $a=1;
 $error_z = 0;
 if($main->status != 0) { 	
 		foreach ($products->result() as $row) { 
-			if($row->kilk < $row->cnt) { $color='style="background-color:#eea236"'; $error_z = 1; } else { $color='';}
+			$ostatok_tmc = $this->Main_model->ostatok_tmc($row->id);
+			//if($row->kilk < $row->cnt) { $color='style="background-color:#eea236"'; $error_z = 1; } else { $color='';}
+			if($row->kilk < $ostatok_tmc) { $color='style="background-color:#eea236"'; $error_z = 1; } else { $color='';}
 			echo '
 			<tr '.$color.'>
 				<td><center>'.$a++.'</center></td>
@@ -199,8 +202,10 @@ if($main->status != 0) {
 				<td><center>'.$row->artikl.'</center></td>
 				<td><center>'.$row->edinica_izm.'</center></td>
 				<td><center>'.$row->kilk.'</center></td>
+				<td><center>'.$ostatok_tmc.'</center></td>
 				<td><center>
-					<div class="input-group col-md-4"><input type="number" name="count_product" class="form-control" min="1" max="'.$row->kilk.'" value="'.$row->cnt.'">
+					<div class="input-group col-md-4">
+					<input type="number" name="count_product" class="form-control" min="1" max="'.($row->kilk - $ostatok_tmc).'" value="'.$row->cnt.'">
 					<span class="input-group-btn">
 						<a class="btn btn-default upd_cnt" data-id="'.$row->id.'"><span class="glyphicon glyphicon-floppy-saved"></span></a>
 					</span></div>

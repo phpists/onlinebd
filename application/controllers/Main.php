@@ -286,6 +286,7 @@ class Main extends CI_Controller {
 			$this->db->join('products', 'zayavki_rashod.product_id = products.id', 'left');
 			$this->db->where('zayavki_rashod.zayavka_id', $id);
 			$data['products'] = $this->db->get('zayavki_rashod');
+			$this->load->model('Main_model');
 			if($this->session->userdata('user_role')==1) {
 				$this->load->view('edit_zayavka_rashod', $data);
 			} else {
