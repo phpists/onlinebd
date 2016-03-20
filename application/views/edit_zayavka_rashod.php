@@ -52,15 +52,20 @@ $(document).ready(function(){
 		$(this).css('background-color', '#5cb85c');
 	});
 
-
-	$('[name=count_product]').bind('change click keyup', function(){
-		var oststok = parseInt($(this).parent().parent().parent().prev().text());
-		if($(this).val() > oststok)	{
-			$(this).val(oststok);
+	$(document).on('change keyup', '[type=number]', function(event){
+		var ostatok   = parseInt($(this).parent().parent().parent().prev().prev().text());
+		var s_zayavok = parseInt($(this).parent().parent().parent().prev().text());
+		var max_count = 0;
+		if(!s_zayavok) s_zayavok = 0;
+		max_count = ostatok - s_zayavok;
+		if($(this).val() > max_count)	{
+			$(this).val(max_count);
+		} 
+		if(s_zayavok >= ostatok) {
+			$(this).val(0);
 		}
 	});
 	
-
 	var dis = 0;
 	$('#otgruzit').click(function() {
 		if(dis==0) {
@@ -216,6 +221,7 @@ if($main->status != 0) {
 }
 if($main->status == 0) { 
 		foreach ($products->result() as $row) { 
+			$ostatok_tmc = $this->Main_model->ostatok_tmc($row->id);
 			echo '
 			<tr>
 				<td><center>'.$a++.'</center></td>
@@ -223,6 +229,7 @@ if($main->status == 0) {
 				<td><center>'.$row->artikl.'</center></td>
 				<td><center>'.$row->edinica_izm.'</center></td>
 				<td><center>'.$row->kilk.'</center></td>
+				<td><center>'.$ostatok_tmc.'</center></td>
 				<td><center>'.$row->cnt.'</center></td>
 				<td><center><img src="'.base_url().'application/views/img/validyes.png"></center></td>
 			</tr>';

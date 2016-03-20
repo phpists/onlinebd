@@ -41,13 +41,17 @@ $(document).ready(function(){
 		}	
 	});
 
-	$(document).on('change keyup', '[type="number"]', function(event){
-		var ostatok = parseInt($(this).parent().parent().prev().text());
-		if(!ostatok) { 
-			ostatok = parseInt($(this).parent().parent().prev().prev().text());
-		}
-		if($(this).val() > ostatok)	{
-			$(this).val(ostatok);
+	$(document).on('change keyup', '[type=number]', function(event){
+		var ostatok   = parseInt($(this).parent().parent().prev().prev().text());
+		var s_zayavok = parseInt($(this).parent().parent().prev().text());
+		var max_count = 0;
+		if(!s_zayavok) s_zayavok = 0;
+		max_count = ostatok - s_zayavok;
+		if($(this).val() > max_count)	{
+			$(this).val(max_count);
+		} 
+		if(s_zayavok >= ostatok) {
+			$(this).val(0);
 		}
 	});
 

@@ -21,9 +21,6 @@ $(document).ready(function(){
 		return false;
 	});	
 
-
-
-
 });
 </script>
 
@@ -66,7 +63,6 @@ $(document).ready(function(){
 									<td><center>'.anchor("main/progect_zayavki/".$row->id, $row->zayavok).'</center></td>
 									<td><center>
 										<a href="'.site_url("main/edit_progect/".$row->id).'"><img src="'.base_url().'application/views/img/pencil.png"></a>&nbsp;&nbsp;&nbsp;
-										<a href="'.site_url("main/edit_progect/".$row->id).'"><img src="'.base_url().'application/views/img/validno.png"></a>
 									</center></td>
 								</tr>';
 	}

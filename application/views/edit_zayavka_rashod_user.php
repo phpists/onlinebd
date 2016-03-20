@@ -52,13 +52,20 @@ $(document).ready(function(){
 		$(this).css('background-color', '#5cb85c');
 	});
 
-
-	$('[name=count_product]').bind('change click keyup', function(){
-		var oststok = parseInt($(this).parent().parent().parent().prev().text());
-		if($(this).val() > oststok)	{
-			$(this).val(oststok);
+	$(document).on('change keyup', '[type=number]', function(event){
+		var ostatok   = parseInt($(this).parent().parent().parent().prev().prev().text());
+		var s_zayavok = parseInt($(this).parent().parent().parent().prev().text());
+		var max_count = 0;
+		if(!s_zayavok) s_zayavok = 0;
+		max_count = ostatok - s_zayavok;
+		if($(this).val() > max_count)	{
+			$(this).val(max_count);
+		} 
+		if(s_zayavok >= ostatok) {
+			$(this).val(0);
 		}
 	});
+
 	
 });
 </script>
@@ -157,6 +164,7 @@ if($main->status == 0 or $main->status == 2) {
 					<th><center>Артикул</center></th>
 					<th><center>Един. измер.</center></th>
 					<th><center>Остаток</center></th>
+					<th><center>С заявок</center></th>
 					<th><center>Количество</center></th>
 					<th><center>#</center></th>
 				</tr>
@@ -164,17 +172,23 @@ if($main->status == 0 or $main->status == 2) {
 			<tbody>
 <?php 
 $a=1;
+$error_z = 0;
 if($main->status == 1) { // 1 - В обработке 
 		foreach ($products->result() as $row) { 
+			$ostatok_tmc = $this->Main_model->ostatok_tmc($row->id);
+			//if($row->kilk < $row->cnt) { $color='style="background-color:#eea236"'; $error_z = 1; } else { $color='';}
+			if($row->kilk < $ostatok_tmc) { $color='style="background-color:#eea236"'; $error_z = 1; } else { $color='';}
 			echo '
-			<tr>
+			<tr '.$color.'>
 				<td><center>'.$a++.'</center></td>
 				<td>'.$row->nazva.'</td>
 				<td><center>'.$row->artikl.'</center></td>
 				<td><center>'.$row->edinica_izm.'</center></td>
 				<td><center>'.$row->kilk.'</center></td>
+				<td><center>'.$ostatok_tmc.'</center></td>
 				<td><center>
-					<div class="input-group col-md-4"><input type="number" name="count_product" class="form-control" min="1" max="'.$row->kilk.'" value="'.$row->cnt.'">
+					<div class="input-group col-md-4">
+					<input type="number" name="count_product" class="form-control" min="1" max="'.($row->kilk - $ostatok_tmc).'" value="'.$row->cnt.'">
 					<span class="input-group-btn">
 						<a class="btn btn-default upd_cnt" data-id="'.$row->id.'"><span class="glyphicon glyphicon-floppy-saved"></span></a>
 					</span></div>

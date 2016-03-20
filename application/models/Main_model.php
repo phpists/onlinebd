@@ -7,6 +7,7 @@ class Main_model extends CI_Model {
 		parent::__construct();
 	}
 
+	// ф-ція для вюшки progect_zayavki
 	public function zayavki_prihod($zayavka_id) {
 		$zayavki_prihod = $this->db->get_where('zayavki_prihod', array('zayavka_id' => $zayavka_id));
 		$a=1;
@@ -36,7 +37,7 @@ class Main_model extends CI_Model {
 				</table>';
 	}
 
-
+	// ф-ція для вюшки progect_zayavki
 	public function zayavki_rashod($zayavka_id) {
 		$this->db->select('zayavki_rashod.id, zayavki_rashod.product_id, zayavki_rashod.cnt, products.nazva, products.artikl, products.edinica_izm, products.kilk');		
 		$this->db->join('products', 'zayavki_rashod.product_id = products.id', 'left');
@@ -70,7 +71,7 @@ class Main_model extends CI_Model {
 	}
 
 
-	// ф-ція виводить остаток даного ТМЦ по всім не закритим заявкам
+	// ф-ція виводить остаток даного ТМЦ по всім не закритим заявкам (стовпчик "с заявок")
 	public function ostatok_tmc($product_id) {
 		$header = $this->db->query('SELECT SUM(cnt) AS ostatok FROM zayavki_rashod 
 			LEFT JOIN zayavki ON zayavki_rashod.zayavka_id = zayavki.id
