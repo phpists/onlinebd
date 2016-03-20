@@ -164,20 +164,19 @@ if($main->status == 0) {
 
 	<div class="row">
 		<div class="col-md-12">
-			<!-- Button (Double) -->
 			<div class="form-group">
-			  <label class="col-md-4 control-label" for="button1id"> </label>
+			  <label class="col-md-4 control-label"> </label>
 			  <div class="col-md-5">
-			<? if($main->status==0) { ?>	
+			<? if($main->status==0) { ?>
 				<a href="/main/zayavki" class="btn btn-danger">Вернутся к списку заявок</a>
-				<a href="/php_excel/export.php?id=<? echo $main->id ?>&type=1" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a>
 			<? } else { ?>
 				<a href="#" class="btn btn-success" id="create"><i class="glyphicon glyphicon-ok"></i> Сохранить</a>
 				<a href="/main/zayavki" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Отмена</a>		
-				<a href="/php_excel/export.php?id=<? echo $main->id ?>&type=1" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a>
 			<? } ?>
+				<!-- <a href="/php_excel/export.php?id=<? echo $main->id ?>&type=1" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a> -->
+				<a href="/main/print_prihod/<? echo $main->id ?>" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a>
 			  </div>
-			</div>	
+			</div>
 		</div>
 	</div>
 

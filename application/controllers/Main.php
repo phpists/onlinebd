@@ -152,7 +152,7 @@ class Main extends CI_Controller {
 		$data['zayavok'] = $this->db->get_where('zayavki', array('progect_id' => $progects_id));
 		$this->load->view('products', $data);
 	}
-
+/*
 	public function add_product() {
 		$data = array(
 			'progect_id' => $this->input->post('progect_id'),
@@ -187,6 +187,7 @@ class Main extends CI_Controller {
 		$this->db->delete('products', array('id' => $id));
 		redirect(site_url("main/products/".$progect_id));
 	}
+*/
 
 // заявки проекта
 	public function progect_zayavki($progects_id) {
@@ -261,7 +262,6 @@ class Main extends CI_Controller {
 			foreach ($progects->result() as $row) {
 				$arr[] = $row->id;
 			}
-
 			if($arr) {
 				$this->db->select('*')->where_in('progect_id', $arr)->where('type', 0);
 			 	$data['rashod'] = $this->db->order_by('id', 'ASC')->get('zayavki');				

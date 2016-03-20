@@ -3,35 +3,25 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
-	$('#add').click(function(){
-		//if ($('input[name=name]').val() != '' & $('input[name=pass]').val() != '') {
-			$('#form_add').trigger("submit");
-		// } else {
-		// 	$('#mes_error_add_user').show("slow");
-		// 	setInterval(function(){
-		// 		$("#mes_error_add_user").hide();
-		// },4000); // 10sec (10000)
-		//}
-	});
+	/*$('#add').click(function(){
+		$('#form_add').trigger("submit");
+	});*/
 
 	$('.edit').click(function(){
 		$.ajax({
 			type: "POST",
 			url: "/ajax/ajax_edit_product",
 			data: { "id": $(this).attr('pr_id') },
-			dataType: "html",
-			success: function(msg){
-				//alert(msg);
-				var obj = jQuery.parseJSON(msg);
-				$('input[name=id]').val(obj.id);
-				$('#edit_nazva').val(obj.nazva);
-				$('#edit_kilk').val(obj.kilk);
-				//$('#edit_edinica_izm').val(obj.edinica_izm);
+			dataType: "json",
+			success: function(data){
+				$('input[name=id]').val(data.id);
+				$('#edit_nazva').val(data.nazva);
+				$('#edit_kilk').val(data.kilk);
 				$('#edit_edinica_izm option').filter(function() { 
-					return ($(this).val() == obj.edinica_izm);
+					return ($(this).val() == data.edinica_izm);
 				}).prop('selected', true);
-				$('#edit_artikl').val(obj.artikl);
-				$('#edit_opus').val(obj.opus);
+				$('#edit_artikl').val(data.artikl);
+				$('#edit_opus').val(data.opus);
 				$('#myModal2').modal('show');
 			}
 		});	
@@ -40,16 +30,9 @@ $(document).ready(function(){
 		return false;		
 	});	
 
-	$('#update').click(function(){
-		//if ($('#edit_name').val() != '' & $('#edit_login').val() != '' & $('#edit_pass').val() != '') {
-			$('#form_edit').trigger("submit");
-		// } else {
-		// 	$('#mes_error_edit_user').show("slow");
-		// 	setInterval(function(){
-		// 		$("#mes_error_edit_user").hide();
-		// 		},4000); // 10sec (10000)
-		// }
-	});
+/*	$('#update').click(function(){
+		$('#form_edit').trigger("submit");
+	});*/
 
 });
 </script>
@@ -72,7 +55,6 @@ $(document).ready(function(){
 									<th><center>Количество</center></th>
 									<th><center>Един. измер</center></th>
 									<th><center>Артикул</center></th>
-									<th><center>#</center></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -86,10 +68,6 @@ $(document).ready(function(){
 									<td><center>'.$row->kilk.'</center></td>
 									<td><center>'.$row->edinica_izm.'</center></td>
 									<td><center>'.$row->artikl.'</center></td>
-									<td><center>
-										<a href="#" class="edit" pr_id="'.$row->id.'"><img src="'.base_url().'application/views/img/pencil.png"></a>&nbsp;&nbsp;&nbsp;
-										<a href="'.site_url("main/del_product/".$row->id).'" onclick="return confirm(\'Удалить ТМЦ?\')"><img src="'.base_url().'application/views/img/validno.png"></a>
-									</center></td>
 								</tr>';
 	}
 	?>
@@ -198,7 +176,7 @@ $(document).ready(function(){
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel2">Редактировать товар</h4>
+						<h4 class="modal-title" id="myModalLabel2">Просмотр ТМЦ</h4>
 					</div>
 					<div class="modal-body">
 
@@ -263,7 +241,7 @@ $(document).ready(function(){
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-						<button type="button" class="btn btn-primary" id="update">Сохранить</button>
+						<!-- <button type="button" class="btn btn-primary" id="update">Сохранить</button> -->
 					</div>
 				</div>
 			</div>

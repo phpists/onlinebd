@@ -20,14 +20,6 @@ $(document).ready(function(){
 		locale: 'ru'
 	});
 
-	// $(document).on('click', 'input[type="checkbox"]', function(event){
-	// 	if (this.checked) {
-	// 		$(this).parent().parent().parent().css('background-color', '#d9534f');
-	// 	} else {
-	// 		$(this).parent().parent().parent().css('background-color', '#fff');
-	// 	}	
-	// });
-
 	$('#create').click(function(){
 		$.post("/ajax/update_zayavka", $("#form_add_zayavka").serialize()).done(function(data) {
 			alert("Сохранено");
@@ -189,19 +181,18 @@ $(document).ready(function(){
 
 	<div class="row">
 		<div class="col-md-12">
-			<!-- Button (Double) -->
 			<div class="form-group">
-			  <label class="col-md-4 control-label" for="button1id"> </label>
+			  <label class="col-md-4 control-label"> </label>
 			  <div class="col-md-5">
 			<? if($main->status==0) { ?>	
 				<a href="/main/zayavki" class="btn btn-danger">Вернутся к списку заявок</a>
-				<a href="/php_excel/export.php?id=<? echo $main->id ?>&type=1" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a>
 			<? } else { ?>
 				<a href="#" class="btn btn-success" id="create"><i class="glyphicon glyphicon-ok"></i> Сохранить</a>
 				<a href="/main/zayavki" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Отмена</a>		
-				<a href="/php_excel/export.php?id=<? echo $main->id ?>&type=1" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a>
 				<a href="#" class="btn btn-warning" id="otgruzit"><i class="glyphicon glyphicon-refresh"></i> Прийнять</a>	
 			<? } ?>
+				<!-- <a href="/php_excel/export.php?id=<? echo $main->id ?>&type=1" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a> -->
+				<a href="/main/print_prihod/<? echo $main->id ?>" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Печать</a>
 			  </div>
 			</div>	
 		</div>
