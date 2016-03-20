@@ -265,11 +265,12 @@ class Main extends CI_Controller {
 			if($arr) {
 				$this->db->select('*')->where_in('progect_id', $arr)->where('type', 0);
 			 	$data['rashod'] = $this->db->order_by('id', 'ASC')->get('zayavki');				
-
 			 	$this->db->select('*')->where_in('progect_id', $arr)->where('type', 1);
 			 	$data['prihod'] = $this->db->order_by('id', 'ASC')->get('zayavki');
-
 				$this->load->view('zayavki_user', $data);
+			} else {
+				$data['error'] = "У вас еще нет проектов !";
+				$this->load->view('message', $data);
 			}
 			//$this->output->enable_profiler(TRUE);	// профайлер
 			//print_r($progect_id);
@@ -315,7 +316,7 @@ class Main extends CI_Controller {
 			//$this->db->where('progects.user_id', $id); // можна по юзеру звязати
 		}
 		$data['progects'] = $this->db->get('progects');
-		$this->load->view('add_zayavka', $data);
+		$this->load->view('add_zayavka_rashod', $data);
 	}
 	
 	public function add_zayavka_prihod() {

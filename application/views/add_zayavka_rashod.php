@@ -42,10 +42,12 @@ $(document).ready(function(){
 	});
 
 	$(document).on('change keyup', '[type="number"]', function(event){
-		var oststok = parseInt($(this).parent().parent().prev().text());
-		//alert(oststok);
-		if($(this).val() > oststok)	{
-		 	$(this).val(oststok);
+		var ostatok = parseInt($(this).parent().parent().prev().text());
+		if(!ostatok) { 
+			ostatok = parseInt($(this).parent().parent().prev().prev().text());
+		}
+		if($(this).val() > ostatok)	{
+			$(this).val(ostatok);
 		}
 	});
 
