@@ -3,6 +3,16 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+	$('#example1').dataTable({
+		//"bFilter": false,
+		"bPaginate": false,
+		"bInfo": false,
+		//"order": [[ 3, "desc" ]]
+		"language": {
+			"url": "<? echo base_url() ?>application/views/DataTables-1.10.9/dataTables.rus.lang"
+		}
+	});
+
 // зміна статусу
 	$(document).on('click', '.change_status_rashod', function(event){
 		data_id = $(event.target).data("id"); 
@@ -21,6 +31,38 @@ $(document).ready(function(){
 		//$.post("/ajax/change_status_prihod", { 'id':data_id, 'status':data_status } );
 		//return false;
 	});*/
+
+	$('.uslugi').click(function(){
+		// alert();
+		var zayavka_id = $(this).data("id");
+		$('[name=zayavka_id]').val(zayavka_id);
+		$('#myModal').modal('show');
+
+		$.ajax({
+			type: "POST",
+			url: "/ajax/ajax_get_usluga_to_zayavka",
+			data: { "zayavka_id": zayavka_id },
+			dataType: "html",
+			success: function(msg){
+				$('#example1>tbody').html(msg);
+			}
+		});	
+		return false;
+	});
+
+	// $('.checked_usluga').click(function(){
+	$(document).on('click', '.checked_usluga', function(){
+		if (this.checked) {
+			$(this).parent().parent().parent().css('background-color', '#d9534f');
+		} else {
+			$(this).parent().parent().parent().css('background-color', '#fff');
+		}	
+	});
+
+	$('#save').click(function() {
+		$('#form_add').submit();
+	});
+
 });
 </script>
 
@@ -85,6 +127,8 @@ $(document).ready(function(){
 											</center></td>
 											<td><center>
 												<a href="/main/zayavka/'.$row->id.'" class="btn btn-warning btn-sm" title="Изменить"><span class="glyphicon glyphicon-pencil"></span></a>
+												
+												<a href="#" class="btn btn-success btn-sm uslugi" title="Услуги" data-id="'.$row->id.'"><span class="glyphicon glyphicon-briefcase"></span></a>
 												
 												<div class="btn-group responsible_vacancy">
 													<button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" type="button"><span class="glyphicon glyphicon-print"></span></button>
@@ -178,6 +222,63 @@ $(document).ready(function(){
 	</div>
 
 
+
+
+
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">Услуги</h4>
+					</div>
+					<div class="modal-body">
+
+
+						<form action="<? echo site_url("ajax/add_usluga_to_zayavka") ?>" method="POST" class="form-horizontal" id="form_add">
+
+
+							<table class="table table-bordered" id="example1">
+								<thead>
+									<tr>
+										<th><center>Название</center></th>
+										<th><center>Цена</center></th>
+										<th><center>#</center></th>
+									</tr>
+								</thead>
+								<tbody>
+		<?php 
+		foreach ($uslugi->result() as $row) { 
+			echo '
+									<tr>
+										<td>'.$row->nazva.'<input type="hidden" name="nazva['.$row->id.']" value="'.$row->nazva.'" /></td>
+										<td><center><input type="number" name="cena['.$row->id.']" class="form-control" min="1" value="'.$row->cena.'"></center></td>
+										<td><center><input type="checkbox" name="availability['.$row->id.']" value="'.$row->id.'" class="form-control checked_usluga"></center></td>
+									</tr>';
+		}
+		?>
+									<tr>
+										<td><input type="text" name="nazva_custom" class="form-control"></td>
+										<td><center><input type="number" name="cena_custom" class="form-control" min="1"></center></td>
+										<td><center><input type="checkbox" name="availability_custom" class="form-control checked_usluga"></center></td>
+									</tr>
+
+								</tbody>
+							</table>
+
+							<input type="hidden" name="zayavka_id">
+						</form>
+
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+						<button type="button" class="btn btn-primary" id="save">Сохранить</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
 
 

@@ -252,6 +252,7 @@ class Main extends CI_Controller {
 
 // заявки (type=0-расход  type=1-приход)
 	public function zayavki() {
+		$data['uslugi'] = $this->db->get('uslugi');
 		if($this->session->userdata('user_role')==1) {
 			$data['rashod'] = $this->db->get_where('zayavki', array('type' => 0));	
 			$data['prihod'] = $this->db->get_where('zayavki', array('type' => 1));	
@@ -360,18 +361,29 @@ class Main extends CI_Controller {
 
 
 
+// услуги
+	public function uslugi() {
+		$data['main'] = $this->db->get('uslugi');
+		$this->load->view('uslugi', $data);
+	}
 
-/*	public function test() {
-		if($this->input->post('nazva')) {
-			$nazva=$this->input->post('nazva');
-			$artikl=$this->input->post('artikl');
-			print_r($artikl);
-			foreach ($nazva as $k=>$value) {
-				echo $value.' - '.$artikl[$k]."<br>";
-			}
-
+	public function add_edit_usluga() {
+		$data = array(
+			'nazva' => $this->input->post('nazva'),	
+			'cena' => $this->input->post('cena'),
+		);
+		if($this->input->post('usluga_id')) {
+			$this->db->where('id', $this->input->post('usluga_id'));
+			$this->db->update('uslugi', $data);	
+		} else {
+			$this->db->insert('uslugi', $data);
 		}
-		$this->output->enable_profiler(TRUE);	// профайлер
-	}*/
+		redirect(site_url("main/uslugi"));
+	}
+
+	public function del_usluga($id) {
+		$this->db->delete('uslugi', array('id' => $id));
+		redirect(site_url("main/uslugi"));
+	}
 
 }

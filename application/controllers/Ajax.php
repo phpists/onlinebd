@@ -6,11 +6,16 @@ class Ajax extends CI_Controller {
 	public function ajax_edit_user() {
 		$user = $this->db->get_where('users', array('id' => $this->input->post('user_id')))->row();
 		echo json_encode($user);
-	}	
+	}
 
 	public function ajax_edit_product() {
 		$products = $this->db->get_where('products', array('id' => $this->input->post('id')))->row();
 		echo json_encode($products);
+	}
+
+	public function ajax_edit_usluga() {
+		$uslugi = $this->db->get_where('uslugi', array('id' => $this->input->post('id')))->row();
+		echo json_encode($uslugi);
 	}
 
 	public function ajax_get_progect_detail() {
@@ -265,6 +270,79 @@ class Ajax extends CI_Controller {
 
 		return $tpl;
 	}
+
+
+
+
+
+
+	public function ajax_get_usluga_to_zayavka() {
+		$zayavka_id = $this->input->post('zayavka_id');
+		// $uslugi = $this->db->get_where('uslugi', array('zayavka_id' => $this->input->post('zayavka_id')));
+		$this->db->select('uslugi.id, uslugi.nazva, uslugi.cena, (SELECT COUNT(*) FROM uslugi_zayavki WHERE usluga_id = uslugi.id AND uslugi_zayavki.zayavka_id = '.$zayavka_id.') AS cena2');		
+		//$this->db->join('uslugi_zayavki', 'uslugi.id = uslugi_zayavki.usluga_id', 'left');
+		//$this->db->where('zayavki_rashod.zayavka_id', $this->input->post('zayavka_id'));
+		$uslugi = $this->db->get('uslugi');
+		foreach ($uslugi->result() as $row) { 
+			($row->cena2)?$checkbox='checked':$checkbox='';
+			($row->cena2)?$style=' style="background-color: #d9534f;"':$style='';
+			echo '
+				<tr'.$style.'>
+					<td>'.$row->nazva.'<input type="hidden" name="nazva['.$row->id.']" value="'.$row->nazva.'" /></td>
+					<td><center><input type="number" name="cena['.$row->id.']" class="form-control" min="1" value="'.$row->cena.'"></center></td>
+					<td><center><input type="checkbox" '.$checkbox.' name="availability['.$row->id.']" value="'.$row->id.'" class="form-control checked_usluga"></center></td>
+				</tr>';
+		}
+		//$this->output->enable_profiler(TRUE);	// профайлер
+	}
+
+	public function add_usluga_to_zayavka() {
+		$zayavka_id = $this->input->post('zayavka_id');
+		$availability=$this->input->post('availability');
+		$nazva=$this->input->post('nazva');
+		$cena=$this->input->post('cena');
+		$data_p = array();
+		foreach ($availability as $value) {
+			array_push($data_p, array(
+				'zayavka_id' => $zayavka_id,
+				'usluga_id' => $value,
+				'nazva' => $nazva[$value],
+				'cena' => $cena[$value],
+			));
+		}
+		if($this->input->post('availability_custom')) {
+			array_push($data_p, array(
+				'zayavka_id' => $zayavka_id,
+				'usluga_id' => '0',
+				'nazva' => $this->input->post('nazva_custom'),
+				'cena' =>  $this->input->post('cena_custom')
+			));			
+		}
+		// echo '<pre>';
+		// print_r($data_p);
+
+		$this->db->delete('uslugi_zayavki', array('zayavka_id' => $zayavka_id));
+		foreach ($data_p as $d_v) {
+			$this->db->insert('uslugi_zayavki', $d_v);
+		}
+
+		/*
+		$uslugi_zayavki = $this->db->get_where('uslugi_zayavki', array('zayavka_id' => $zayavka_id));
+		if($uslugi_zayavki->result()) {
+			//$this->db->where('id', $this->input->post('id'));
+			//$this->db->update('progects', $data);	
+		} else {
+			foreach ($data_p as $d_v) {
+				$this->db->insert('uslugi_zayavki', $d_v);
+			}
+		}		
+		*/
+		redirect(site_url("main/zayavki"));
+		//$this->output->enable_profiler(TRUE);	// профайлер
+	}
+
+
+
 
 
 

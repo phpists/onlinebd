@@ -214,7 +214,8 @@ if($main->status != 0) {
 					<span class="input-group-btn">
 						<a class="btn btn-default upd_cnt" data-id="'.$row->id.'"><span class="glyphicon glyphicon-floppy-saved"></span></a>
 					</span></div>
-				</center></td>
+				</center>
+				</td>
 				<td><center><a href="#" title="Удалить" class="del_tmc" data-id="'.$row->id.'"><img src="'.base_url().'application/views/img/validno.png"></a></center></td>
 			</tr>';
 		}

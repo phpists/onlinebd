@@ -40,6 +40,7 @@
 	 								<li <? if($this->uri->segment(2, '') == '' or $this->uri->segment(2, '') == "index") echo 'class="active"'; ?>><a href="<? echo site_url("main/index") ?>">Проекты</a></li>
 	 								<li <? if($this->uri->segment(2, '') == "users") echo 'class="active"'; ?>><a href="<? echo site_url("main/users") ?>">Пользователи</a></li>
 	 								<li <? if($this->uri->segment(2, '') == "zayavki") echo 'class="active"'; ?>><a href="<? echo site_url("main/zayavki") ?>">Заявка на отгрузку / приход</a></li>
+	 								<li <? if($this->uri->segment(2, '') == "uslugi") echo 'class="active"'; ?>><a href="<? echo site_url("main/uslugi") ?>">Услуги</a></li>
 	 							</ul> 
 <? } else { ?>
 								<ul class="nav navbar-nav">
