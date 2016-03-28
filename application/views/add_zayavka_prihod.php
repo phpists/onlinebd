@@ -102,6 +102,34 @@ $(document).ready(function(){
     // });	
 
 
+
+$(".nazva_tmc").autocomplete({
+      	source: '/ajax/ajax_autocomplete_tmc',
+        //minLength: 2,
+        select: function(event, ui) {
+        	$(this).val(ui.item.value);
+        	$(this).parent().next().children('input').val(ui.item.id);
+        
+
+        //     var url = ui.item.id;
+	       //  log( ui.item ?
+	       //    "Selected: " + ui.item.label :
+	       //    "Nothing selected, input was " + this.value);
+
+	    },
+ 
+        // html: true, // optional (jquery.ui.autocomplete.html.js required)
+ 
+      // optional (if other layers overlap autocomplete list)
+        open: function(event, ui) {
+            $(".ui-autocomplete").css("z-index", 1000);
+        }
+    });
+
+
+
+
+
 });
 
 var i=1;
@@ -172,16 +200,17 @@ $(".nazva_tmc").autocomplete({
 
 $(".nazva_tmc").autocomplete({
       	source: '/ajax/ajax_autocomplete_tmc',
-        minLength: 2,
+        //minLength: 2,
         select: function(event, ui) {
-            var url = ui.item.id;
-        log( ui.item ?
-          "Selected: " + ui.item.label :
-          "Nothing selected, input was " + this.value);
+        	$(this).val(ui.item.id);
+        //     var url = ui.item.id;
+	       //  log( ui.item ?
+	       //    "Selected: " + ui.item.label :
+	       //    "Nothing selected, input was " + this.value);
 
-        },
+	    },
  
-        html: true, // optional (jquery.ui.autocomplete.html.js required)
+        // html: true, // optional (jquery.ui.autocomplete.html.js required)
  
       // optional (if other layers overlap autocomplete list)
         open: function(event, ui) {
@@ -189,6 +218,41 @@ $(".nazva_tmc").autocomplete({
         }
     });
 
+
+
+
+/*			$(".nazva_tmc").autocomplete({
+				//delay: 500,
+				//minLength: 3,
+				source: function(request, response) {
+					$.getJSON("http://api.rottentomatoes.com/api/public/v1.0/movies.json?callback=?", {
+						// do not copy the api key; get your own at developer.rottentomatoes.com
+						apikey: "6czx2pst57j3g47cvq9erte5",
+						q: request.term,
+						page_limit: 10
+					}, function(data) {
+						// data is an array of objects and must be transformed for autocomplete to use
+						var array = data.error ? [] : $.map(data.movies, function(m) {
+							return {
+								label: m.title + " (" + m.year + ")",
+								url: m.links.alternate
+							};
+						});
+						response(array);
+					});
+				},
+				focus: function(event, ui) {
+					// prevent autocomplete from updating the textbox
+					event.preventDefault();
+				},
+				select: function(event, ui) {
+					$(this).val(ui.item.url);
+					// prevent autocomplete from updating the textbox
+					event.preventDefault();
+					// navigate to the selected item's url
+					//window.open(ui.item.url);
+				}
+			});*/
 
 
 
