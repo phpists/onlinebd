@@ -135,7 +135,7 @@ $(document).ready(function(){
 	</div>	
 
 	<div class="form-group" id="error_tel">
-	  <label class="col-md-3 control-label" for="tel">Телефон: <img src="<? echo base_url() ?>application/views/front/img/ajax-loader2.gif" id="load" style="display:none" /><span></span></label>  
+	  <label class="col-md-3 control-label" for="tel">Телефон:</label>  
 		<div class="col-md-6">
 			<div class="input-group">
 				<input id="tel" name="tel" class="form-control input-md tel" type="text" value="<? echo @$main->tel ?>">
@@ -150,7 +150,7 @@ $(document).ready(function(){
 	<div style="display:none" id="hid_tel">	
 		<!-- Text input-->
 		<div class="form-group" id="error_tel">
-		  <label class="col-md-3 control-label" for="tel">Телефон 2: <img src="<? echo base_url() ?>application/views/front/img/ajax-loader2.gif" id="load" style="display:none" /><span></span></label>  
+		  <label class="col-md-3 control-label" for="tel">Телефон 2:</label>  
 			<div class="col-md-6">
 				<div class="input-group">
 					<input id="tel2" name="tel2" class="form-control input-md tel" type="text">
@@ -162,7 +162,7 @@ $(document).ready(function(){
 		</div>
 		<!-- Text input-->
 		<div class="form-group" id="error_tel">
-		  <label class="col-md-3 control-label" for="tel">Телефон 3: <img src="<? echo base_url() ?>application/views/front/img/ajax-loader2.gif" id="load" style="display:none" /><span></span></label>  
+		  <label class="col-md-3 control-label" for="tel">Телефон 3</label>  
 			<div class="col-md-6">
 				<div class="input-group">
 					<input id="tel3" name="tel3" class="form-control input-md tel" type="text">

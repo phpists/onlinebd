@@ -252,7 +252,6 @@ class Main extends CI_Controller {
 
 // заявки (type=0-расход  type=1-приход)
 	public function zayavki() {
-		$data['uslugi'] = $this->db->get('uslugi');
 		if($this->session->userdata('user_role')==1) {
 			$data['rashod'] = $this->db->get_where('zayavki', array('type' => 0));	
 			$data['prihod'] = $this->db->get_where('zayavki', array('type' => 1));	
@@ -273,10 +272,6 @@ class Main extends CI_Controller {
 				$data['error'] = "У вас еще нет проектов !";
 				$this->load->view('message', $data);
 			}
-			//$this->output->enable_profiler(TRUE);	// профайлер
-			//print_r($progect_id);
-			// $data['rashod'] = $this->db->get_where('zayavki', array('type' => 0));	
-			// $data['prihod'] = $this->db->get_where('zayavki', array('type' => 1));	
 		}
 	}	
 		

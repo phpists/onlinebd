@@ -343,7 +343,17 @@ class Ajax extends CI_Controller {
 
 
 
-
+	public function ajax_autocomplete_tmc() {
+		$term = $this->input->get('id, nazva AS value, artikl AS label');
+		$this->db->select('id, nazva AS value, artikl AS label');
+		// фільтри пошуку
+		//if($term) { $this->db->like('name', $term); }
+		$this->db->from('products');
+		//$this->db->where('flavor.approved', 1);
+		$flavors = $this->db->order_by('id', 'DESC')->get();
+		$flavors2 = $flavors->result();
+		echo json_encode($flavors2);
+	}
 
 
 

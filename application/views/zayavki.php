@@ -50,7 +50,6 @@ $(document).ready(function(){
 		return false;
 	});
 
-	// $('.checked_usluga').click(function(){
 	$(document).on('click', '.checked_usluga', function(){
 		if (this.checked) {
 			$(this).parent().parent().parent().css('background-color', '#d9534f');
@@ -194,7 +193,9 @@ $(document).ready(function(){
 											</center></td>
 											<td><center>
 												<a href="/main/zayavka/'.$row->id.'" class="btn btn-warning btn-sm" title="Изменить"><span class="glyphicon glyphicon-pencil"></span></a>
-												
+								
+												<a href="#" class="btn btn-success btn-sm uslugi" title="Услуги" data-id="'.$row->id.'"><span class="glyphicon glyphicon-briefcase"></span></a>
+
 												<div class="btn-group responsible_vacancy">
 													<button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" type="button"><span class="glyphicon glyphicon-print"></span></button>
 													<ul class="dropdown-menu">
@@ -248,22 +249,7 @@ $(document).ready(function(){
 									</tr>
 								</thead>
 								<tbody>
-		<?php 
-		foreach ($uslugi->result() as $row) { 
-			echo '
-									<tr>
-										<td>'.$row->nazva.'<input type="hidden" name="nazva['.$row->id.']" value="'.$row->nazva.'" /></td>
-										<td><center><input type="number" name="cena['.$row->id.']" class="form-control" min="1" value="'.$row->cena.'"></center></td>
-										<td><center><input type="checkbox" name="availability['.$row->id.']" value="'.$row->id.'" class="form-control checked_usluga"></center></td>
-									</tr>';
-		}
-		?>
-									<tr>
-										<td><input type="text" name="nazva_custom" class="form-control"></td>
-										<td><center><input type="number" name="cena_custom" class="form-control" min="1"></center></td>
-										<td><center><input type="checkbox" name="availability_custom" class="form-control checked_usluga"></center></td>
-									</tr>
-
+<!-- result ajax_get_usluga_to_zayavka -->
 								</tbody>
 							</table>
 
