@@ -113,7 +113,6 @@ class Ajax extends CI_Controller {
 		$this->db->where('id', $zayavka_id)->update('zayavki', array('status' => 0)); 
 	}
 
-
 	function update_zayavka() {
 		$id=$this->input->post('id');
 		//$nazva_progect = $this->db->get_where('progects', array('id' => $this->input->post('progect_id')))->row('nazva');
@@ -138,9 +137,7 @@ class Ajax extends CI_Controller {
 
 
 
-
-
-
+// створення заявки на приход
 	function create_zayavka_prihod() {
 		$product=$this->input->post('nazva');
 		// існуючий проект
@@ -184,6 +181,7 @@ class Ajax extends CI_Controller {
 		$edinica_izm=$this->input->post('edinica_izm');
 		$kilk=$this->input->post('kilk');
 		$opus=$this->input->post('opus');
+		$product_id = $this->input->post('id_tmc'); // hidden поле з автокомпліта id існуючого ТМЦ
 		foreach ($product as $k=>$value) {
 			$data_p = array(
 				'zayavka_id' => $return_z_id,
@@ -191,7 +189,8 @@ class Ajax extends CI_Controller {
 				'kilk' => $kilk[$k],
 				'edinica_izm' => $edinica_izm[$k],
 				'opus' => $opus[$k],
-				'artikl' => $this->generate_nomer($progect_id, $max_id)
+				'artikl' => $this->generate_nomer($progect_id, $max_id),
+				'product_id' => $product_id[$k]
 			);
 			$this->db->insert('zayavki_prihod', $data_p);
 			$max_id = $this->db->insert_id()+1;
@@ -199,23 +198,30 @@ class Ajax extends CI_Controller {
 		//print_r($data_p);
 	}
 
+// прийняти приход
 	public function do_prihod() {
 		$zayavka_id = $this->input->post('id');
 		$progect_id = $this->input->post('progect_id');
 		$products = $this->db->get_where('zayavki_prihod', array('zayavka_id' => $zayavka_id));
 		foreach ($products->result() as $row) {
-			//echo $row->nazva;
-			$this->db->insert('products', 
-				array(
-					//'zayavka_id'=>$return_z_id, 
-					'progect_id'=>$progect_id, 
-					'nazva'=>$row->nazva, 
-					'kilk'=>$row->kilk, 
-					'edinica_izm'=>$row->edinica_izm, 
-					'opus'=>$row->opus, 
-					'artikl'=>$row->artikl
-				)
-			);
+			if($row->product_id == 0) {		// новий ТМЦ
+				$this->db->insert('products', 
+					array(
+						'progect_id'=>$progect_id, 
+						'nazva'=>$row->nazva, 
+						'kilk'=>$row->kilk, 
+						'edinica_izm'=>$row->edinica_izm, 
+						'opus'=>$row->opus, 
+						'artikl'=>$row->artikl
+					)
+				);
+			} else {	// існуючий ТМЦ (апдейтимо тільки к-сть)
+				//$this->db->where('id', $row->product_id);
+				//$this->db->update('products', array('kilk'=>$row->kilk));
+				$this->db->set('kilk', 'kilk+'.$row->kilk, FALSE);
+				$this->db->where('id', $row->product_id);
+				$this->db->update('products');
+			}
 		}
 		// апдейт статуса заявки
 		$this->db->where('id', $zayavka_id)->update('zayavki', array('status' => 0)); 
@@ -275,7 +281,7 @@ class Ajax extends CI_Controller {
 
 
 
-
+// услуги
 	public function ajax_get_usluga_to_zayavka() {
 		$zayavka_id = $this->input->post('zayavka_id');
 		// $uslugi = $this->db->get_where('uslugi', array('zayavka_id' => $this->input->post('zayavka_id')));
@@ -342,18 +348,15 @@ class Ajax extends CI_Controller {
 	}
 
 
-
+// автокомпліт на приход
 	public function ajax_autocomplete_tmc() {
-		$nazva = $this->input->get('nazva');
+		$nazva = $this->input->get('term');
 		// $this->db->select('id, nazva AS value, artikl AS label');
 		$this->db->select('id, CONCAT(nazva," (",artikl,")") AS label, nazva AS value');
-		// фільтри пошуку
-		//if($nazva) { $this->db->like('name', $nazva); }
+		if($nazva) { $this->db->like('nazva', $nazva); } // фільтр пошуку
 		$this->db->from('products');
-		//$this->db->where('flavor.approved', 1);
-		$flavors = $this->db->order_by('id', 'DESC')->get();
-		$flavors2 = $flavors->result();
-		echo json_encode($flavors2);
+		$res = $this->db->order_by('id', 'DESC')->get();
+		echo json_encode($res->result());
 	}
 
 

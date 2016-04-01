@@ -381,4 +381,31 @@ class Main extends CI_Controller {
 		redirect(site_url("main/uslugi"));
 	}
 
+
+
+
+// ф-ція тестування приходу
+	public function test() {
+		if($this->input->post('nazva')) {
+			$nazva=$this->input->post('nazva');
+			$artikl=$this->input->post('artikl');
+			print_r($artikl);
+			foreach ($nazva as $k=>$value) {
+				echo $value.' - '.$artikl[$k]."<br>";
+			}
+
+		}
+		$this->output->enable_profiler(TRUE);	// профайлер
+	}
+
+	public function test2() {
+		$f=10;
+		$this->db->set('kilk', 'kilk+'.$f, FALSE);
+		$this->db->where('id', 3);
+		$this->db->update('products');
+		$this->output->enable_profiler(TRUE);	// профайлер
+	}
+
+
+
 }

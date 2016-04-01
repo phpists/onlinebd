@@ -96,37 +96,23 @@ $(document).ready(function(){
 		}
 	});
 
-// спрацьовує перший раз
+
     // $( ".nazva_tmc" ).autocomplete({
     //   source: availableTags
     // });	
 
-
-
-$(".nazva_tmc").autocomplete({
-      	source: '/ajax/ajax_autocomplete_tmc',
-        //minLength: 2,
-        select: function(event, ui) {
-        	$(this).val(ui.item.value);
-        	$(this).parent().next().children('input').val(ui.item.id);
-        
-
-        //     var url = ui.item.id;
-	       //  log( ui.item ?
-	       //    "Selected: " + ui.item.label :
-	       //    "Nothing selected, input was " + this.value);
-
-	    },
- 
-        // html: true, // optional (jquery.ui.autocomplete.html.js required)
- 
-      // optional (if other layers overlap autocomplete list)
-        open: function(event, ui) {
-            $(".ui-autocomplete").css("z-index", 1000);
-        }
-    });
-
-
+// спрацьовує перший раз
+	$(".nazva_tmc").autocomplete({
+		source: '/ajax/ajax_autocomplete_tmc',
+		//minLength: 2,
+		select: function(event, ui) {
+			$(this).val(ui.item.value);
+			$(this).next().val(ui.item.id);
+		},
+		open: function(event, ui) {
+			$(".ui-autocomplete").css("z-index", 1000);
+		}
+	});
 
 
 
@@ -141,122 +127,21 @@ function add_tmc(){
 		last_row.css('border-color', '#d9534f');
 	} else {
 		i++;
-		$("#example1 > tbody").append('<tr><td><center>'+i+'</center></td><td><input class="form-control nazva_tmc" type="text" name="nazva[]"></td><td><input class="form-control" type="text" name="opus[]"></td><td><select name="edinica_izm[]" class="form-control"><option value="упаковка">упаковка</option><option value="шт">шт</option><option value="ед">ед.</option><option value="коробка">коробка</option><option value="паллет">паллет</option></select></td><td><input class="form-control" type="number" min="1" value="1" name="kilk[]"></td><td><center><a href="#" class="del_item"><img src="<? echo base_url() ?>application/views/img/validno.png"></a></center></td></tr>');
+		$("#example1 > tbody").append('<tr><td><center>'+i+'</center></td><td><input class="form-control nazva_tmc" type="text" name="nazva[]"><input type="hidden" name="id_tmc[]"></td><td><input class="form-control" type="text" name="opus[]"></td><td><select name="edinica_izm[]" class="form-control"><option value="упаковка">упаковка</option><option value="шт">шт</option><option value="ед">ед.</option><option value="коробка">коробка</option><option value="паллет">паллет</option></select></td><td><input class="form-control" type="number" min="1" value="1" name="kilk[]"></td><td><center><a href="#" class="del_item"><img src="<? echo base_url() ?>application/views/img/validno.png"></a></center></td></tr>');
 	
-		// $( ".nazva_tmc" ).autocomplete({
-		// 	source: availableTags
-		// });
-
-
-// ajax_autocomplete_tmc
-
-
-
-/*    $( ".nazva_tmc" ).autocomplete({
-      source: function( request, response ) {
-        $.ajax({
-          url: "http://gd.geobytes.com/AutoCompleteCity",
-          dataType: "jsonp",
-          data: {
-            q: request.term
-          },
-          success: function( data ) {
-            response( data );
-            //alert(data);
-          }
-        });
-      },
-      minLength: 3,
-      select: function( event, ui ) {
-        log( ui.item ?
-          "Selected: " + ui.item.label :
-          "Nothing selected, input was " + this.value);
-      },
-      open: function() {
-        $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
-      },
-      close: function() {
-        $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
-      }
-    });*/
-
-/*
-$(".nazva_tmc").autocomplete({
-        source: '/ajax/ajax_autocomplete_tmc',
-        select: function (b, a) {
-        log( ui.item ?
-          "Selected: " + ui.item.label :
-          "Nothing selected, input was " + this.value);
-        }
-    }).focus().data('ui-autocomplete')._renderItem = function (b, a) {
-        // append = "";
-        // if (a.make != null) {
-        //     append = " - " + a.make;
-        // }
-       // return $('<li>').append('<a>1212121212 ' + a.nazva +  '</a>').appendTo(b)
-    }
-
-*/
-
-$(".nazva_tmc").autocomplete({
-      	source: '/ajax/ajax_autocomplete_tmc',
-        //minLength: 2,
-        select: function(event, ui) {
-        	$(this).val(ui.item.id);
-        //     var url = ui.item.id;
-	       //  log( ui.item ?
-	       //    "Selected: " + ui.item.label :
-	       //    "Nothing selected, input was " + this.value);
-
-	    },
- 
-        // html: true, // optional (jquery.ui.autocomplete.html.js required)
- 
-      // optional (if other layers overlap autocomplete list)
-        open: function(event, ui) {
-            $(".ui-autocomplete").css("z-index", 1000);
-        }
-    });
-
-
-
-
-/*			$(".nazva_tmc").autocomplete({
-				//delay: 500,
-				//minLength: 3,
-				source: function(request, response) {
-					$.getJSON("http://api.rottentomatoes.com/api/public/v1.0/movies.json?callback=?", {
-						// do not copy the api key; get your own at developer.rottentomatoes.com
-						apikey: "6czx2pst57j3g47cvq9erte5",
-						q: request.term,
-						page_limit: 10
-					}, function(data) {
-						// data is an array of objects and must be transformed for autocomplete to use
-						var array = data.error ? [] : $.map(data.movies, function(m) {
-							return {
-								label: m.title + " (" + m.year + ")",
-								url: m.links.alternate
-							};
-						});
-						response(array);
-					});
-				},
-				focus: function(event, ui) {
-					// prevent autocomplete from updating the textbox
-					event.preventDefault();
-				},
-				select: function(event, ui) {
-					$(this).val(ui.item.url);
-					// prevent autocomplete from updating the textbox
-					event.preventDefault();
-					// navigate to the selected item's url
-					//window.open(ui.item.url);
-				}
-			});*/
-
-
-
-
+		$(".nazva_tmc").autocomplete({
+			source: '/ajax/ajax_autocomplete_tmc',
+			//minLength: 2,
+			select: function(event, ui) {
+				$(this).val(ui.item.value);
+				$(this).next().val(ui.item.id);
+				//$(this).parent().next().children('input').val(ui.item.id);
+				// var url = ui.item.id;
+			},
+			open: function(event, ui) {
+				$(".ui-autocomplete").css("z-index", 1000);
+			}
+		});
 
 	}
 	return false;
@@ -278,7 +163,7 @@ $(".nazva_tmc").autocomplete({
 
 	<!-- Text input-->
 	<div class="form-group">
-	  <label class="col-md-4 control-label">Дата отгрузки/ время отгрузки:</label>  
+	  <label class="col-md-4 control-label">Дата отгрузки / время отгрузки:</label>  
 	  <div class="col-md-4">
 	  <input name="date_otgruzki" class="form-control input-md datepicker" type="text" value="<? echo @$main->nazva ?>">
 	  </div>
@@ -356,7 +241,7 @@ $(".nazva_tmc").autocomplete({
 		<tbody>
 			<tr>
 				<td><center>1</center></td>
-				<td><input class="form-control nazva_tmc" type="text" name="nazva[]"></td>
+				<td><input class="form-control nazva_tmc" type="text" name="nazva[]"><input type="hidden" name="id_tmc[]"></td>
 				<td><input class="form-control" type="text" name="opus[]"></td>
 				<td>
 					<select name="edinica_izm[]" class="form-control">
