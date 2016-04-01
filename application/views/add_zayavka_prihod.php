@@ -106,8 +106,9 @@ $(document).ready(function(){
 		source: '/ajax/ajax_autocomplete_tmc',
 		//minLength: 2,
 		select: function(event, ui) {
-			$(this).val(ui.item.value);
+			$(this).val(ui.item.value).attr('readonly', 'true');
 			$(this).next().val(ui.item.id);
+			$(this).parent().next().children('input').attr('readonly', 'true');
 		},
 		open: function(event, ui) {
 			$(".ui-autocomplete").css("z-index", 1000);
@@ -121,7 +122,6 @@ $(document).ready(function(){
 var i=1;
 
 function add_tmc(){
-	//$("#example1").find('tr:last').css('background-color', '#d9534f');
 	last_row = $("#example1").find('tr:last').find('input:first');
 	if(last_row.val()=='') {
 		last_row.css('border-color', '#d9534f');
@@ -131,12 +131,10 @@ function add_tmc(){
 	
 		$(".nazva_tmc").autocomplete({
 			source: '/ajax/ajax_autocomplete_tmc',
-			//minLength: 2,
 			select: function(event, ui) {
-				$(this).val(ui.item.value);
+				$(this).val(ui.item.value).attr('readonly', 'true');
 				$(this).next().val(ui.item.id);
-				//$(this).parent().next().children('input').val(ui.item.id);
-				// var url = ui.item.id;
+				$(this).parent().next().children('input').attr('readonly', 'true');
 			},
 			open: function(event, ui) {
 				$(".ui-autocomplete").css("z-index", 1000);
