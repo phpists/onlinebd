@@ -1,6 +1,5 @@
 <?php $this->load->view('header'); ?>
 
-
 <script type="text/javascript">
 $(document).ready(function(){
 	$('#example1').dataTable({

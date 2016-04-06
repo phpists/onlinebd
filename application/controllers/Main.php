@@ -191,10 +191,12 @@ class Main extends CI_Controller {
 
 // заявки проекта
 	public function progect_zayavki($progects_id) {
+		$q = $this->db->query('SELECT id FROM zayavki WHERE progect_id='.$progects_id);
+		$data['zayavok'] = $q->num_rows();
 		$data['progects'] = $this->db->get_where('progects', array('id' => $progects_id))->row();		
 		$data['zayavki'] = $this->db->get_where('zayavki', array('progect_id' => $progects_id));
 		$this->load->model('Main_model');
-		// $this->Main_model->zayavki_prihod(1);
+		$data['uslugi'] = $this->db->get('uslugi');
 		$this->load->view('progect_zayavki', $data);
 	}
 

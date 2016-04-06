@@ -15,3 +15,9 @@ margin-bottom: 3px;
 .filterGroupTitle.collapsed{
 	color: #5e5e5e;
 }
+.zayavki_table tr th{
+	text-align: center;
+}
+.zayavki_table input{
+	max-width: 150px;
+}
