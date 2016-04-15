@@ -32,7 +32,6 @@ $(document).ready(function(){
 	});*/
 
 	$('.uslugi').click(function(){
-		// alert();
 		var zayavka_id = $(this).data("id");
 		$('[name=zayavka_id]').val(zayavka_id);
 		$('#myModal').modal('show');
@@ -237,8 +236,6 @@ $(document).ready(function(){
 
 
 						<form action="<? echo site_url("ajax/add_usluga_to_zayavka") ?>" method="POST" class="form-horizontal" id="form_add">
-
-
 							<table class="table table-bordered" id="example1">
 								<thead>
 									<tr>

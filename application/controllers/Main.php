@@ -360,8 +360,37 @@ class Main extends CI_Controller {
 
 // услуги
 	public function uslugi() {
-		$data['main'] = $this->db->get('uslugi');
+		//$data['main'] = $this->db->get('zayavki');
+		/*$this->db->select('zayavki.*, progects.nazva, progects.sroki, companies.nazva AS company_nazva, companies.contragent');
+		$this->db->join('progects', 'zayavki.progect_id = progects.id', 'left');
+		$this->db->join('companies', 'progects.company_id = progects.id', 'left');
+		$data['main'] = $this->db->get('zayavki');*/
+		$date = '';
+		if($this->input->get('date')) {
+			$date = 'WHERE zayavki.date_create = "'.$this->input->get('date').'"';
+			if($this->input->get('progect')) {
+				$date = ' AND zayavki.date_create = "'.$this->input->get('date').'"';
+			}
+		}
+
+		$query = $this->db->query('SELECT `zayavki`.*, `progects`.`nazva` AS `progect_nazva`, `progects`.`sroki`, `companies`.`nazva` AS `company_nazva`, `companies`.`contragent`,
+		(SELECT SUM(cena) FROM `uslugi_zayavki` WHERE zayavki.`id` = uslugi_zayavki.`zayavka_id`) AS suma
+		FROM `zayavki`
+		LEFT JOIN `progects` ON `zayavki`.`progect_id` = `progects`.`id`
+		LEFT JOIN `companies` ON `progects`.`company_id` = `progects`.`id` '.
+		($this->input->get('progect')?'WHERE progect_id = '.$this->input->get('progect'):'').$date.'
+        GROUP BY zayavki.id');
+		$data['main'] = $query;
+		$data['companies'] = $this->db->get('companies');
+		$data['progects'] = $this->db->get('progects');
 		$this->load->view('uslugi', $data);
+		//$this->output->enable_profiler(TRUE);	// профайлер
+	}
+
+
+	public function uslugi_list() {
+		$data['main'] = $this->db->get('uslugi');
+		$this->load->view('uslugi_list', $data);
 	}
 
 	public function add_edit_usluga() {

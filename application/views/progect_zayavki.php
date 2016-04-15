@@ -73,7 +73,7 @@ summ_uslug();
 			<div class="panel panel-default">
 				<div class="panel-heading"><? echo anchor('main/index', $progects->nazva);  ?>: заявки</div>
 				<div class="panel-body">
-
+<!--
 				<div class="row">
 					<div class="col-sm-3">
 						<p><b>Всего услуг: </b> </p>
@@ -119,7 +119,7 @@ summ_uslug();
 						<p><b>Общая сума по услугам: </b> <span id="summa_uslug"></span></p>
 					</div>
 				</div>
-
+-->
 
 
 

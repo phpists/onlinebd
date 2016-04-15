@@ -343,7 +343,7 @@ class Ajax extends CI_Controller {
 			}
 		}		
 		*/
-		redirect(site_url("main/zayavki"));
+		redirect(site_url("main/uslugi"));
 		//$this->output->enable_profiler(TRUE);	// профайлер
 	}
 

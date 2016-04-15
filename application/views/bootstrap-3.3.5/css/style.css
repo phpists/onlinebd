@@ -21,3 +21,21 @@ margin-bottom: 3px;
 .zayavki_table input{
 	max-width: 150px;
 }
+.filters{
+	margin-top: 15px;
+}
+.filters .select{
+	padding-left: 0;
+}
+.filters select {
+	width: 175px;
+	display: inline-block;
+
+}
+.filters input {
+		width: 100px;
+	display: inline-block;
+}
+.filters .input {
+padding-left: 0;
+}
