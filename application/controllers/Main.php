@@ -146,12 +146,11 @@ class Main extends CI_Controller {
 	}		
 
 // товары
-	public function products($progects_id) {
-		//$data['progects'] = $this->db->get_where('products');	
-		$data['progects'] = $this->db->get_where('progects', array('id' => $progects_id))->row();		
-		$data['main'] = $this->db->get_where('products', array('progect_id' => $progects_id));
-		$data['progects_id'] = $progects_id;
-		$data['zayavok'] = $this->db->get_where('zayavki', array('progect_id' => $progects_id));
+	public function products($progect_id) {
+		$data['progects'] = $this->db->get_where('progects', array('id' => $progect_id))->row();		
+		$data['main'] = $this->db->get_where('products', array('progect_id' => $progect_id));
+		$data['progect_id'] = $progect_id;
+		$data['zayavok'] = $this->db->get_where('zayavki', array('progect_id' => $progect_id));
 		$this->load->view('products', $data);
 	}
 /*
@@ -361,7 +360,11 @@ class Main extends CI_Controller {
 		$this->load->view('print_templates/rashod', $data);
 	}
 
-
+	public function print_tmc_progect($progect_id) {
+		$data['progect'] = $this->db->get_where('progects', array('id' => $progect_id))->row();		
+		$data['main'] = $this->db->get_where('products', array('progect_id' => $progect_id));
+		$this->load->view('print_templates/tmc_progect', $data);
+	}
 
 
 // услуги

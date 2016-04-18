@@ -77,7 +77,8 @@ $(document).ready(function(){
 <? if($this->session->userdata('user_role')==1) { ?>
 						<!-- <button class="btn btn-success" type="button" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i> Добавить товар</button> -->
 <? } ?>
-						<a href="<? echo site_url("main/progect_zayavki/".$progects_id) ?>" class="btn btn-danger">Заявок <span class="badge"><? echo count($zayavok->result()) ?></span></a>
+						<a href="<? echo site_url("main/progect_zayavki/".$progect_id) ?>" class="btn btn-danger">Заявок <span class="badge"><? echo count($zayavok->result()) ?></span></a>
+						<a href="<? echo site_url("main/print_tmc_progect/".$progect_id) ?>" class="btn btn-primary"><span class="glyphicon glyphicon-print"></span> Печать</a>
 
 
 
@@ -149,7 +150,7 @@ $(document).ready(function(){
 									<label class="col-md-4 control-label">Описание:</label>  
 									<div class="col-md-6">
 										<textarea class="form-control" name="opus" id="opus_add" rows="3"></textarea>
-										<input type="hidden" name="progect_id" value="<? echo $progects_id ?>">
+										<input type="hidden" name="progect_id" value="<? echo $progect_id ?>">
 									</div>
 								</div>	
 
@@ -230,7 +231,7 @@ $(document).ready(function(){
 										<textarea class="form-control" name="opus" id="edit_opus" rows="3"></textarea>
 									</div>
 								</div>
-								<input type="hidden" name="progect_id" value="<? echo $progects_id ?>">
+								<input type="hidden" name="progect_id" value="<? echo $progect_id ?>">
 								<input type="hidden" name="id">
 								<!-- <input type="hidden" name="user_id"> -->
 								<div class="alert alert-danger" role="alert" style="display:none;" id="mes_error_edit_user">Заповніть обовязкові поля (ім'я, логін, пароль) !</div>
