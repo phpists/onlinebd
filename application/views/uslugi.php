@@ -51,7 +51,10 @@ $(document).ready(function(){
 	var summ = 0;
 	$('.cena').each(function() {
 		str = $(this).text();
-		summ=parseFloat(str.replace(",", "."))+summ;
+		if(str) {
+			//summ=parseFloat(str.replace(",", "."))+summ;
+			summ=parseInt(str)+summ;
+		}
 	});
 	$('#result_summ').text(summ.toFixed(2));
 
