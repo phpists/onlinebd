@@ -97,7 +97,7 @@ $(document).ready(function(){
 							      		<? select_sel($progects, $this->input->get('progect')) ?>
 								  </select>
 							    </div>
-							    <div class="col-xs-2 input">
+							    <div class="col-xs-3 input">
 							    <label for="inputPassword" class="">Дата</label>
 							      <input type="text" class="form-control datepicker" name="date" value="<? echo $this->input->get('date') ?>">
 							      <button class="btn btn-primary">ok</button>

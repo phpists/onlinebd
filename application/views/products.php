@@ -30,9 +30,9 @@ $(document).ready(function(){
 		return false;		
 	});	
 
-/*	$('#update').click(function(){
+	$('#update').click(function(){
 		$('#form_edit').trigger("submit");
-	});*/
+	});
 
 });
 </script>
@@ -241,7 +241,9 @@ $(document).ready(function(){
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-						<!-- <button type="button" class="btn btn-primary" id="update">Сохранить</button> -->
+					<? if($this->session->userdata('user_role')==1) { ?>
+						<button type="button" class="btn btn-primary" id="update">Сохранить</button>
+					<? } ?>
 					</div>
 				</div>
 			</div>

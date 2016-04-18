@@ -168,8 +168,9 @@ class Main extends CI_Controller {
 		$this->db->insert('products', $data);
 		redirect(site_url("main/products/".$this->input->post('progect_id')));
 	}
-
+*/
 	public function edit_product() {
+		if($this->session->userdata('user_role')==2) { redirect(site_url()); }
 		$data = array(
 			//'progect_id' => $this->input->post('progect_id'),
 			//'company_id' => $this->input->post('company_id'),	
@@ -183,7 +184,7 @@ class Main extends CI_Controller {
 		$this->db->update('products', $data);	
 		redirect(site_url("main/products/".$this->input->post('progect_id')));
 	}
-
+/*
 	public function del_product($id) {
 		$progect_id = $this->db->get_where('products', array('id' => $id))->row("progect_id");	
 		$this->db->delete('products', array('id' => $id));

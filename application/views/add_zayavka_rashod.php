@@ -97,116 +97,106 @@ $(document).ready(function(){
 				<div class="panel-heading"><? echo $title ?></div>
 				<div class="panel-body">
 	
-<form class="form-horizontal" id="form_add_zayavka">
-<fieldset>
+					<form class="form-horizontal" id="form_add_zayavka">
+					<fieldset>
 
-	<!-- Text input-->
-	<div class="form-group">
-	  <label class="col-md-4 control-label">Дата отгрузки/ время отгрузки:</label>  
-	  <div class="col-md-4">
-	  <input name="date_otgruzki" class="form-control input-md datepicker" type="text" value="<? echo @$main->nazva ?>">
-	  </div>
-	</div>	
+						<!-- Text input-->
+						<div class="form-group">
+						  <label class="col-md-4 control-label">Дата отгрузки/ время отгрузки:</label>  
+						  <div class="col-md-4">
+						  <input name="date_otgruzki" class="form-control input-md datepicker" type="text" value="<? echo @$main->nazva ?>">
+						  </div>
+						</div>	
 
-	<!-- Text input-->
-	<div class="form-group">
-	  <label class="col-md-4 control-label">ФИО кто забирает:</label>  
-	  <div class="col-md-4">
-	  <input name="fio" class="form-control input-md" type="text" value="<? echo @$main->fio ?>">
-	  </div>
-	</div>	
+						<!-- Text input-->
+						<div class="form-group">
+						  <label class="col-md-4 control-label">ФИО кто забирает:</label>  
+						  <div class="col-md-4">
+						  <input name="fio" class="form-control input-md" type="text" value="<? echo @$main->fio ?>">
+						  </div>
+						</div>	
 
-	<!-- Text input-->
-	<div class="form-group">
-	  <label class="col-md-4 control-label">Номер телефона:</label>  
-		<div class="col-md-4">
-			<div class="input-group">
-				<input name="tel" class="form-control input-md" type="text" value="<? echo @$main->tel ?>">
-				<span class="input-group-addon"><span class="glyphicon glyphicon-phone"> </span></span>
-			</div>
-		</div>
-	</div>
+						<!-- Text input-->
+						<div class="form-group">
+						  <label class="col-md-4 control-label">Номер телефона:</label>  
+							<div class="col-md-4">
+								<div class="input-group">
+									<input name="tel" class="form-control input-md" type="text" value="<? echo @$main->tel ?>">
+									<span class="input-group-addon"><span class="glyphicon glyphicon-phone"> </span></span>
+								</div>
+							</div>
+						</div>
 
+						<!-- Text input
+						<div class="form-group">
+						  <label class="col-md-4 control-label">Дата забора:</label>  
+						  <div class="col-md-4">
+						  <input name="sroki" class="form-control input-md" type="text" value="">
+						  </div>
+						</div>-->	
 
+						<!-- Text input-->
+						<div class="form-group">
+						  <label class="col-md-4 control-label">№авто:</label>  
+						  <div class="col-md-4">
+						  <input name="nom_avto" class="form-control input-md" type="text" value="<? echo @$main->nom_avto ?>">
+						  </div>
+						</div>	
 
-	<!-- Text input
-	<div class="form-group">
-	  <label class="col-md-4 control-label">Дата забора:</label>  
-	  <div class="col-md-4">
-	  <input name="sroki" class="form-control input-md" type="text" value="">
-	  </div>
-	</div>-->	
+						<!-- Textarea -->
+						<div class="form-group">
+						  <label class="col-md-4 control-label">Комментарий:</label>
+						  <div class="col-md-4">
+							<textarea rows="3" class="form-control" name="comment"><? echo @$main->comment ?></textarea>
+						  </div>
+						</div>
 
-	<!-- Text input-->
-	<div class="form-group">
-	  <label class="col-md-4 control-label">№авто:</label>  
-	  <div class="col-md-4">
-	  <input name="nom_avto" class="form-control input-md" type="text" value="<? echo @$main->nom_avto ?>">
-	  </div>
-	</div>	
-
-	<!-- Textarea -->
-	<div class="form-group">
-	  <label class="col-md-4 control-label">Комментарий:</label>
-	  <div class="col-md-4">
-		<textarea rows="3" class="form-control" name="comment"><? echo @$main->comment ?></textarea>
-	  </div>
-	</div>
-
-	<!-- Text input-->
-	<div class="form-group">
-	  <label class="col-md-4 control-label">Проект:</label>  
-	  <div class="col-md-4">
-		<select name="progect_id" class="form-control">
-			<option value="">Выберите проект</option>
-			<?php select_sel($progects); ?>
-		</select>
-	  </div>
-	</div>
+						<!-- Text input-->
+						<div class="form-group">
+						  <label class="col-md-4 control-label">Проект:</label>  
+						  <div class="col-md-4">
+							<select name="progect_id" class="form-control">
+								<option value="">Выберите проект</option>
+								<?php select_sel($progects); ?>
+							</select>
+						  </div>
+						</div>
 
 
-		<table class="table table-bordered" id="example1">
-			<thead>
-				<tr>
-					<th><center>#</center></th>
-					<th><center>Название</center></th>
-					<th><center>Артикул</center></th>
-					<th><center>Един. измер</center></th>
-					<th><center>Остаток</center></th>
-					<th><center>С заявок</center></th>
-					<th><center>Количество</center></th>
-					<th><center><input class="check-all" type="checkbox" /></center></th>
-				</tr>
-			</thead>
-			<tbody>
+						<table class="table table-bordered" id="example1">
+							<thead>
+								<tr>
+									<th><center>#</center></th>
+									<th><center>Название</center></th>
+									<th><center>Артикул</center></th>
+									<th><center>Един. измер</center></th>
+									<th><center>Остаток</center></th>
+									<th><center>С заявок</center></th>
+									<th><center>Количество</center></th>
+									<th><center><input class="check-all" type="checkbox" /></center></th>
+								</tr>
+							</thead>
+							<tbody>
 
 
-			</tbody>
-		</table>
+							</tbody>
+						</table>
 
-</fieldset>
-</form>	
-	
+					</fieldset>
+					</form>	
+						
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<a href="#" class="btn btn-success" id="create"><i class="glyphicon glyphicon-ok"></i> Создать</a>
+							<a href="/main/zayavki" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Отмена</a>
+						</div>
+					</div>
 
-
-	<div class="row">
-		<div class="col-md-12">
-			<!-- Button (Double) -->
-			<div class="form-group">
-			  <label class="col-md-4 control-label" for="button1id"> </label>
-			  <div class="col-md-4">
-				<a href="#" class="btn btn-success" id="create"><i class="glyphicon glyphicon-ok"></i> Создать</a>
-				<a href="/main/zayavki" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Отмена</a>		
-			  </div>
-			</div>	
-		</div>
-	</div>
-
-	<div class="col-md-12">
-		<div class="row" style="padding-top:10px; display:none;" id="mess_error">
-			<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Выберете хотя б один товар!</div>
-		</div>
-	</div>
+					<div class="row">
+						<div class="col-md-12" style="padding-top:10px; display:none;" id="mess_error">
+							<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Выберете хотя б один ТМЦ !</div>
+						</div>
+					</div>
 
 							
 
