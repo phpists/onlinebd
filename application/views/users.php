@@ -76,48 +76,50 @@ $(document).ready(function(){
 				<div class="panel-heading">Пользователи</div>
 				<div class="panel-body">
 	
-	
-						<table class="table table-bordered" id="example">
-							<thead>
-								<tr>
-									<th><center>#</center></th>
-									<th><center>Имя</center></th>
-									<th><center>Компания</center></th>
-									<th><center>email</center></th>
-									<th><center>Телефон</center></th>
-									<th><center>Статус</center></th>
-									<th><center>#</center></th>
-								</tr>
-							</thead>
-							<tbody>
-	<?php 
-	$a=1;
-	foreach ($main->result() as $row) { 
-		echo '
-								<tr>
-									<td><center>'.$a++.'</center></td>
-									<td><a href="#" class="edit" user_id="'.$row->id.'">'.$row->name.'</a></td>
-									<td><center>'.$row->nazva.'</center></td>
-									<td><center>'.$row->email.'</center></td>
-									<td><center>'.$row->tel.'</center></td>
-									<td><center><a href="'.site_url("main/deactevate_user/".$row->id).'">'.(($row->active==1)?"Активен":"Деактивирован").'</a></center></td>
-									<td><center>
-										<a href="#" class="edit" user_id="'.$row->id.'"><img src="'.base_url().'application/views/img/pencil.png"></a>&nbsp;&nbsp;&nbsp;
-										<a href="'.site_url("main/del_user/".$row->id).'" onclick="return confirm(\'Удалить этого пользователя?\')" title="Удалить"><img src="'.base_url().'application/views/img/validno.png"></a>
-										<!--<a href="#" class="edit_user btn btn-warning btn-sm" user_id="'.$row->id.'" title="Изменить"><span class="glyphicon glyphicon-pencil"></span></a>
-										<a href="'.site_url("main/del_user/".$row->id).'" class="btn btn-danger btn-sm" onclick="return confirm(\'Удалить этого пользователя?\')" title="Удалить"><span class="glyphicon glyphicon-remove"></span></a>-->
-									</center></td>
-								</tr>';
-	}
-	?>
+					<? show_message() ?>
 
-							</tbody>
-						</table>
+					<table class="table table-bordered table-hover" id="example">
+						<thead>
+							<tr>
+								<th><center>#</center></th>
+								<th><center>Имя</center></th>
+								<th><center>Компания</center></th>
+								<th><center>email</center></th>
+								<th><center>Телефон</center></th>
+								<th><center>Статус</center></th>
+								<th><center>#</center></th>
+							</tr>
+						</thead>
+						<tbody>
+<?php 
+$a=1;
+foreach ($main->result() as $row) { 
+	echo '
+							<tr>
+								<td><center>'.$a++.'</center></td>
+								<td><a href="#" class="edit" user_id="'.$row->id.'">'.$row->name.'</a></td>
+								<td><center>'.$row->nazva.'</center></td>
+								<td><center>'.$row->email.'</center></td>
+								<td><center>'.$row->tel.'</center></td>
+								<td><center><a href="'.site_url("main/deactevate_user/".$row->id).'">'.(($row->active==1)?"Активен":"Деактивирован").'</a></center></td>
+								<td><center>
+									<a href="#" class="edit" user_id="'.$row->id.'"><img src="'.base_url().'application/views/img/pencil.png"></a>&nbsp;&nbsp;&nbsp;
+									<a href="'.site_url("main/del_user/".$row->id).'" onclick="return confirm(\'Удалить этого пользователя?\')" title="Удалить"><img src="'.base_url().'application/views/img/validno.png"></a>
+									<!--<a href="#" class="edit_user btn btn-warning btn-sm" user_id="'.$row->id.'" title="Изменить"><span class="glyphicon glyphicon-pencil"></span></a>
+									<a href="'.site_url("main/del_user/".$row->id).'" class="btn btn-danger btn-sm" onclick="return confirm(\'Удалить этого пользователя?\')" title="Удалить"><span class="glyphicon glyphicon-remove"></span></a>-->
+								</center></td>
+							</tr>';
+}
+?>
 
-						<button class="btn btn-success" type="button" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i> Добавить пользователя</button>
+						</tbody>
+					</table>
+
+					<button class="btn btn-success" type="button" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i> Добавить пользователя</button>
 
 				</div>
 			</div>
+			
 		</div>
 	</div>
 

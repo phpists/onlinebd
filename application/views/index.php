@@ -34,44 +34,45 @@ $(document).ready(function(){
 				<div class="panel-heading">Проекты</div>
 				<div class="panel-body">
 	
+					<? show_message() ?>
 	
-						<table class="table table-bordered" id="example">
-							<thead>
-								<tr>
-									<th><center>#</center></th>
-									<th><center>Название</center></th>
-									<th><center>Компания</center></th>
-									<th><center>ТМЦ</center></th>
-									<th><center>Дата создания</center></th>
-									<th><center>Сроки</center></th>
-									<th><center>Заявок</center></th>
-									<th><center>#</center></th>
-								</tr>
-							</thead>
-							<tbody>
-	<?php 
-	$a=1;
-	foreach ($main->result() as $row) { 
-		echo '
-								<tr>
-									<td><center>'.$a++.'</center></td>
-									<td><a href="#" class="detail" progect_id="'.$row->id.'">'.$row->nazva.'</a></td>
-									<td>'.$row->company.'</td>
-									<td><center>('.anchor("main/products/".$row->id, $row->cnt).')</center></td>
-									<td><center>'.$row->date_create.'</center></td>
-									<td><center>'.$row->sroki.'</center></td>
-									<td><center>'.anchor("main/progect_zayavki/".$row->id, $row->zayavok).'</center></td>
-									<td><center>
-										<a href="'.site_url("main/edit_progect/".$row->id).'"><img src="'.base_url().'application/views/img/pencil.png"></a>&nbsp;&nbsp;&nbsp;
-									</center></td>
-								</tr>';
-	}
-	?>
+					<table class="table table-bordered table-hover" id="example">
+						<thead>
+							<tr>
+								<th><center>#</center></th>
+								<th><center>Название</center></th>
+								<th><center>Компания</center></th>
+								<th><center>ТМЦ</center></th>
+								<th><center>Дата создания</center></th>
+								<th><center>Сроки</center></th>
+								<th><center>Заявок</center></th>
+								<th><center>#</center></th>
+							</tr>
+						</thead>
+						<tbody>
+<?php 
+$a=1;
+foreach ($main->result() as $row) { 
+	echo '
+							<tr>
+								<td><center>'.$a++.'</center></td>
+								<td><a href="#" class="detail" progect_id="'.$row->id.'">'.$row->nazva.'</a></td>
+								<td>'.$row->company.'</td>
+								<td><center>('.anchor("main/products/".$row->id, $row->cnt).')</center></td>
+								<td><center>'.$row->date_create.'</center></td>
+								<td><center>'.$row->sroki.'</center></td>
+								<td><center>'.anchor("main/progect_zayavki/".$row->id, $row->zayavok).'</center></td>
+								<td><center>
+									<a href="'.site_url("main/edit_progect/".$row->id).'"><img src="'.base_url().'application/views/img/pencil.png"></a>&nbsp;&nbsp;&nbsp;
+								</center></td>
+							</tr>';
+}
+?>
 
-							</tbody>
-						</table>
+						</tbody>
+					</table>
 
-						<a class="btn btn-success" href="/main/add_progect"><i class="glyphicon glyphicon-plus"></i> Добавить проект</a>
+					<a class="btn btn-success" href="/main/add_progect"><i class="glyphicon glyphicon-plus"></i> Добавить проект</a>
 
 
 				</div>

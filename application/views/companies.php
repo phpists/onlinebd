@@ -10,7 +10,7 @@
 				<div class="panel-body">
 	
 	
-						<table class="table table-bordered" id="example">
+						<table class="table table-bordered table-hover" id="example">
 							<thead>
 								<tr>
 									<th><center>#</center></th>

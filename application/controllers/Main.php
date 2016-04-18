@@ -83,10 +83,12 @@ class Main extends CI_Controller {
 		$data['opus'] = $this->input->post('opus');
 		if($this->input->post('id')) {
 			$this->db->where('id', $this->input->post('id'));
-			$this->db->update('progects', $data);	
+			$this->db->update('progects', $data);
+			$this->session->set_flashdata('save', 'Проект отредактирован !');
 		} else {
 			$data['date_create'] = date("Y-m-d"); //$this->input->post('date_create');
 			$this->db->insert('progects', $data);
+			$this->session->set_flashdata('save', 'Проект создан !');
 		}
 		redirect(site_url("main/index"));
 		// $this->output->enable_profiler(TRUE);	// профайлер
@@ -224,9 +226,11 @@ class Main extends CI_Controller {
 		if($this->input->post('user_id')) {
 			if($this->input->post('role')==1) $data['company_id'] = '';
 			$this->db->where('id', $this->input->post('user_id'));
-			$this->db->update('users', $data);	
+			$this->db->update('users', $data);
+			$this->session->set_flashdata('save', 'Пользователь отредактирован !');
 		} else {
 			$this->db->insert('users', $data);
+			$this->session->set_flashdata('save', 'Пользователь добавлен !');
 		}
 		redirect(site_url("main/users"));
 	}
@@ -235,6 +239,7 @@ class Main extends CI_Controller {
 		if($id!=1) {
 			$this->db->delete('users', array('id' => $id));
 		}
+		$this->session->set_flashdata('save', 'Пользователь удален !');
 		redirect(site_url("main/users"));
 	}	
 
@@ -360,11 +365,6 @@ class Main extends CI_Controller {
 
 // услуги
 	public function uslugi() {
-		//$data['main'] = $this->db->get('zayavki');
-		/*$this->db->select('zayavki.*, progects.nazva, progects.sroki, companies.nazva AS company_nazva, companies.contragent');
-		$this->db->join('progects', 'zayavki.progect_id = progects.id', 'left');
-		$this->db->join('companies', 'progects.company_id = progects.id', 'left');
-		$data['main'] = $this->db->get('zayavki');*/
 		$date = '';
 		if($this->input->get('date')) {
 			$date = 'WHERE zayavki.date_create = "'.$this->input->get('date').'"';
@@ -372,7 +372,6 @@ class Main extends CI_Controller {
 				$date = ' AND zayavki.date_create = "'.$this->input->get('date').'"';
 			}
 		}
-
 		$query = $this->db->query('SELECT `zayavki`.*, `progects`.`nazva` AS `progect_nazva`, `progects`.`sroki`, `companies`.`nazva` AS `company_nazva`, `companies`.`contragent`,
 		(SELECT SUM(cena) FROM `uslugi_zayavki` WHERE zayavki.`id` = uslugi_zayavki.`zayavka_id`) AS suma
 		FROM `zayavki`
@@ -400,16 +399,19 @@ class Main extends CI_Controller {
 		);
 		if($this->input->post('usluga_id')) {
 			$this->db->where('id', $this->input->post('usluga_id'));
-			$this->db->update('uslugi', $data);	
+			$this->db->update('uslugi', $data);
+			$this->session->set_flashdata('save', 'Услуга отредактирована !');
 		} else {
 			$this->db->insert('uslugi', $data);
+			$this->session->set_flashdata('save', 'Услуга добавлена !');
 		}
-		redirect(site_url("main/uslugi"));
+		redirect(site_url("main/uslugi_list"));
 	}
 
 	public function del_usluga($id) {
 		$this->db->delete('uslugi', array('id' => $id));
-		redirect(site_url("main/uslugi"));
+		$this->session->set_flashdata('save', 'Услуга удалена !');
+		redirect(site_url("main/uslugi_list"));
 	}
 
 

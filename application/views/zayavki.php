@@ -86,7 +86,7 @@ $(document).ready(function(){
 							</div>
 							<br><br>
 	<!-- отгрузка -->
-								<table class="table table-bordered" id="example2">
+								<table class="table table-bordered table-hover" id="example2">
 									<thead>
 										<tr>
 											<th><center>#</center></th>
@@ -154,7 +154,7 @@ $(document).ready(function(){
 							</div>
 							<br><br>
 	<!-- приход -->
-								<table class="table table-bordered">
+								<table class="table table-bordered table-hover">
 									<thead>
 										<tr>
 											<th><center>#</center></th>

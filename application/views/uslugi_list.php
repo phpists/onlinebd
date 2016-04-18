@@ -47,6 +47,7 @@ $(document).ready(function(){
 				<div class="panel-heading">Услуги</div>
 				<div class="panel-body">
 	
+					<? show_message() ?>
 
 					<ul class="nav nav-tabs">
 					  <li><a href="/main/uslugi">Услуги</a></li>
@@ -54,40 +55,36 @@ $(document).ready(function(){
 					</ul>
 					<br>
 
-						<table class="table table-bordered" id="example">
-							<thead>
-								<tr>
-									<th><center>#</center></th>
-									<th><center>Название</center></th>
-									<th><center>Цена</center></th>
-									<th><center>#</center></th>
-								</tr>
-							</thead>
-							<tbody>
-	<?php 
-	$a=1;
-	foreach ($main->result() as $row) { 
-		echo '
-								<tr>
-									<td><center>'.$a++.'</center></td>
-									<td><a href="#" class="edit" usluga_id="'.$row->id.'">'.$row->nazva.'</a></td>
-									<td><center>'.$row->cena.'</center></td>
-									<td><center>
-										<a href="#" class="edit" usluga_id="'.$row->id.'"><img src="'.base_url().'application/views/img/pencil.png"></a>&nbsp;&nbsp;&nbsp;
-										<a href="'.site_url("main/del_usluga/".$row->id).'" onclick="return confirm(\'Удалить эту услугу?\')" title="Удалить"><img src="'.base_url().'application/views/img/validno.png"></a>
-									</center></td>
-								</tr>';
-	}
-	?>
+					<table class="table table-bordered table-hover" id="example">
+						<thead>
+							<tr>
+								<th><center>#</center></th>
+								<th><center>Название</center></th>
+								<th><center>Цена</center></th>
+								<th><center>#</center></th>
+							</tr>
+						</thead>
+						<tbody>
+<?php 
+$a=1;
+foreach ($main->result() as $row) { 
+	echo '
+							<tr>
+								<td><center>'.$a++.'</center></td>
+								<td><a href="#" class="edit" usluga_id="'.$row->id.'">'.$row->nazva.'</a></td>
+								<td><center>'.$row->cena.'</center></td>
+								<td><center>
+									<a href="#" class="edit" usluga_id="'.$row->id.'"><img src="'.base_url().'application/views/img/pencil.png"></a>&nbsp;&nbsp;&nbsp;
+									<a href="'.site_url("main/del_usluga/".$row->id).'" onclick="return confirm(\'Удалить эту услугу?\')" title="Удалить"><img src="'.base_url().'application/views/img/validno.png"></a>
+								</center></td>
+							</tr>';
+}
+?>
 
-							</tbody>
-						</table>
+						</tbody>
+					</table>
 
-						<button class="btn btn-success" type="button" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i> Добавить услугу</button>
-
-
-
-
+					<button class="btn btn-success" type="button" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus"></i> Добавить услугу</button>
 
 
 				</div>

@@ -59,16 +59,15 @@ function select_sel_val($a, $b=''){
 	}
 }
 
-function show_menu($id_active=1){
-	echo '				
-	<li'.(($id_active==1)?' class="active"':'').'><a href="'.site_url("settings/index").'">Сотрудники</a></li>
-	<li'.(($id_active==2)?' class="active"':'').'><a href="'.site_url("settings/recruter_change").'">Переназначение рекрутера</a></li>
-	<li'.(($id_active==3)?' class="active"':'').'><a href="'.site_url("settings/email_templates").'">Шаблоны уведомлений</a></li>
-	<li'.(($id_active==4)?' class="active"':'').'><a href="'.site_url("settings/skills").'">Справочник технологий</a></li>
-	<li'.(($id_active==5)?' class="active"':'').'><a href="'.site_url("settings/stoplist").'">Стоп-лист</a></li>
-	<li'.(($id_active==6)?' class="active"':'').'><a href="'.site_url("settings/link").'">Ссылки рекрутера</a></li>
-	<li'.(($id_active==7)?' class="active"':'').'><a href="'.site_url("settings/log").'">Журнал</a></li>
-	<li'.(($id_active==8)?' class="active"':'').'><a href="'.site_url("settings/email_sended").'">Отправленные письма</a></li>';
+function show_message() {
+	$CI =& get_instance();
+	if($CI->session->flashdata('save')) {
+		echo '
+			<div class="alert alert-success alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<strong>'.$CI->session->flashdata('save').'</strong>
+			</div>';
+	}
 }
 
 function mb_ucfirst($text) {

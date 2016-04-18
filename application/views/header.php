@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Онлайн БД</title>
+	<title>CRM управление складом</title>
 	<!-- Bootstrap -->
 	<link href="<? echo base_url() ?>application/views/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
 	<link href="<? echo base_url() ?>application/views/bootstrap-3.3.5/css/style.css" rel="stylesheet">
@@ -26,14 +26,11 @@
 			<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 				<div class="container">
 					<div class="row">
-						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-							<a class="navbar-brand" href="<? echo site_url() ?>">Онлайн БД</a>
+						<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							<a class="navbar-brand" href="<? echo site_url() ?>">CRM управление складом</a>
 					 	</div>
-						 <!-- Collect the nav links, forms, and other content for toggling -->
-						 <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+						 <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
-
 <? if($this->session->userdata('user_role')==1) { ?>
 								<ul class="nav navbar-nav">
 	 								<li <? if($this->uri->segment(2, '') == "companies") echo 'class="active"'; ?>><a href="<? echo site_url("main/companies") ?>">Компании</a></li>
@@ -47,9 +44,7 @@
 	 								<li <? if($this->uri->segment(2, '') == '' or $this->uri->segment(2, '') == "index") echo 'class="active"'; ?>><a href="<? echo site_url("main/index") ?>">Проекты</a></li>
 	 								<li <? if($this->uri->segment(2, '') == "zayavki") echo 'class="active"'; ?>><a href="<? echo site_url("main/zayavki") ?>">Заявка на отгрузку / приход</a></li>
 	 							</ul> 
-
 <? } ?>
-
 								<ul class="nav navbar-nav navbar-right">
 									<li><a href="#">Привет <b><? echo $this->session->userdata('user_name') ?></b></a></li>
 									<li><a href="<? echo site_url("main/exit") ?>">Выйти <span class="glyphicon glyphicon-log-out"></span></a></li>
@@ -64,8 +59,6 @@
 					</div>  	
 				</div><!-- /.container-fluid -->
 			</nav>
-
-
 
 <script type="text/javascript">
 $(document).ready(function(){
