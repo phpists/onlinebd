@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Main extends CI_Controller {
 
    function _remap($method, $params = array()) {
-        $password=$this->input->post('password');
+		$password = ($this->input->post('password'))?trim($this->input->post('password')):"";
         $pars = $this->uri->segment_array(); // $pars[1]-контроллер; $pars[2]-метод; $pars[3]-параметри
 		
         if($method=="exit") {
@@ -12,14 +12,12 @@ class Main extends CI_Controller {
             $this->session->unset_userdata('user_name');
             $this->session->unset_userdata('user_role');
             $this->session->unset_userdata('user_company_id');
-            $this->login('Ви вышли !');
+            $this->login('Вы вышли !');
         } else {
             if($this->session->userdata('user_id'))  {
-				//if(count(@$pars) == 1 ) { $this->index();  } else { $this->$pars[2](@$pars[3]); }
 				return call_user_func_array(array($this, $method), $params);
             } else {
                 if(!empty($password)) {
-					$password = ($this->input->post('password'))?trim($this->input->post('password')):"";
 					$login_in = $this->db->get_where('users', array('email' => trim($this->input->post('login')), 'pass' => $password, 'active' => 1));
 					if($login_in->result()) {
 						$this->session->set_userdata('user_id', $login_in->row('id'));
@@ -28,7 +26,7 @@ class Main extends CI_Controller {
 						$this->session->set_userdata('user_company_id', $login_in->row('company_id'));
 						$this->index();
 					} else { 
-						$this->load->view('login', array("message"=>"Логин или пароль не совпадают !"));	
+						 $this->login('Логин или пароль не совпадают !');	
 					}
                 } else {
                     $this->login('');
