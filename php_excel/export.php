@@ -70,13 +70,15 @@ if($_GET['type']==1) {
 	}
 }
 
+$filename = $zayavka['nazva'].'_'.$zayavka['fio'].'_'.$zayavka['nomer_dogovora'].'_'.$zayavka['date_c'];
 
 //создаем объект класса-писателя
 include("Classes/PHPExcel/Writer/Excel5.php");
 $objWriter = new PHPExcel_Writer_Excel5($objPHPExcel);
 //выводим заголовки
 header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="print.xls"');
+//header('Content-Disposition: attachment;filename="print.xls"');
+header('Content-Disposition: attachment;filename="'.$filename.'"');
 header('Cache-Control: max-age=0');
 //выводим в браузер таблицу с бланком
 $objWriter->save('php://output');

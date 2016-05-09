@@ -162,10 +162,9 @@ foreach ($main->result() as $row) {
 </div>
 <div class="col-xs-12">
   <p>Особые отметки</p>
-
-  <div class="border_bottom"><br></div>
-  <div class="border_bottom"><br></div>
-  <div class="border_bottom"><br></div>
+  <div class="border_bottom"><? echo mb_substr($header->comment, 0, 115) ?> <br></div>
+  <div class="border_bottom"><? echo mb_substr($header->comment, 115, 115) ?><br></div>
+  <div class="border_bottom"><? echo mb_substr($header->comment, 230, 115) ?><br></div>
 </div>
 <br>
 <p class="text-center">Расписка  в  получении  товарно - материальных ценностей</p>
