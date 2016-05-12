@@ -60,6 +60,8 @@ $(document).ready(function(){
 		$('#form_add').submit();
 	});
 
+	 $('[data-toggle="tooltip"]').tooltip();
+
 });
 </script>
 
@@ -123,6 +125,7 @@ $(document).ready(function(){
 												</div>
 											</center></td>
 											<td><center>
+												'.(($row->comment)?'<button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="'.$row->comment.'"><span class="glyphicon glyphicon-info-sign"></span></button>':'').'
 												<a href="/main/zayavka/'.$row->id.'" class="btn btn-warning btn-sm" title="Изменить"><span class="glyphicon glyphicon-pencil"></span></a>
 												
 												<a href="#" class="btn btn-success btn-sm uslugi" title="Услуги" data-id="'.$row->id.'"><span class="glyphicon glyphicon-briefcase"></span></a>
@@ -190,6 +193,8 @@ $(document).ready(function(){
 												</div>
 											</center></td>
 											<td><center>
+												'.(($row->comment)?'<button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="'.$row->comment.'"><span class="glyphicon glyphicon-info-sign"></span></button>':'').'
+											
 												<a href="/main/zayavka/'.$row->id.'" class="btn btn-warning btn-sm" title="Изменить"><span class="glyphicon glyphicon-pencil"></span></a>
 								
 												<a href="#" class="btn btn-success btn-sm uslugi" title="Услуги" data-id="'.$row->id.'"><span class="glyphicon glyphicon-briefcase"></span></a>
