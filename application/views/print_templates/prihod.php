@@ -12,6 +12,7 @@
 <body>
 
 <div class="container">
+<? if($this->session->userdata('user_role')==1) { ?>
   <div class="center-block top_info">
     <div class="text-right">
     <div>
@@ -98,7 +99,7 @@
       </table>
     </div>
   </div>
-
+<? } ?>
 <h4 class="text-center"> АКТ <br>О ПРИЕМЕ - ПЕРЕДАЧЕ  ТОВАРНО - МАТЕРИАЛЬНЫХ <br> ЦЕННОСТЕЙНА <br> ХРАНЕНИЕ</h4>
 <h6 class="text-center">Акт составлен о том, что приняты на хранение</h6>
 <div class="before_table">

@@ -12,6 +12,7 @@
 <body>
 
 <div class="container">
+<? if($this->session->userdata('user_role')==1) { ?>
   <div class="center-block top_info">
     <div class="text-right">
       <span>Унифицированная форма № МХ-3 Утверждена<br> постановлением Госкомстата <br>России от 09.08.99 № 66</span>
@@ -95,7 +96,7 @@
       </table>
     </div>
   </div>
-
+<? } ?>
 <h4 class="text-center">АКТ <br>О ВОЗВРАТЕ  ТОВАРНО - МАТЕРИАЛЬНЫХ  ЦЕННОСТЕЙ, <br>СДАННЫХ НА  ХРАНЕНИЕ</h4>
 <h6 class="text-center">Акт составлен о том, что поклажедатель принял от хранителя <br> следующие товарно материальные ценности:</h6>
 <div style="padding: 0 20px">
