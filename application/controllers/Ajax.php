@@ -96,6 +96,9 @@ class Ajax extends CI_Controller {
 		$sql .= implode(", ", $insertArray);
 		$this->db->query($sql);
 
+		$message = 'Добавлена новая заявка на расход, дата '.date("d.m.Y").'<br>Проект: '.$nazva_progect.'<br>ФИО: '.$this->input->post('fio').'<br> Телефон: '.$this->input->post('tel').'<br>Ссылка для просмотра: <a href="'.site_url("main/zayavka/".$return_id).'">'.site_url("main/zayavka/".$return_id).'</a>';
+		$this->send_email("Новая заявка на расход", $message);
+
 		// віднімаємо остаток з products
 		// foreach ($product as $value) {
 		//  	$this->db->query("UPDATE products SET `kilk`=kilk-".$count[$value]." WHERE `id`=".$value);
@@ -196,6 +199,9 @@ class Ajax extends CI_Controller {
 			$max_id = $this->db->insert_id()+1;
 		}
 		//print_r($data_p);
+
+		$message = 'Добавлена новая заявка на приход, дата '.date("d.m.Y").'<br>Проект: '.$nazva_progect.'<br>ФИО: '.$this->input->post('fio').'<br> Телефон: '.$this->input->post('tel').'<br>Ссылка для просмотра: <a href="'.site_url("main/zayavka/".$return_id).'">'.site_url("main/zayavka/".$return_id).'</a>';
+		$this->send_email("Новая заявка на приход", $message);		
 	}
 
 // прийняти приход
@@ -358,6 +364,22 @@ class Ajax extends CI_Controller {
 		$res = $this->db->order_by('id', 'DESC')->get();
 		echo json_encode($res->result());
 	}
+
+
+
+// універсальна ф-ція відправки листа
+	public function send_email($subject, $message) {
+		$email = $this->db->get_where('users', array('id' => 1))->row('email');
+		$this->load->library('email');
+		$config['mailtype'] = 'html';	// відправка в html
+		$this->email->initialize($config);
+		//$this->email->to('phpists@gmail.com');
+		$this->email->to($email);
+		$this->email->from('admin@crm.ru');
+		$this->email->subject($subject);
+		$this->email->message($message);
+		$this->email->send();
+	}	
 
 
 

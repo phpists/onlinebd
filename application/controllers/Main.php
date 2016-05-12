@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Main extends CI_Controller {
 
    function _remap($method, $params = array()) {
+		$login = trim($this->input->post('login'));
 		$password = ($this->input->post('password'))?trim($this->input->post('password')):"";
         $pars = $this->uri->segment_array(); // $pars[1]-контроллер; $pars[2]-метод; $pars[3]-параметри
 		
@@ -18,14 +19,18 @@ class Main extends CI_Controller {
 				return call_user_func_array(array($this, $method), $params);
             } else {
                 if(!empty($password)) {
-					$login_in = $this->db->get_where('users', array('email' => trim($this->input->post('login')), 'pass' => $password, 'active' => 1));
+                	if($login == "admin") {
+						$login_in = $this->db->get_where('users', array('id' => 1, 'pass' => $password));
+					} else {
+						$login_in = $this->db->get_where('users', array('email' => $login, 'pass' => $password, 'active' => 1));
+					}
 					if($login_in->result()) {
 						$this->session->set_userdata('user_id', $login_in->row('id'));
 						$this->session->set_userdata('user_name', $login_in->row('name'));
 						$this->session->set_userdata('user_role', $login_in->row('role'));
 						$this->session->set_userdata('user_company_id', $login_in->row('company_id'));
 						$this->index();
-					} else { 
+					} else {
 						 $this->login('Логин или пароль не совпадают !');	
 					}
                 } else {

@@ -9,7 +9,7 @@ $(document).ready(function(){
 	$("input[name=tel]").mask("(999) 999-99-99");
 
 	$('#add').click(function(){
-		if ($('input[name=name]').val() != '' & $('input[name=pass]').val() != '') {
+		if ($('#name').val() != '' & $('#pass').val() != '' & $('#email').val() != '') {
 			$('#form_add').trigger("submit");
 		} else {
 			$('#mes_error_add').show("slow").delay(2000).fadeOut();
@@ -56,7 +56,7 @@ $(document).ready(function(){
 	});
 
 	$('#update').click(function(){
-		if ($('#edit_name').val() != '' & $('#edit_login').val() != '' & $('#edit_pass').val() != '') {
+		if ($('#edit_name').val() != '' & $('#edit_pass').val() != '' & $('#edit_email').val() != '') {
 			$('#form_edit').trigger("submit");
 		} else {
 			$('#mes_error_edit').show("slow").delay(2000).fadeOut();
