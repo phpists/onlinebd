@@ -102,8 +102,8 @@ $(document).ready(function(){
 							<?php 
 							$a=1;
 							foreach ($rashod->result() as $row) {
-								if($row->status==1) $status = "В обработке";
-								if($row->status==2) $status = "В ожидании";
+								if($row->status==1) $status = "В ожидании";
+								if($row->status==2) $status = "В обработке";
 								if($row->status==0) $status = "Отгружено";
 								echo '
 										<tr>
@@ -116,8 +116,8 @@ $(document).ready(function(){
 												<div class="btn-group responsible_vacancy">
 													<button class="btn btn-link dropdown-toggle" data-toggle="dropdown" type="button">'.$status.'</button>
 													<ul class="dropdown-menu">
-														<li><a class="change_status_rashod" data-status="1" data-title="В обработке" data-id="'.$row->id.'" href="#">В обработке</a></li>
-														<li><a class="change_status_rashod" data-status="2" data-title="В ожидании" data-id="'.$row->id.'" href="#">В ожидании</a></li>
+														<li><a class="change_status_rashod" data-status="1" data-title="В ожидании" data-id="'.$row->id.'" href="#">В ожидании</a></li>
+														<li><a class="change_status_rashod" data-status="2" data-title="В обработке" data-id="'.$row->id.'" href="#">В обработке</a></li>
 														<li><a class="change_status_rashod1" data-status="0" data-title="Отгружено" data-id="'.$row->id.'" href="#">Отгружено</a></li>
 													</ul>
 												</div>
@@ -170,8 +170,8 @@ $(document).ready(function(){
 							<?php 
 							$a=1;
 							foreach ($prihod->result() as $row) {
-								if($row->status==1) $status = "В обработке";
-								//if($row->status==2) $status = "В ожидании";
+								if($row->status==1) $status = "В ожидании";
+								//if($row->status==2) $status = "В обработке";
 								if($row->status==0) $status = "Принято"; //"Отгружено";
 								echo '
 										<tr>
@@ -184,7 +184,7 @@ $(document).ready(function(){
 												<div class="btn-group responsible_vacancy">
 													<button class="btn btn-link dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="true">'.$status.'</button>
 													<ul class="dropdown-menu">
-														<li><a class="change_status_prihod" data-status="1" data-title="В обработке" data-id="'.$row->id.'" href="#">В обработке</a></li>
+														<li><a class="change_status_prihod" data-status="1" data-title="В ожидании" data-id="'.$row->id.'" href="#">В ожидании</a></li>
 														<li><a class="change_status_prihod" data-status="0" data-title="Принято" data-id="'.$row->id.'" href="#">Принято</a></li>
 													</ul>
 												</div>

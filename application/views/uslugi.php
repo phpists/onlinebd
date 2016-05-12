@@ -58,9 +58,6 @@ $(document).ready(function(){
 	});
 	$('#result_summ').text(summ.toFixed(2));
 
-  
-
-
 
 });
 </script>
@@ -103,10 +100,6 @@ $(document).ready(function(){
 							      <button class="btn btn-primary">ok</button>
 							    </div>
 						    </form>
-						    <!-- <div class="col-xs-2 input">
-						    <label for="inputPassword" class="">Дата</label>
-						    						   	 <input type="text" class="form-control" placeholder="">
-						    </div> -->
 						</div>
 						</div>
 					</div>
@@ -152,9 +145,6 @@ $(document).ready(function(){
 			</div>
 		</div>
 	</div>
-
-
-
 
 
 		<!-- Modal -->

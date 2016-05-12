@@ -149,8 +149,8 @@ if($main->status == 0 or $main->status == 2) {
 	<div class="form-group">
 	  <label class="col-md-4 control-label">Статус:</label>
 	  <label class="col-md-4" style="margin-top:8px">
-		<? if($main->status==1) echo "В обработке" ?>
-		<? if($main->status==2) echo "В ожидании" ?>
+		<? if($main->status==1) echo "В ожидании" ?>
+		<? if($main->status==2) echo "В обработке" ?>
 		<? if($main->status==0) echo "Отгружено" ?>
 	  </label>
 	</div>
@@ -173,7 +173,7 @@ if($main->status == 0 or $main->status == 2) {
 <?php 
 $a=1;
 $error_z = 0;
-if($main->status == 1) { // 1 - В обработке 
+if($main->status == 1) { // 1 - В ожидании 
 		foreach ($products->result() as $row) { 
 			$ostatok_tmc = $this->Main_model->ostatok_tmc($row->id);
 			//if($row->kilk < $row->cnt) { $color='style="background-color:#eea236"'; $error_z = 1; } else { $color='';}
@@ -197,7 +197,7 @@ if($main->status == 1) { // 1 - В обработке
 			</tr>';
 		}
 }
-if($main->status == 0 or $main->status == 2) { // 2 - В ожидании, 0 - Отгружено
+if($main->status == 0 or $main->status == 2) { // 2 - В обработке, 0 - Отгружено
 		foreach ($products->result() as $row) { 
 			echo '
 			<tr>

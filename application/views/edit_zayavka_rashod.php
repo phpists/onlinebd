@@ -169,8 +169,8 @@ $(document).ready(function(){
 		<? if($main->status==0) { ?>
 			<option value="0" <? if($main->status==0) echo "selected" ?> disabled>Отгружено</option>
 		<? } else { ?>
-			<option value="1" <? if($main->status==1) echo "selected" ?>>В обработке</option>
-			<option value="2" <? if($main->status==2) echo "selected" ?>>В ожидании</option>
+			<option value="1" <? if($main->status==1) echo "selected" ?>>В ожидании</option>
+			<option value="2" <? if($main->status==2) echo "selected" ?>>В обработке</option>
 			<option value="0" disabled>Отгружено</option>
 		<? } ?>
 		</select>

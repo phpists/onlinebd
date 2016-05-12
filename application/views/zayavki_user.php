@@ -39,8 +39,8 @@
 							<?php 
 							$a=1;
 							foreach ($rashod->result() as $row) {
-								if($row->status==1) $status = "В обработке";
-								if($row->status==2) $status = "В ожидании";
+								if($row->status==1) $status = "В ожидании";
+								if($row->status==2) $status = "В обработке";
 								if($row->status==0) $status = "Отгружено";
 								echo '
 										<tr>
@@ -88,8 +88,8 @@
 							<?php 
 							$a=1;
 							foreach ($prihod->result() as $row) {
-								if($row->status==1) $status = "В обработке";
-								//if($row->status==2) $status = "В ожидании";
+								if($row->status==1) $status = "В ожидании";
+								//if($row->status==2) $status = "В обработке";
 								if($row->status==0) $status = "Принято"; //"Отгружено";
 								echo '
 										<tr>
