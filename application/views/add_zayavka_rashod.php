@@ -14,6 +14,7 @@ $(document).ready(function(){
 	$("input[name=tel]").mask("(999) 999-99-99");
 
 	$('.datepicker').datetimepicker({
+		minDate:"<? echo date("Y-m-d") ?>",
 		format: 'YYYY-MM-DD HH:mm:ss',
 		locale: 'ru'
 	});

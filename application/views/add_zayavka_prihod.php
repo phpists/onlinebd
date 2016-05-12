@@ -14,55 +14,15 @@
 
 <script type="text/javascript">
 
-    var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
-
-
-
 $(document).ready(function(){
 
 	$("input[name=tel]").mask("(999) 999-99-99");
 
 	$('.datepicker').datetimepicker({
+		minDate:"<? echo date("Y-m-d") ?>",
 		format: 'YYYY-MM-DD HH:mm:ss',
 		locale: 'ru'
 	});
-
-	var i=1;
-	// $('#add_tmc').click(function(){
-	// 	//$("#example1").find('tr:last').css('background-color', '#d9534f');
-	// 	last_row = $("#example1").find('tr:last').find('input:first');
-	// 	if(last_row.val()=='') {
-	// 		last_row.css('border-color', '#d9534f');
-	// 	} else {
-	// 		i++;
-	// 		//$("#example1 > tbody").append('<tr><td><center>'+i+'</center></td><td><input class="form-control" type="text" name="nazva[]"></td><td><input class="form-control" type="text" name="artikl[]"></td><td><select name="edinica_izm[]" class="form-control"><option value="упаковка">упаковка</option><option value="шт">шт</option><option value="ед">ед.</option><option value="коробка">коробка</option><option value="паллет">паллет</option></select></td><td><input class="form-control" type="number" min="1" value="1" name="kilk[]"></td><td><center><a href="#" class="del_item"><img src="<? echo base_url() ?>application/views/img/validno.png"></a></center></td></tr>');
-	// 		$("#example1 > tbody").append('<tr><td><center>'+i+'</center></td><td><input class="form-control nazva_tmc" type="text" name="nazva[]"></td><td><input class="form-control" type="text" name="opus[]"></td><td><select name="edinica_izm[]" class="form-control"><option value="упаковка">упаковка</option><option value="шт">шт</option><option value="ед">ед.</option><option value="коробка">коробка</option><option value="паллет">паллет</option></select></td><td><input class="form-control" type="number" min="1" value="1" name="kilk[]"></td><td><center><a href="#" class="del_item"><img src="<? echo base_url() ?>application/views/img/validno.png"></a></center></td></tr>');
-	// 	}
-	// 	return false;
-	// });
 
 	$(document).on('click', '.del_item', function(event){
 		$(this).parent().parent().parent().remove();
@@ -96,10 +56,6 @@ $(document).ready(function(){
 		}
 	});
 
-
-    // $( ".nazva_tmc" ).autocomplete({
-    //   source: availableTags
-    // });	
 
 // спрацьовує перший раз
 	$(".nazva_tmc").autocomplete({
