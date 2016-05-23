@@ -287,6 +287,9 @@ class Main extends CI_Controller {
 		
 	public function zayavka($id) {
 		$data['main'] = $zayavka = $this->db->get_where('zayavki', array('id' => $id))->row();
+		if($this->session->userdata('user_role')==1) {
+			$this->db->where('id', $id)->update('zayavki', array('is_new' => 0));
+		}
 		if($zayavka->type == 0) {	// расход
 			$data['title'] = "Изменить заявку на расход №".$id;
 			$this->db->select('zayavki_rashod.id, zayavki_rashod.product_id, zayavki_rashod.cnt, products.nazva, products.artikl, products.edinica_izm, products.kilk');		

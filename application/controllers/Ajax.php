@@ -83,7 +83,8 @@ class Ajax extends CI_Controller {
 			'comment' => $this->input->post('comment'),
 			'date_create' => date("Y-m-d"),
 			'status' => 1,
-			'type' => 0
+			'type' => 0,
+			'is_new' => 1
 		);
 		$this->db->insert('zayavki', $data);
 		$return_id = $this->db->insert_id();
@@ -170,7 +171,8 @@ class Ajax extends CI_Controller {
 			'comment' => $this->input->post('comment'),
 			'date_create' => date("Y-m-d"),
 			'status' => 1,
-			'type' => 1
+			'type' => 1,
+			'is_new' => 1
 		);
 		$this->db->insert('zayavki', $data);
 		$return_z_id = $this->db->insert_id();
