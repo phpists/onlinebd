@@ -93,6 +93,7 @@ $(document).ready(function(){
 										<tr>
 											<th><center>#</center></th>
 											<th><center>Проект</center></th>
+											<th><center>Дата создания</center></th>
 											<th><center>Дата отгрузки</center></th>
 											<th><center>ФИО кто забирает</center></th>
 											<th><center>Телефон</center></th>
@@ -111,6 +112,7 @@ $(document).ready(function(){
 										<tr'.(($row->is_new)?' class="success"':'').'>
 											<td><center>'.anchor("main/zayavka/".$row->id, 'Заявка №'.$row->id).'</center></td>
 											<td>'.anchor("main/zayavka/".$row->id, $row->nazva_progect).'</td>
+											<td><center>'.$row->date_create.'</center></td>
 											<td><center>'.$row->date_otgruzki.'</center></td>
 											<td><center>'.$row->fio.'</center></td>
 											<td><center>'.$row->tel.'</center></td>
@@ -162,6 +164,7 @@ $(document).ready(function(){
 										<tr>
 											<th><center>#</center></th>
 											<th><center>Проект</center></th>
+											<th><center>Дата создания</center></th>
 											<th><center>Дата отгрузки</center></th>
 											<th><center>ФИО кто забирает</center></th>
 											<th><center>Телефон</center></th>
@@ -181,6 +184,7 @@ $(document).ready(function(){
 											<td><center>'.anchor("main/zayavka/".$row->id, 'Заявка №'.$row->id).'</center></td>
 											<td>'.anchor("main/zayavka/".$row->id, $row->nazva_progect).'</td>
 											<td><center>'.$row->date_otgruzki.'</center></td>
+											<td><center>'.$row->date_create.'</center></td>
 											<td><center>'.$row->fio.'</center></td>
 											<td><center>'.$row->tel.'</center></td>
 											<td><center>
