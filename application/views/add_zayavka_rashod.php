@@ -30,6 +30,7 @@ $(document).ready(function(){
 			success: function(msg){
 				$("#example1 > tbody").empty();
 				$("#example1 > tbody").append(msg);
+				$('[data-toggle="tooltip"]').tooltip();
 			}
 		});
 	});
@@ -85,7 +86,7 @@ $(document).ready(function(){
 			}
 		}
 	});
-
+	
 
 });
 </script>

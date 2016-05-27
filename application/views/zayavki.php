@@ -112,7 +112,7 @@ $(document).ready(function(){
 										<tr'.(($row->is_new)?' class="success"':'').'>
 											<td><center>'.anchor("main/zayavka/".$row->id, 'Заявка №'.$row->id).'</center></td>
 											<td>'.anchor("main/zayavka/".$row->id, $row->nazva_progect).'</td>
-											<td><center>'.$row->date_create.'</center></td>
+											<td><center>'.$row->date_create_t.'</center></td>
 											<td><center>'.$row->date_otgruzki.'</center></td>
 											<td><center>'.$row->fio.'</center></td>
 											<td><center>'.$row->tel.'</center></td>
@@ -184,7 +184,7 @@ $(document).ready(function(){
 											<td><center>'.anchor("main/zayavka/".$row->id, 'Заявка №'.$row->id).'</center></td>
 											<td>'.anchor("main/zayavka/".$row->id, $row->nazva_progect).'</td>
 											<td><center>'.$row->date_otgruzki.'</center></td>
-											<td><center>'.$row->date_create.'</center></td>
+											<td><center>'.$row->date_create_t.'</center></td>
 											<td><center>'.$row->fio.'</center></td>
 											<td><center>'.$row->tel.'</center></td>
 											<td><center>

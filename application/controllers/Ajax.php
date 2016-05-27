@@ -44,7 +44,9 @@ class Ajax extends CI_Controller {
 			echo '
 			<tr>
 				<td><center>'.$a++.'</center></td>
-				<td>'.$row->nazva.'</td>
+				<td>'.$row->nazva.'
+					'.(($row->opus)?'<button type="button" class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="bottom" title="'.$row->opus.'"><span class="glyphicon glyphicon-info-sign"></span></button>':'').'
+				</td>
 				<td><center>'.$row->artikl.'</center></td>
 				<td><center>'.$row->edinica_izm.'</center></td>
 				<td><center>'.$row->kilk.'</center></td>
@@ -82,6 +84,7 @@ class Ajax extends CI_Controller {
 			'nom_avto' => $this->input->post('nom_avto'),
 			'comment' => $this->input->post('comment'),
 			'date_create' => date("Y-m-d"),
+			'date_create_t' => date("Y-m-d H:i:s"),
 			'status' => 1,
 			'type' => 0,
 			'is_new' => 1
@@ -170,6 +173,7 @@ class Ajax extends CI_Controller {
 			'nom_avto' => $this->input->post('nom_avto'),
 			'comment' => $this->input->post('comment'),
 			'date_create' => date("Y-m-d"),
+			'date_create_t' => date("Y-m-d H:i:s"),
 			'status' => 1,
 			'type' => 1,
 			'is_new' => 1

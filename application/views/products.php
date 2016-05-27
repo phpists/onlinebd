@@ -34,6 +34,8 @@ $(document).ready(function(){
 		$('#form_edit').trigger("submit");
 	});
 
+	$('[data-toggle="tooltip"]').tooltip();
+
 });
 </script>
 
@@ -47,7 +49,7 @@ $(document).ready(function(){
 				<div class="panel-body">
 	
 	
-						<table class="table table-bordered" id="example">
+						<table class="table table-bordered table-hover" id="example">
 							<thead>
 								<tr>
 									<th><center>#</center></th>
@@ -55,6 +57,7 @@ $(document).ready(function(){
 									<th><center>Количество</center></th>
 									<th><center>Един. измер</center></th>
 									<th><center>Артикул</center></th>
+									<th><center>Описание</center></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -68,6 +71,9 @@ $(document).ready(function(){
 									<td><center>'.$row->kilk.'</center></td>
 									<td><center>'.$row->edinica_izm.'</center></td>
 									<td><center>'.$row->artikl.'</center></td>
+									<td><center>
+										'.(($row->opus)?'<button type="button" class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="bottom" title="'.$row->opus.'"><span class="glyphicon glyphicon-info-sign"></span></button>':'').'
+									</center></td>
 								</tr>';
 	}
 	?>
